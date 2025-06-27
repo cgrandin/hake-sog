@@ -1,0 +1,71 @@
+<!-- This section is loaded from within
+executive-summary/executive-summary.rmd and also from
+research-needs-section/research-needs-loader.rmd -->
+
+There are many research projects and data collections that could improve
+the stock assessment for `r sp` and lead to improved biological understanding
+and decision-making. The following is a list of needs (new and ongoing) that the
+JTC has identified as having a high probability of improving the overall
+quality and robustness of the stock assessment.  Only the top three are shown
+in the executive summary.
+
+1. Continue to conduct research to evaluate ways to improve recent, current,
+and future estimates of recruitment for use in stock assessment. This could
+include the development of time series of recruitment indices, time series of
+informative environmental or ecosystem variables, and models that have
+predictive skill [e.g., @VestfalsEtAl2023]. Explorations should also consider
+options for incorporating information on recruitment into the assessment model
+and the management framework for `r sp`. For example, time series could be
+included in the stock assessment as a standalone data source (similar to the
+acoustic indices) or improvements could be made to the modeling framework
+such that these environmental time series could impact the stock--recruitment
+relationship directly. Results from such work should be connected to or in
+cooperation with ongoing research related to recruitment variability as discussed
+in Section~\@ref(sec:assessment-response-review). Related, there is a need to
+streamline and broaden the availability of products from oceanographic models
+(e.g., Regional Ocean Modeling System) so they are available across
+international boundaries and updated on a recurring basis, thereby allowing for
+their use as informative links in operational stock assessments. A successful
+example of this has been the annual production of `r sp` distribution forecasts
+that depend on 6--9 month forecasts of subsurface (i.e., 100 m depth)
+temperature from [J-SCOPE](http://www.nanoos.org/products/j-scope/home.php).
+The continued collection of annual histological samples across ages, and the associated
+resources to complete the histological laboratory work, is needed
+to inform time-varying maturity in the assessment model.
+Furthermore, the existing management strategy evaluation framework should be
+used, or further developed, to examine how information on recruitment can
+inform robust management decisions.
+
+2. Conduct research on current and future index of abundance data sets
+or species distribution models that provide new age-based (e.g.,
+recruitment or population-wide) or spatial population structure and
+distribution information to the stock assessment.  In particular,
+continue to explore the utility of eDNA-based spatiotemporal biomass indices
+of population abundance. Develop species distribution models for `r sp`
+that utilize ecosystem information as drivers of observations across
+spatiotemporal domains. Investigate alternative ways to utilize survey
+age-composition information in the assessment model. Develop estimates of
+uncertainty for the relative age-1 index and test performance for furture use.
+Broaden the scope of
+uncertainty considered in the age-2$+$ index and adjust for changes arising
+from the U.S. Integrated Survey Initiative. Bootstrapping of the
+acoustic survey time series, or related methods, could help incorporate
+uncertainty related to the target-strength relationship, subjective scoring of
+echograms, thresholding methods, and methods used to estimate the species mixes
+for interpreting the acoustic backscatter into the variance calculations.
+Research should be communicated with those involved in developing the U.S. West
+Coast Integrated Survey Initiative. The management strategy evaluation
+framework should be used, or further developed, to examine how changes in
+survey methods can be used to inform robust management decisions.
+
+3. Continue to develop value-added scientific products to complement the stock
+assessment for management decision-making. In particular, work with regional
+partners to develop risk tables or other annual workflows that provides key
+metrics, indicators, or other summaries of general ecosystem conditions relevant
+to the coast-wide population of `r sp`.  It would be advantageous to include
+indicators that are potentially associated with `r sp` biology and ecology (e.g.,
+recruitment, distribution, predation, prey, and communities). Such information can
+broaden the context within which a single species stock assessment is interpreted,
+be used to support model development, refine uncertain assessment conclusions
+(e.g., productivity), and provide other non-assessment indicators of the
+system's state to management.

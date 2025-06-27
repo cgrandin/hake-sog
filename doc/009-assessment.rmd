@@ -1,0 +1,1739 @@
+
+\rfoot{Assessment}
+
+# Assessment {#sec:assessment}
+
+## Modeling history {#sec:assessment-modeling-history}
+
+In spite of the relatively short history of fishing, `r sp` have surely been
+subject to a larger number of stock assessments than any other marine species off the
+west coast of the U.S.~and Canada. These assessments have included a large
+variety of age-structured models. Initially, a cohort analysis tuned to fishery
+CPUE was used [@FrancisSwartzmanEtAl1982]. Later, the cohort analysis was
+tuned to National Marine Fisheries Service (NMFS) triennial acoustic survey
+estimates of absolute biomass-at-age [@HollowedAdlersteinEtAl1988].
+Since 1989, Stock Synthesis models (or base versions of it) fit to
+fishery catch-at-age data and acoustic survey estimates of population biomass
+and age composition have been the primary assessment method.
+
+While the general form of the age-structured assessment has remained similar
+since 1991, modeling procedures have been modified in a variety of ways. There
+have been alternative data choices, post-data collection processing routines,
+data-weighting schemes, structural assumptions for the stock assessment model,
+MCMC sampling algorithms, and control rules
+(Table~\@ref(tab:main-assessment-changes-tab)). Analysts are constantly trying to
+improve the caliber and relevance of the assessment by responding to new
+scientific developments related to statistics and biological dynamics, policy
+requirements, and different or new insights brought up during the peer review
+process to ensure a robust stock assessment.
+
+Data processing, filtering, and weighting choices have been modified several
+times since the first assessment. For example, modifications to the
+target-strength relationship used to scale acoustic data changed in 1997
+[@DornSaunders1997], and kriging was implemented to account for the spatial
+correlation in the acoustic data in 2010 [@StewartHamel2010]. While survey
+data have been the key index for biomass since 1988, surveys that have been
+used have varied considerably. The Alaska Fisheries Science Center/Northwest
+Fisheries Science Center West Coast Triennial Shelf Survey was used from 1988
+before being discarded from the 2009 assessment [@HamelStewart2009]. Acoustic
+surveys from the years prior to 1995 were used for assessments in the early
+1990s, but @StewartForrestEtAl2011 reviewed these early surveys and deemed
+that sampling was insufficient to be comparable with more recent data. Several
+recruitment indices have been considered but ultimately none were identified
+as adding appreciable contribution to model results [@HelserDornEtAl2002;
+@HelserFleischerEtAl2005; @StewartHamel2010], except for the
+fishery-independent acoustic-based relative age-1 index that was included
+in the base model in the 2022-2024 assessments and removed in the final bridging
+step this year. The process for generating
+fecundity-at-age from the combination of weight-at-age and maturity data changed
+in 2019 from using time-invariant to year-specific weight-at-age values. In 2024,
+time-varying maturity ogives were also added to the calculation of fecundity-at-age
+(see Section~\@ref(sec:data-maturity) for details). Even where data have
+been consistently used, the weighting of these data in the statistical likelihood
+has changed through the use of various emphasis factors [e.g., @Dorn1994;
+@DornSaundersEtAl1999], a multinomial sample size on age compositions [e.g.,
+@DornSaundersEtAl1999; @HelserDornEtAl2002; @HelserFleischerEtAl2005;
+@StewartForrestEtAl2011], internal estimations of effective sample size using
+the Dirichlet-multinomial distribution [@JTC2018], and assumptions regarding
+year-specific survey variance. Since 2021, a more computationally efficient
+Bayesian MCMC sampler [No-U-Turn Sampler; NUTS; @HoffmanGelman2014] was used
+to estimate posterior distributions [@Monnahan2018; @Monnahan2019], a change
+from previous assessments that used the random walk Metropolis Hastings (rwMH)
+sampler [details described in @JTC2021]. The list of changes discussed above
+is for illustrative purposes only and represents a small fraction of the
+different choices analysts have made and that reviewers have requested.
+
+The structure of the assessment models has perhaps had the largest number of
+changes. In terms of spatial models, analysts have considered
+spatially explicit forms [@Dorn1994; @Dorn1997], spatially implicit forms
+[@HelserStewartEtAl2006], and single-area models [@JTC2012]. Predicted
+recruitment has been modeled by sampling historical recruitment [e.g.,
+@Dorn1994; @HelserFleischerEtAl2005], using a stock--recruitment
+relationship parameterized using maximum sustainable yield (MSY) and
+the fishing mortality rate estimated to produce the MSY [`r f_msy`;
+@Martell2010], and using several alternative steepness priors [@JTC2012;
+@JTC2013]. Selectivity has also been modeled in several ways, invariant
+[@JTC2012; @JTC2013], time-varying with [@HelserDornEtAl2002] and without
+[@Dorn1994; @DornSaunders1997; @JTC2012; @JTC2013] a random walk,
+alternative levels of allowable deviation through time [@JTC2013; @JTC2017],
+age-based [@Dorn1994; @DornSaunders1997; @JTC2012; @JTC2013], and length-based
+[@HelserMartell2007].
+
+Several harvest control rules have been explored for providing catch limits
+from stock assessment output. `r sp` stock assessments have presented decision
+makers with constant *F*, variable *F*, and the following
+hybrid control rules: `r fspr_35`, `r fspr_40`, `r f_40_40_10`, `r fspr_45`,
+`r f_45_40_10`, and `r fspr_50` [e.g., @Dorn1996; @JTC2013]. Changes to
+policies such as the United States' National Standards Guidelines in
+2002 and the `r f_40_40_10` harvest control rule in the Agreement
+(Appendix~\@ref(sec:app-glossary)) have required specific changes to control
+rules.
+
+In addition to the examples given above and changes documented in stock
+assessments, there have been many more investigations conducted at review
+panel meetings. Starting in 2013, the addition of the MSE [@JTC2013;
+@JacobsenEtAl2021] facilitated investigating changes to the modeling
+procedure in terms of pre-specified objectives that aim for a sustainable
+coast-wide fishery.
+
+## Description of base model {#sec:assessment-base-model}
+
+The `r assess_yr` base model has the same general population dynamics structure as the
+`r last_assess_yr` assessment's base model. The statistical-catch-at-age model
+assumes that the `r sp` population is a single coast-wide stock subject to
+one aggregated fleet with combined male and female population dynamics. Stock
+Synthesis [@MethotWetzel2013] version `r ss_version` was the modeling platform
+used. The largest changes between the `r last_assess_yr` and `r assess_yr`
+stock assessments are the addition of another year of fishery data, a change
+in the estimation of recruitment from 2023 onwards, and the exclusion of the
+age-1 index of relative numbers of age-1 fish from the acoustic survey.
+Given the unique
+seasonal fishing conditions during the year, the fishery age composition of age-1 fish
+in 2024 was considered
+potentially suspect as a standalone observation (i.e., without the addition of survey information).
+Therefore, recruitment in 2023 was based on the stock--recruitment relationship
+(no additional recruitment deviate estimate). In addition, no recruitment deviations were
+estimated for `r end_yr - 1` onwards (including the forecast years) because no information is available
+to inform the estimates. The age-1 index
+(Section~\@ref(sec:data-acoustic-survey)) was excluded from the base model
+because it was found to be strongly influencing recruitment estimates even for
+cohorts that had several years of data (see
+Section~\@ref(sec:assessment-changes)), and it does not have an externally
+calculated measure of uncertainty.
+
+The `r assess_yr` base model includes a time series (1995 to
+`r last_survey_yr`) of acoustic age-2$+$ biomass estimates. Maturity is assumed to be time-invariant prior to 2009,
+and time-varying, with the integration of annual maturity ogives informed by sea
+temperature at depth, since 2009 (see Section~\@ref(sec:data-maturity)).
+Fecundity-at-age is time-varying as defined by annual weight-at-age
+multiplied by annual maturity ogives (`r start_yr_age_comps`--`r last_data_yr`;
+additionally see Section~\@ref(sec:data-weight-at-age)). The D-M likelihood approach
+[@ThorsonEtAl2017Dirichlet] is used to estimate the weights associated
+with age-composition data, rather than iteratively tuning the sample size
+multiplier as in 2017 and earlier assessments (see
+Section~\@ref(sec:data-age-comp-likelihood)). Time-varying fishery
+selectivity is retained in the `r assess_yr` base model with the magnitude
+of the allowable deviations unchanged from the `r last_assess_yr` base model
+(see Section~\@ref(sec:data-variability-selectivity)). The general
+parameterization of selectivity was retained, although additional parameters
+were required to estimate an additional year of deviations. The selectivity
+of the acoustic survey is assumed to be time invariant. Selectivity curves
+were modeled as non-parametric functions estimating age-specific values for
+each age beginning at age two for the index of age-2$+$ biomass and age one for
+the fishery until a maximum age of 6, after which all ages are assumed to have
+the same selectivity.
+
+Prior probability distributions are used for a select few parameters and fixed
+values are used for several parameters. For the base model, the instantaneous
+rate of time-invariant natural mortality ($M$) is estimated with a `r m_prior[1]` prior
+having a median of `r f(exp(as.numeric(m_prior[2])), 2)` and a standard
+deviation (in log-space) of 0.1 (see
+Section~\@ref(sec:data-natural-mortality)). The stock--recruitment relationship is
+a Beverton--Holt parameterization, with the log of the mean unexploited
+recruitment (log `r r_0`) freely estimated. This assessment uses the same
+beta-distributed prior for stock--recruitment steepness ($h$), based on
+@MyersBowenEtAl1999, that has been applied since 2011
+[@StewartForrestEtAl2011]. Year-specific recruitment deviations were estimated
+from `r main_recdev_early`--`r main_recdev_end`. The standard
+deviation, $\sigma_r$, of recruitment variability serves as a recruitment
+deviation constraint and is fixed at `r base_model$sigma_R_in` in this
+assessment. This value is based on consistency with the observed variability
+in the time series of recruitment deviation estimates and is the same as
+assumed in assessments from 2013 to `r last_assess_yr`
+(Table~\@ref(tab:main-assessment-changes-tab)). Catchabilities associated with the
+biomass index (*q*~b~), and with the relative age-1 index (*q*~1~) bridging
+model, were calculated
+analytically as per @LudwigWalters1981 for each sample of posterior parameters,
+resulting in a distribution of catchability for each.
+
+Statistical likelihood functions used for data fitting are typical of many
+stock assessments. The biomass index was fit via a lognormal likelihood
+function, using the observed (and extra 2009) sampling variability, estimated
+via kriging, as year-specific weightings. When included, the relative age-1 index was
+specified as having a Student's t-distribution for its error structure with the
+number of degrees of freedom equal to one less than the number of available
+data points, and its selectivity was set to one for age one and zero for all other ages.
+An additional constant and additive standard deviation on the
+log-scale component is included for the biomass index (and the relative
+age-1 index when included), which was freely estimated to accommodate unaccounted-for sources
+of process and observation error. A D-M likelihood was applied to
+age-composition data, with input sample sizes equal to the sum of the number of
+trips and hauls sampled across all fishing fleets or the number of trawl sets
+in the research surveys (see Section~\@ref(sec:data-age-comp-likelihood)).
+
+Model results and statistical inference were based on
+`r f(num_mcmc_samples)` MCMC samples (using the \texttt{adnuts} R package;
+@Monnahan2018) compiled across 8 chains, each with a 250 sample burn in
+period, to describe posterior distributions for model
+parameters and derived quantities. The number of samples used for bridging
+models, sensitivity models, and retrospective models was also
+`r f(num_mcmc_samples)`. Medians (50% quantiles) are reported together with
+the bounds of 95% credibility intervals calculated as the 2.5% quantile and
+the 97.5% quantile of posterior distributions from the MCMC samples, to
+give equal-tailed intervals. A full explanation of the NUTS algorithm and the
+\texttt{adnuts} package, including an analysis with the `r sp` stock can be found
+in @Monnahan2019.
+
+## Response to `r end_yr - 1` Scientific Review Group (SRG) review {#sec:assessment-response-review}
+
+The Scientific Review Group (SRG) meeting was held from February
+6--9th, 2024, at the Vancouver Island Conference Centre, Nanaimo, BC.
+
+The following are the 'SRG Recommendations and Conclusions for the Stock
+Assessment' from the 2024 SRG report and the associated responses from the
+JTC:
+
+1. **The SRG recommends continuing sensitivities for steepness, natural mortality
+, $\sigma_R$, excluding the age-1 index, alternative standard deviations for
+time-varying selectivity, and down-weighting fishery age-composition data.**
+
+*Response -- The incorporation of these sensitivities have been included per our
+standard workflow. Due to the removal of the age-1 index in the base model this year,
+the relevant sensitivity model was to include the age-1 index.*
+
+2. **The SRG recommends that the JTC explore alternative ways of estimating
+natural mortality ($M$) to update the current approach in the model, which
+is based on methods from more than a decade ago, and particularly consider
+options which have age-based $M$.**
+
+*Response -- `r sp` have several natural predators, including themselves,
+particularly on younger ages. Recently, [Trzcinski et al. (2024)](https://scholar.
+google.com/scholar_url?url=https://www.int-res.com/articles/meps_oa/m743p113.
+pdf&hl=en&sa=X&d=7035063540343333520&ei=dg3KZvPXCq-Ly9YPsfnLwQs&scisig=
+AFWwaeZ0XVe4uuKTGL-PCWaZhm-R&oi=scholaralrt&hist=_VMmiPwAAAAJ:9480142533121162666:
+AFWwaea2_PScUeInVLp6dXD_hYL6&html=&pos=0&folt=kw-top) identified `r sp` as the largest
+mean proportion of the diet of harbor seals. Additionally, the abundance of harbor
+seals is near carrying capacity in Canadian waters and has been since the late 1990s.
+Stock Synthesis allows for the inclusion of a predator index to estimate predation
+mortality in addition to baseline natural mortality. Data for predation mortality can be
+absolute numbers of dead fish due to the predator, an index of predator effort, and
+predation composition (age or length) data. A predation index based on estimated
+abundance of harbor seals could be added to the assessment model, but this has not
+been explored.*
+
+*A potential, better path forward is to use Dynamic Structural Equation
+Modeling (DSEM) to include indices for multiple predators and allow for two-way
+interactions between them and $M$. This capability is not, and will not be,
+available within Stock Synthesis but is possible using models written in
+Template Model Builder. A proof of concept has been implemented at the Alaska
+Fisheries Science Center and discussions are ongoing to implement this in the
+Fisheries Integrated Modeling System (FIMS). Thus, for the 2025 assessment a
+simple version of FIMS will be fit, where the simple version does not have the
+capacity to estimate ageing error or facilitate DSEMs. A more complex FIMS
+model will be presented to the SRG in 2026.*
+
+*In 2023 the JTC unsuccessfully estimated age-specific $M$ using Stock
+Synthesis, where it was seen as an unsuccessful exercise because estimates of
+$M$ increased with age due to a lack of data to inform the estimates.
+Second, the JTC explored the use of Lorenzen $M$ but this is not possible in
+Stock Synthesis without simultaneously estimating growth. Thus, the JTC sees
+using estimates of age-specific $M$ from the Climate- Enhanced, Age-based model
+with Temperature-specific Trophic Linkages and Energetics (CEATTLE) model as a
+way forward [@HolsmanEtAl2016]. Output from CEATTLE includes time series of
+estimates of baseline $M$ and estimates of $M$ at age for ages 0--1, 2, 3, 4, 5,
+and 6$^+$, where the $M$ at-age estimates are strictly natural mortality due to
+cannibalism. Two sensitivities were run for this assessment, one where
+baseline mortality at age was fixed and one where it was estimated. Results
+are presented in Section~\@ref(sec:assessment-sensitivity-analyses).*
+
+3. **The SRG encourages an analysis of catch and biomass distribution for Canada and
+US that examines latitudinal shifts in fishing over time, and tries to predict factors
+influencing these shifts.**
+
+*Response -- The JTC is collaborating with lead analyst Owen Liu (NWFSC) who is building
+species distribution models for Pacific Hake. This work will include incorporating environmental
+factors across the full transboundary range of Pacific Hake and will evaluate prediction skill
+for developing short-term forecasts. Results from this work are expected to be presented
+at the 2026 SRG meeting.*
+
+*The JTC is also investigating patterns of hake in the U.S. West Coast Bottom Trawl Survey
+in California waters where fishery data is limited. Data sharing agreements between
+countries are concurrently being developed so that the JTC can explore coast-wide fishing location
+information to better understand spatial fleet dynamics over time. The JTC will also be
+investigating spatial fishing effort, catch, and revenue over time using data summary
+tools (e.g., Pacific Fishing Effort Mapping Project) that are currently under development (but available for beta
+explorations).*
+
+4. **Pacific Hake dynamics are highly variable even without fishing mortality. The
+SRG applauds the efforts of the JTC to estimate dynamic reference points, and encourages
+efforts by the MSE Technical Team to include dynamic reference points in the MSE process.**
+
+*Response -- There has been limited time (thus far) to evaluate dynamic reference points
+using the MSE. The MSE technical team lost the dedicated MSE post-doc earlier this year,
+and the previous MSE coordinator at the NWFSC, Kristin Marshall, has moved to a new
+position. The JTC is attempting to balance their available research time in 2025 with
+requests such as this one with others (e.g., request 11). The JTC has included dynamic
+reference point figures and summary metrics in this stock assessment.*
+
+5. **The SRG recommends continued work to collect ovary samples, with a focus on
+fecundity and functional maturity, as well as continued annual maturity analysis.**
+
+*Response -- The estimates of maturity have been updated with recent data for
+this assessment. The selection of the best day of the year to predict maturity to remains
+an area for further discussion. The JTC has researched the internal assumptions of
+Stock Synthesis to help inform the best day of the year, but no investigation can make
+up for the lack of data during the winter spawning season. Additional work is being put
+forward to implement a research effort with Oregon State University and the University
+of Washington to investigate broader assumptions about `r sp` fecundity.*
+
+6. **On three occasions since 2009 (2011--12, 2016--17, 2023), stock assessments have
+predicted a rapid increase in biomass similar to that seen in the 2024 assessment, where
+this rapid increase was not visible in subsequent assessments. The SRG recommends
+investigating what factors might be causing these shifts in biomass estimates and
+projections.**
+
+*Response -- This comment seems to arise from Figure 63
+showing summaries of historical assessment estimates of spawning biomass. Uncertainty is not fully
+considered in this figure because it is only shown for the most recent assessment (i.e., only point
+estimates are shown for historical estimates). In particular, with median estimates presented:*
+
+- *from 2010--11 (presumably, not 2011--12) the subsequent assessments greatly reduce
+the absolute size of the stock, but still show an increase, likely due to the change in
+data included in 2012 (e.g., addition of 2011 survey biomass estimate).*
+
+- *from 2016--17 and 2023 the increases are actually larger in later
+assessments, not smaller. For example, 2016--17 increase from each assessment is:*
+  - *2017 base model: increase of 136,000 t*
+  - *2018 base model: increase of 194,000 t*
+  - *2024 base model: increase of 423,000 t;*
+
+- *the 2022--2023 (presumably) increase from each assessment is:*
+  - *2023 base model: increase of 486,000 t*
+  - *2024 base model: increase of 549,000 t*.
+
+ *An age-0 recruitment index could help, and the JTC plans to continue analyses
+ of age-0 Pacific Hake data presented at previous SRG meetings when time allows.*
+
+7. **The SRG encourages the JTC to consider methods to determine the maximum input
+sample size for the age compositions (e.g., Stewart and Hamel 2014, Hulson et al. 2023).**
+
+*Response -- The JTC agrees that determining input sample sizes is important for fishery
+and survey age compositions, which then provides the basis from which model-based re-weighting
+is done. The JTC has considered alternative methods and has determined additional research
+is needed to inform the calculation of input sample size for both fishery and survey ages.
+Fishery input sample sizes are calculated using a mixture of either the number of hauls or trips,
+when haul information is not available (e.g., shoreside), and further work is needed to
+determine the effective sample sizes at the haul and trip level and how to calculate a fleet-wide
+input sample size. Survey age compositions represent age structure associated with the acoustic
+survey as viewed through an estimated selectivity curve for the acoustic-trawl sampling net.
+Yet, selectivity for ages two and older with acoustics is theoretically at or near one.
+Additionally, if the survey moves to using a new net, changing selectivity, the effective sample
+size could vary requiring consideration on how to model the survey. The JTC did not
+investigate this issue for this year's assessment but supports the prioritization of this
+research for future assessments.*
+
+*Instead, the JTC has conducted a sensitivity analyses using input sample sizes following the
+Stewart and Hamel (2014) approach. The results of that sensitivity are included in
+Section~\@ref(sec:assessment-sensitivity-analyses).*
+
+8. **The SRG has previously noted that $\sigma_R$ is an influential parameter,
+and encourages further work by the JTC. The SRG supports continuing efforts to
+explore new recruitment parameterizations, including treating recruitment deviations
+as random effects, to better estimate $\sigma_R$.**
+
+*Response -- Future improvements in the stock assessment software used to assess Pacific Hake
+(e.g., ability to use random effects in the modeling framework) will allow for fruitful
+work on this.  The Fisheries Integrated Modeling System (FIMS) will replace Stock
+Synthesis in the coming years and will have random effects capabilities. The Pacific
+Hake assessment is a primary test case for FIMS, and further versions of the `r sp`
+assessment in FIMS are expected at forthcoming SRG meetings.*
+
+*Other frameworks (e.g., Woods Hole Assessment Model, or WHAM, and bespoke models) can
+already use random effects.  The JTC has completed initial explorations using WHAM
+and concluded random effect structures will be beneficial for modeling Pacific Hake.*
+
+*The JTC is also following pertinent research aimed at advancing related novel methods
+(e.g., dynamic structural equation models) for incorporating time-variation into
+stock assessment models (occurring at the Alaska Fisheries Science Center and University of Washington) and
+approaches for operational assessment use, including the estimation of $\sigma_R$.*
+
+9. **The SRG noted that the age-1 index did not include a value for 2001 because
+it was zero. Although this decision had negligible influence on the results because
+the estimate for 2000 recruitment was close to zero, the SRG noted that Stock Synthesis
+uses a lognormal likelihood which does not handle zero values. Given that future zero
+values are expected to have a bigger influence on the results in the short-term, the
+SRG recommends that the JTC explore likelihood forms that can fit to very low index
+values from the age-1 survey (e.g., robust likelihood). The SRG acknowledges that
+implementing new likelihoods will require changes to the Stock Synthesis platform.**
+
+*Response -- Researchers at the Alaska Fisheries Science Center have the same problem
+and have yet to find a solution. The JTC will not be investigating this in the near
+future nor will Stock Synthesis be altered to accommodate a future solution. However,
+the JTC will continue to monitor new research on this front as new assessment
+platforms are developed.*
+
+10. **The SRG recommends that the JMC review the decision tables and reconsider
+required harvest scenarios to reduce the number of similar and overlapping
+Scenarios.**
+
+*Response -- The JTC helped initiate discussions on decision table structure at
+a 6 December 2024 JMC meeting. Refinements of the number of catch scenarios were discussed
+and a JMC recommendation was put forth. The JTC followed those recommendations for the
+decision tables used in this assessment. This included a reduction in the total number
+of catch scenarios.*
+
+11. **The SRG noted that alternative structures of the assessment model have not been
+comprehensively examined since 2011 (e.g., multiple fleets and/or spatial model), and
+were informed that limited staffing and availability of the JTC inhibits these
+time-consuming analyses. The SRG recommends examining structural assumptions of the
+stock assessment as time allows. More complex structural assumptions may utilize the
+data more thoroughly, explain different trends across areas and/or fleets, and estimate
+stock status more accurately, but simpler models may be more appropriate for determination
+of the TAC. The MSE can be used to determine best performing assessment models for
+management.**
+
+*Response -- The JTC plans to evaluate the multitude of changes in the assessment process
+itself (e.g., data availability, assumptions, etc.) that would be needed to develop
+alternative model structures and share future plans at the 2025 SRG meeting. This includes
+the development of a research plan, including complimentary or standalone analyses, alternative
+model structures to explore, and simulation analyses to evaluate and compare alternative
+models (e.g., using one or more tools, such as MSE).*
+
+*The JTC explored the ability to disaggregate data across the entire historical time series.
+There are no issues with catch data, because those data are already disaggregated by fleet
+across the time series. Similarly, biological data are already disaggregated from 2007 to
+present. However, the ability to disaggregate pre-2007 biological is not immediately straightforward
+given new data pulls for these historical data are not typically conducted. Differences resulting from
+new data pulls need to be thoroughly investigated.*
+
+*Other steps the JTC plans to take in the future include evaluating alternative data and model
+assumptions that arise for validity given proposed new model structures; evaluating variance
+and bias trade-offs associated with new parameterizations (e.g., doubling the number of
+time-varying selectivity parameters when doubling the number of fleets); comparing
+alternative spatially-implicit assessment approaches (e.g., time-varying selectivity
+versus area-varying selectivity, or both); and developing states of nature scenarios
+to test model structure robustness in an MSE framework.*
+
+*Additionally, model complexity in the spatial domain needs to be addressed relative to
+other structural assumptions in the assessment model.  Other assumptions may have a higher
+propensity to be influential and be more sensitive to model results. These may include data
+weighting, improving estimates of natural mortality via predator time series, multiple fleets
+instead of a single aggregated fleet, and using fleet-specific weight-at-age data instead of
+aggregated weight-at-age (the JTC has looked at this before, but it hasn't been revisited in
+over a decade).*
+
+*Changes to the structure of the assessment model may not be the most immediate need for
+understanding changes in hake distribution. Some of the other (higher priority) SRG requests noted
+above will help with understanding fundamental mechanisms, which can help to formulate hypotheses
+to inform relevant model structures. These include spatial CPUE modeling, investigating hake
+distribution changes in bottom trawl surveys, correlating hake distribution changes with California
+Current Integrated Ecosystem Assessment results, and `r sp` distribution modeling research informed by environmental data.*
+
+## Modeling results {#sec:assessment-modeling-results}
+
+### Changes from `r last_assess_yr` {#sec:assessment-changes}
+
+A set of `bridging' models was constructed to evaluate the component-specific
+effects of the steps to change from the `r last_assess_yr` base model to
+the `r assess_yr` base model. The steps are as follows:
+
+- Update to the latest version of Stock Synthesis, version `r ss_version`, to
+follow current best practices;
+- Incrementally update catch, maturity-at-age/weight-at-age/fecundity-at-age, and fishery age-composition data from years previous to `r last_data_yr` (in that order);
+- Incrementally add `r last_data_yr` catch, maturity-at-age/weight-at-age/fecundity-at-age, and fishery age-composition data (in that order);
+- Turn off estimation of the `r last_data_yr - 1` and `r last_data_yr`
+  recruitment deviations (i.e., recruitment comes from the stock--recruitment
+  relationship) due to limited data to inform the estimation of
+  `r last_data_yr - 1` year class strength in the absence of survey
+  data. Similarly, no recruitment deviations were estimated during the forecast
+  period; and
+- Exclude the age-1 index.
+
+Stock Synthesis version `r ss_version` includes a number of changes since the
+version used by @JTC2024. However, none of the changes were specifically relevant
+to this assessment, and thus, the software update had no effect on assessment
+results (Figure~\@ref(fig:main-bridge-summary-1-fig)).
+
+The update of pre-`r last_data_yr` data occurs because databases are
+continually updated; this yielded minor adjustments to the data. For example,
+samples that were recently aged but not available for the `r last_assess_yr`
+assessment were included. Updates to pre-`r last_assess_yr` data were
+small enough that they had little impact on the model results.
+
+The addition of the `r last_data_yr` catch, modelled weight-at-age estimates,
+and fishery age compositions extends the model to the start of `r assess_yr`.
+Historical recruitment estimates and the stock trajectory were relatively
+unchanged through 2023 (except for changes in recruitment due to adding fishery age
+compositions), but female spawning biomass increased in the final
+year of the model due to the estimate of above-average recruitment in
+`r last_data_yr-1` (Figure~\@ref(fig:main-bridge-summary-2-fig)).
+With the lack of a survey in 2024, the `r last_data_yr-1` recruitment deviation
+is being informed solely by age-1 observations in the `r last_data_yr` fishery
+age-composition data.
+
+<!---
+Including the `r last_data_yr` fishery-independent biomass estimate led to a downward shift
+in the stock trajectory going back to 2017 and a similar shift in the fit to the survey
+(Figure~\@ref(fig:main-bridge-summary-1-fig)). The addition of the `r last_data_yr` survey
+biomass age compositions led to an estimated increase in stock biomass from 2023 to 2024 as a result of small shifts in expected recruitment, particularly for the 2020 and 2021 year
+classes. While the addition of the `r last_data_yr` relative age-1 index
+had a negligible effect on the stock trajectory, it did slightly adjust estimates of recent
+recruitment strength, in particular raising the 2022 recruitment somewhat.
+--->
+
+The penultimate step in this year's bridging led to turning off the estimation of the
+`r last_data_yr - 1` and `r last_data_yr` recruitment deviations (i.e.,
+recruitment without deviation from the stock--recruitment relationship,
+Figure~\@ref(fig:main-bridge-summary-2-fig)). Given the unique seasonal fishing
+conditions during the year, the 2023 estimate of recruitment was considered
+potentially suspect without the addition of survey information. This change led
+to decreased estimates of female spawning biomass at the start of `r assess_yr`
+relative to the previous model bridging steps. The next assessment will include
+data from the `r assess_yr` survey that will provide an age-2+ index with age
+compositions providing additional information on the `r last_data_yr-1`
+year-class strength. Given this survey information, the `r assess_yr+1` assessment will explore
+estimating recruitment deviations for `r last_data_yr-1` and beyond.
+
+The final bridging step was to exclude the age-1 index from the base model. Exluding
+the age-1 index considerably shifted the female spawning biomass trajectory
+downwards from 2015 onwards, with the largest changes coming since 2022
+(Figure~\@ref(fig:main-bridge-summary-2-fig)). Recruitment deviations in 2018 and 2022 were
+reduced considerably, while all others since 2019 were slightly reduced. The fit to the
+acoustic survey index in 2023 was improved, but the fit in 2021 was lessened.
+
+The decision to exclude the age-1 index occurred through discussions and
+supporting analyses at the `r assess_yr` Scientific
+Review Group meeting (see Appendix~\@ref(sec:app-srg-requests) for additional details).
+In summary, the performance of the age-1 index over recent years was called into question
+given that it was found to be strongly influencing recruitment estimates even for
+cohorts that had several years of data (going back to 2015). In addition, the age-1
+index does not have an externally calculated measure of uncertainty, including any
+measure of year to year differences in the quality of the index. Analyses
+conducted during the review week identified the 2019 and 2023 index points as having
+a particularly high impact on model results. The model considerably underfit these
+data points such that the age-1 index was suggesting larger recruitment in 2018 and 2022
+than all other data sources in the assessment. Further analyses into the performance of the
+age-1 index and the quantification of yearly uncertainty measures will provide the means to
+potentially include this index once again in future assessments.
+
+### Assessment model results {#sec:assessment-model-results}
+
+**Model Fit**
+
+Stationarity of the posterior distribution for model parameters was assessed
+via a suite of standard single-chain and multi-chain diagnostic tests
+via graphical summaries and interactive web applications
+([ShinySTAN](https://mc-stan.org/users/interfaces/shinystan);
+Appendix~\@ref(sec:app-mcmc-diagnostics)).
+All estimated parameters showed good mixing during sampling,
+no evidence for lack of convergence, and acceptable autocorrelation (results
+for some key parameters are shown in
+Figures~\@ref(fig:app-mcmc-diag-m-r0-fig)--\@ref(fig:app-mcmc-diag-dm-fig)).
+Correlation-corrected effective sample sizes were sufficient to summarize the
+posterior distributions and neither the Geweke nor the Heidelberger and Welch
+statistics for these parameters exceeded critical values more frequently than
+expected via random chance (Figure~\@ref(fig:app-mcmc-diag-hists-fig)). The
+Gelman-Rubin multi-chain diagnostic test, which compares within-chain variance
+to among-chain variance, further indicated that convergence was adequately
+achieved (examined via \texttt{ShinySTAN}). Correlations among key parameters were
+generally low, with the exception of $M$ and $\log R_0$
+(Figure~\@ref(fig:app-mcmc-pairs-fig)). Estimates of recruitment in 2014 and
+2016 were correlated with the derived quantity of catch from the default
+harvest rule in `r end_yr`, as to be expected given the dependencies among
+these quantities (Figure~\@ref(fig:app-mcmc-pairs-fig)). An examination of
+deviations in recruitment (log-scale differences between estimated and
+expected recruitment values) from recent years
+(Figures~\@ref(fig:app-mcmc-pairs-fig) and \@ref(fig:app-mcmc-pairs-recruit-devs-fig))
+indicates the highest correlation (`r f(base_model$mcmcvals$rec_cor_2014_2016, 2)`)
+was between the 2014 and 2016 recruitment deviations. This is the same as in
+the last assessment despite the fact that each cohort
+has been observed for an additional year.
+
+Regarding the D-M parameter $\theta_{\text{fish}}$,
+the estimate (median and 95% credible interval) for
+$\log \theta_{\text{fish}}$ was
+`r f(log_theta_fishery_median, 3)`
+(`r f(log_theta_fishery_lower, 3)` to `r f(log_theta_fishery_upper, 3)`),
+giving an effective sample size multiplier
+$\theta_{\text{fish}} / (1 + \theta_{\text{fish}})$ of
+`r f(dm_weight_fishery_median, 3)`
+(`r f(dm_weight_fishery_lower, 3)`--`r f(dm_weight_fishery_upper, 3)`).
+The related log of the survey age-composition parameter $\theta_{\text{surv}}$,
+i.e., $\log \theta_{\text{surv}}$, was
+`r f(log_theta_survey_median, 3)`
+(`r f(log_theta_survey_lower, 3)`--`r f(log_theta_survey_upper, 3)`),
+and the resulting effective sample size
+multiplier $\theta_{\text{surv}} / (1 + \theta_{\text{surv}})$ of
+`r f(dm_weight_survey_median, 3)`
+(`r f(dm_weight_survey_lower, 3)`--`r f(dm_weight_survey_upper, 3)`).
+
+The base model fit to the acoustic survey biomass index
+(Figure~\@ref(fig:main-survey-index-fit-mcmc-fig)) remains similar to the
+`r last_assess_yr` base model, except the fit to the 2023 survey biomass is
+slightly improved. The low `r last_survey_yr` survey
+biomass pulls down the last few years of estimated biomass, such that the fit
+to the 2019 data point is very good compared to the 2023 assessment when it
+was overestimated. The 2021 fit remains underestimated but within the range
+of the input standard deviation.
+The median of the posterior distribution for the analytically-derived
+catchability associated with the acoustic survey biomass index ($q_b$)
+was `r f(median(base_model$extra_mcmc$q_vector), 3)`
+(Figure~\@ref(fig:main-catchability-density-fig)).
+
+The 2023 biomass index is the third lowest in the series
+(Table~\@ref(tab:main-survey-history-tab)), and is below the model
+estimate, similar to the 2001 index that has always been below
+model estimates [@JTC2023]. While no direct cause for the
+2001 index anomaly is known, the survey did begin earlier that year than all other surveys
+between 1995 and 2009 (Table~\@ref(tab:main-survey-history-tab)), which may
+explain some portion of the anomaly, along with age
+structure. For 2023, the survey timing is not anomalous. The estimated biomass
+increase from 2023 to 2024 is driven by the addition of 2023 survey age-composition data
+(Figure~\@ref(fig:main-bridge-summary-1-fig)).
+
+The relatively stable estimated biomass from
+2013--2019 is unchanged from the previous assessment.
+The underestimation of the 2009 and 2023 biomass estimates are larger than
+the underestimation of any other year. The uncertainty of the 2009 value (both
+modeled and actual) is high because of the presence of large numbers of
+Humboldt Squid during the survey. Humboldt Squid have similar target
+strength to hake which could introduce bias in the biomass estimate for that
+year, which also likely influenced the population dynamics of `r sp` through
+predation in that year. Future data will reduce the large uncertainty in the
+2023 biomass estimate, which may reduce the underestimation.
+
+Differences between the median posterior density estimates from the fit to the
+survey index are likely due to slight differences in what the fishery composition data
+and survey composition data, when considered independently, would otherwise
+suggest as population trends. Additionally, the population has undergone
+recent high, but declining, catch levels and produced a couple of
+above-average cohorts that are now mature.
+
+<!--The base model fit to the relative index of age-1 fish highlights an overall general -->
+<!--confirmation of relative cohort strength -->
+<!--(Figure~\@ref(fig:main-age1-index-fit-mcmc-fig)). In particular, the 2008, 2014, -->
+<!--and 2018 -->
+<!--cohorts were estimated to be less than the index, while the 1994 and 2016 -->
+<!--cohorts were estimated to be larger than indicated by the index. The 2011 value -->
+<!--(the large 2010 cohort) was closely fit.  Age-1 fish in 2021 -->
+<!--(2020 cohort) and in 2023 (2022 cohort) were estimated below the index value. -->
+<!--The median of the posterior distribution for the analytically-derived catchability -->
+<!--associated with the age-1 index (*q*~1~) was -->
+<!--`r f(median(base_model$extra_mcmc$q_vector_age1), 3)` -->
+<!--(Figure~\@ref(fig:main-catchability-density-age1-fig)). -->
+
+Fits to the age-composition data continue to show close correspondence to the
+dominant and small cohorts observed in the data when the data give a
+consistent signal (Figures~\@ref(fig:main-age-comp-fits-fishery-fig) and
+\@ref(fig:main-age-comp-fits-survey-fig)). The fit to commercial age-composition
+data is particularly good as a result of the large sample sizes and time-varying
+selectivity parameterization. In the `r last_data_yr`
+fishery, `r top_coh(base_model, last_data_yr, 3, cap = FALSE)`. Age
+compositions from the `r survey_end_yr` acoustic survey suggest a similar age
+structure for older fish.
+
+The 2020 cohort is well fit by the acoustic survey
+(Figure~\@ref(fig:main-age-comp-fits-survey-fig)).
+Combined, the 2015--`r last_data_yr` fishery age-composition
+data and the 2017--`r survey_end_yr` acoustic survey age-composition data
+suggest that 2014 was a strong recruitment year, and the model was able to
+adequately fit these observations
+(Figure~\@ref(fig:main-age-comp-fits-survey-fig)).
+The 2016 cohort, which has been observed three times by the survey,
+still appears to be smaller than the 2014 cohort.
+
+The `r survey_end_yr` survey was the first
+to sample the `r survey_end_yr - 2` cohort, suggesting that it was a large
+contingent of the population (`r survey_a2_prop`% of the `r survey_end_yr` survey catch). The 2020 cohort,
+which has now been observed by the acoustic survey, is expected to be above average in size.
+Residual patterns to the fishery and survey age data do not show patterns
+that would indicate systematic bias in model predictions
+(Figure~\@ref(fig:main-age-comp-pearson-fig)).
+
+The median estimates for numbers, biomass, exploitation rate, and catch (in
+numbers and in biomass) for each age class in each year are given in
+Tables~\@ref(tab:main-est-numbers-at-age-tab)--
+\@ref(tab:main-est-catch-at-age-biomass-tab).
+For the major cohorts, the resulting estimated age-specific catch, natural
+mortality, and surviving biomasses are given in
+Table~\@ref(tab:main-cohort-effects-tab). For example, at age-4 the catch weight of the
+2016 cohort was slightly more than that of the 2014 cohort,
+and the resulting surviving biomass of the 2016 cohort was approximately one-third
+of the surviving biomass of the 2014 cohort.
+
+Posterior distributions for both steepness and natural mortality are
+influenced by priors (Figures~\@ref(fig:main-prior-posterior-fig)--
+\@ref(fig:main-prior-posterior-truncated-fig)). The posterior for steepness is
+only slightly updated by the data, as expected given the low level of
+information available to inform steepness as found in previous hake
+assessments. The posterior of natural mortality, on the other hand, is shifted
+to the right of the prior distribution and the prior may be constraining the
+posterior distribution from shifting further. Broadening the prior
+distribution by increasing the prior standard deviation for the natural
+mortality parameter is examined in sensitivity runs (see
+Section~\@ref(sec:assessment-sensitivity-analyses)). Other parameters showed
+updating from diffuse priors to posterior distributions, including
+$\log \theta_{\text{fish}}$ and  $\log \theta_{\text{surv}}$ (as outlined in
+Section~\@ref(sec:data-age-comp-likelihood)).
+
+The `r assess_yr` base model specified the same level of variation (standard
+deviation of $\Phi =$ `r sel_phi_val`) associated with time-varying fishery
+selectivity as the `r last_assess_yr` base model, effectively allowing the
+model flexibility (i.e., a lower penalty on the overall likelihood) to fit to
+data that suggests high variability among years for each age. This level of
+variation led to results that remained consistent with the `r survey_end_yr`
+acoustic survey age-composition data (but not the biomass index) and gave reasonable fits to the fishery
+age-composition data, given that there is considerable uncertainty associated
+with spatial changes in fish availability (due to movement) and recent
+variability in oceanographic conditions. Estimated selectivity deviations for
+age-3 and age-4 fish are larger from 2010 to 2012 than in subsequent years
+until 2020 when the deviation for age-4 was large again
+(Figures~\@ref(fig:main-tv-selex-fig) and
+\@ref(fig:main-tv-selex-uncertainty-fig)). The median selectivity peaks at
+age-4 in 2010, 2012 and 2020 and at age-3 in 2011 suggesting targeting (or
+generally higher availability) of the younger cohorts in those years. This
+pattern is consistent with the 2008 cohort appearing strong in the fishery
+age compositions initially, but decreasing in prominence from 2013 onward (Figure~\@ref(fig:main-age-comp-fits-fishery-fig)). Fishery selectivity on
+age-2 fish was at its highest in 2016. Fishery selectivity for
+`r last_data_yr` was higher than average for age-1 fish
+followed by a relatively flat pattern from age-2 to age-5 before increasing
+at older ages (Figure~\@ref(fig:main-tv-selex-uncertainty-fig)).
+Even though the survey selectivity is time invariant, the posterior shows a
+broad
+band of uncertainty between ages 2 and 5
+(Figure~\@ref(fig:main-tv-selex-posteriors-fig)). The decline in survey
+selectivity between ages 3 and 4 may be an artifact of the interaction between
+large cohorts and the biennial timing of recent surveys, with the 2010, 2014,
+2016, and 2020 cohorts occurring in the survey at ages 3 and/or 5 but not age 4.
+Fishery selectivity is likewise very uncertain
+(Figures~\@ref(fig:main-tv-selex-uncertainty-fig) and
+\@ref(fig:main-tv-selex-posteriors-fig)), but in spite of this uncertainty,
+changes in year-to-year patterns in the estimates are still evident,
+particularly for age-2, age-3, and age-4 fish, though these patterns might
+also reflect time-varying mortality processes.
+
+**Stock biomass**
+
+The base stock assessment model indicates that, since the 1960s, `r sp` female
+spawning biomass has ranged from well below to above unfished equilibrium
+(Figures~\@ref(fig:main-biomass-fig) and
+\@ref(fig:main-relative-biomass-fig) and
+Tables~\@ref(tab:main-median-posterior-tab) and
+\@ref(tab:main-ci-posterior-tab)). The model estimates that it was below the
+unfished equilibrium in the 1960s, at the start of the assessment period, due
+to lower than average recruitment. The stock is estimated to have increased
+rapidly and was above unfished equilibrium in the mid-1970s and mid-1980s
+(after two large recruitments in the early 1980s). It then declined steadily
+to a low in 1999. This was followed by a brief increase to a peak in 2003 as
+the very large 1999 year class matured. The 1999 year class largely supported
+the fishery for several years due to relatively small recruitments between
+2000 and 2007. With the aging 1999 year class, median female spawning biomass
+declined throughout the late 2000s, reaching a time-series low of
+`r median_bio_min` million~t in `r median_bio_min_yr`. The assessment model
+estimates that median female spawning biomass then peaked again in
+2014 due to a very large 2010 year class and an above-average 2008 year
+class. The subsequent decline from 2014 to 2016 is primarily from the 2010
+year class surpassing the age at which gains in weight from growth are greater
+than the loss in weight from mortality (growth-mortality transition). The
+2014 year class is estimated to be large, though not as large as the 1999
+and 2010 year classes, resulting in increasing biomass through 2018. The
+estimated biomass declined
+from 2018 to 2021 due to the 2014 and 2016 year classes moving through the
+growth-mortality transition during a period of high catches. The increase in
+female spawning biomass from 2022 through 2025 is due to the above-average 2020 and
+2021 cohorts entering maturity and the recent declining trend in catch.
+
+The median estimate of the `r end_yr` relative spawning biomass (spawning
+biomass at the start of `r end_yr` divided by that at unfished equilibrium,
+`r b_0`) is `r curr_depl_median`%. However, the uncertainty is large, with a
+95% posterior credibility interval from `r curr_depl_lower`% to
+`r curr_depl_upper`% (Tables~\@ref(tab:main-median-posterior-tab) and
+\@ref(tab:main-ci-posterior-tab)), partly due to remaining unknowns about the size of the
+potentially large 2021 cohort because the acoustic survey has only provided one year of
+information about it during the 2023 survey. Even when used, the biennial age-1 index does not provide
+additional information for odd year cohorts like this one.
+<!-- for non-survey years: age-1 information, which is more uncertain than the -->
+<!-- 2+ estimate. -->
+
+The median estimate of the `r end_yr` female spawning biomass is
+`r curr_bio_median` million~t (with a 95% posterior credibility interval from
+`r curr_bio_lower` to `r curr_bio_upper` million~t). The current estimate of
+the `r end_yr - 1` female spawning biomass is `r prev_bio_median`
+(`r prev_bio_lower`--`r prev_bio_upper`) million~t, giving a narrower range of
+uncertainty compared to the estimate from the `r end_yr - 1` assessment of `r prev_bio_median_last_assess`
+(`r prev_bio_lower_last_assess`--`r prev_bio_upper_last_assess`) million~t. The current
+median is reduced from last year, partly due to the influence of the age-2$+$ biomass index
+pulling down the estimated biomass for recent years, the reduction in the estimate of
+the 2022 year class with updated data, the removal of the age-1 index, and the setting of the 2023 year class using only
+the stock-recruitment relationship (i.e., no estimated recruitment deviate; Figure~\@ref(fig:main-bridge-summary-1-fig)).
+
+**Recruitment**
+
+The new data for this assessment do not significantly change the general pattern of
+recruitment estimated in recent assessments. However, estimates of absolute
+recruitment for the most recent years can change with new data and updated
+assumptions about recent recruitments.  In particular, the `r last_data_yr - 1` and `r last_data_yr` year classes were set based solely on the stock--recruitment relationship for this assessment, such that
+no recruitment deviations were estimated for these years (as well as none for forecast years).
+The only information on the size of the 2023 cohort
+(age-1 fish in `r last_data_yr`) in this assessment comes from the age composition of fishery catches.
+The catch of age-1 fish was particularly high in `r last_data_yr`, potentially due to the unique
+seasonal fishing conditions during the year (see Appendix~\@ref(sec:app-us-fishery-report)) and the relative
+loss of older age classes in the population. Thus, this data point was considered
+suspect as a standalone observation (i.e., without the addition of survey information).
+By restricting `r last_data_yr - 1` recruitment to the stock--recruitment relationship, the assessment model
+was not allowed to predict a very high `r last_data_yr - 1` year class based solely on the age-1
+catch in the fishery. Another year of data, particularly for the age-2$+$ acoustic--trawl
+survey in `r assess_yr` will provide additional information on the size of the `r last_data_yr - 1` year class.
+
+The 2021 recruitment is estimated to be well above average
+(though highly uncertain), with the absolute size being similar to the
+2014 year class (current estimate is `r recruitment_med_in_2021`, with
+a 95% credible interval of `r f(base_model$mcmccalcs$rlower["2021"], 1)`--
+`r f(base_model$mcmccalcs$rupper["2021"], 1)`~billion fish). Last year's assessment
+also indicated a large 2021 year class, so the
+addition of `r last_assess_yr` data did not appreciably change this estimate.
+The 95% credible interval in the `r end_yr - 1` assessment was
+`r f(last_yr_base_model$mcmccalcs$rlower["2021"], 2)`--
+`r f(last_yr_base_model$mcmccalcs$rupper["2021"], 2)`~billion fish,
+reduced and narrowed in the current assessment to
+`r f(base_model$mcmccalcs$rlower["2021"], 1)`--
+`r f(base_model$mcmccalcs$rupper["2021"], 1)`~billion fish.
+The median has changed by
+`r f(((((recruitment_med_to_compare - prev_assess_recruitment_med)["2021"]) /
+(prev_assess_recruitment_med)["2021"]) * 100), 0)`%
+(`r f(((recruitment_med_to_compare - prev_assess_recruitment_med)["2021"]), 1)`
+~billion fish).
+The general notion remains that recent
+recruitment is highly uncertain, and estimates for recent years (based on
+limited data) can change with more data.
+
+The median estimate of 2020 recruitment continues to be estimated as above average,
+though has declined slightly compared to the median estimate from last year's assessment
+(`r f(base_model$mcmccalcs$rmed["2020"], 1)`~billion fish compared to
+`r f(last_yr_base_model$mcmccalcs$rmed["2020"], 1)`~billion fish, respectively).
+The addition of 2024 fishery data had little affect reducing the uncertainty associated
+with the size of this cohort (95% interval:
+`r f(base_model$mcmccalcs$rlower["2020"], 1)`--
+`r f(base_model$mcmccalcs$rupper["2020"], 1)`~billion fish compared to last year's
+model with `r f(last_yr_base_model$mcmccalcs$rlower["2020"], 1)`--
+`r f(last_yr_base_model$mcmccalcs$rupper["2020"], 1)`~billion fish).
+
+In general, `r sp` have low average recruitment (relative to the long-term average)
+with occasional large year classes
+(Figures~\@ref(fig:main-recruitment-fig) and
+\@ref(fig:main-recruitment-devs-fig),
+Tables~\@ref(tab:main-median-posterior-tab) and
+\@ref(tab:main-ci-posterior-tab)). Very large year classes in 1980, 1984,
+and 1999 supported much of the commercial catch from the 1980s to the
+mid-2000s. From 2000 to 2007, estimated recruitment was at some of the
+lowest values in the time series, but this was followed by an above average
+2008 year class and a very strong 2010 year class. Above average year classes
+have occurred since then in 2014, 2016 and 2021, which have been sustaining the
+fishery over the last decade (Figure~\@ref(fig:main-age-comp-fits-fishery-fig)).
+The current assessment estimates a strong 2014 year class
+(Figure~\@ref(fig:main-numbers-at-age-fig)) comprising
+`r top_coh(base_model, 2016, ret_cohort = 2014)`% of the 2016 catch,
+`r top_coh(base_model, 2017, ret_cohort = 2014)`% of the 2017 catch,
+`r top_coh(base_model, 2018, ret_cohort = 2014)`% of the 2018 catch,
+`r top_coh(base_model, 2019, ret_cohort = 2014)`% of the 2019 catch,
+`r top_coh(base_model, 2020, ret_cohort = 2014)`% of the 2020 catch,
+`r top_coh(base_model, 2021, ret_cohort = 2014)`% of the 2021 catch,
+`r top_coh(base_model, 2022, ret_cohort = 2014)`% of the 2022 catch,
+`r top_coh(base_model, 2023, ret_cohort = 2014)`% of the 2023 catch, and
+`r top_coh(base_model, 2024, ret_cohort = 2014)`% of the 2024 catch.
+The strong 2016 cohort comprises
+`r top_coh(base_model, 2018, ret_cohort = 2016)`% of the 2018 catch,
+`r top_coh(base_model, 2019, ret_cohort = 2016)`% of the 2019 catch,
+`r top_coh(base_model, 2020, ret_cohort = 2016)`% of the 2020 catch,
+`r top_coh(base_model, 2021, ret_cohort = 2016)`% of the 2021 catch,
+`r top_coh(base_model, 2022, ret_cohort = 2016)`% of the 2022 catch,
+`r top_coh(base_model, 2023, ret_cohort = 2016)`% of the 2023 catch, and
+`r top_coh(base_model, 2024, ret_cohort = 2016)`% of the 2024 catch.
+The strong 2021 cohort comprises
+`r top_coh(base_model, 2023, ret_cohort = 2021)`% of the 2023 catch, and
+`r top_coh(base_model, 2024, ret_cohort = 2021)`% of the 2024 catch.
+
+The large size of the 2014, 2016, and 2021 cohorts is informed by
+observations from several years of fishery data and the acoustic survey.
+For all other years from 2011 to 2022, the model currently estimates small year classes
+<!-- see: yrs_since_2010_recruitment_med_below_mean -->
+(median recruitment below the mean of all median
+recruitments), except for 2020 as previously mentioned. The 2022 cohort was observed
+in recent years by the fishery.  To date, this information
+suggests that it is well below average (Figure~\@ref(fig:main-recruitment-fig)).
+It will be observed as part of the age-2$+$
+survey index for the first time in 2025. There is no information in the data to estimate the
+sizes of the `r end_yr-1` and `r end_yr` year classes. Retrospective analyses
+of year class strength for young fish have shown the estimates of recent
+recruitment to be unreliable prior to at least model age-3 (observed at age-2
+the previous year)
+without a survey in the most recent year and age-2 with a
+survey.
+
+From Figure~\@ref(fig:main-recruitment-fig) it looks as though the 2014
+recruitment could be as large as the 2010 recruitment. However, the assessment
+model estimates a `r prob_percent_2014_rec_gt_2010_rec`% chance that this
+could be the case. The overlapping of the credible intervals in
+Figure~\@ref(fig:main-recruitment-fig) is because large MCMC estimates of 2010
+recruitment are associated with large estimates of 2014 recruitment
+(presumably with large estimates of `r r_0`). By scaling all recruitments by
+the 2010 recruitment, Figure~\@ref(fig:main-recruitment-scale-all-fig) provides
+an intuitive way to compare recruitment across years [see
+@JTC2022 for motivation and methods]. It shows that
+only the 1980 recruitment is probably larger than 2010 (median
+relative value $>1$), and the 1984
+recruitment has a small chance of being as large as 2010.
+Whereas Figure~\@ref(fig:main-recruitment-fig) suggests that 1967, 1973, 1977,
+1999, 2014, and 2021 could also possibly be larger than in 2010, giving an
+over-optimistic impression of how often we can expect cohorts the size of
+the 2010 cohort to occur. The 2021 cohort is still very uncertain but has a
+small chance of exceeding the 2010 cohort
+(Figure~\@ref(fig:main-recruitment-scale-all-fig)).
+Figure~\@ref(fig:main-recruitment-scale-all-fig) shows how the 2010 cohort is the largest in
+the last 30~years, and that such large cohorts are rarer than is inferred
+from Figure~\@ref(fig:main-recruitment-fig).
+
+The estimated recruitments with uncertainty for each year and the overall
+stock--recruitment relationship are provided in
+Figure~\@ref(fig:main-stock-recruitment-fig). Extremely large variability
+about the expectation and about the joint uncertainty of individual
+recruitment and female spawning biomass pairs are evident. High and low
+recruitments have been produced throughout the range of observed female
+spawning biomass (Figure~\@ref(fig:main-stock-recruitment-fig)). The
+standard deviation of the time series of median recruitment deviation
+estimates for the years 1970--`r last_data_yr - 1`, which are informed by
+the age compositions
+<!--and the age-1 index,-->
+is `r sd_med_recr_dev_estimates`.
+
+**Exploitation status**
+
+The median estimated relative fishing intensity on the stock is below
+1.0 `r median_intensity_above_1_text` (Figure~\@ref(fig:main-fishing-intensity-fig) and
+Tables~\@ref(tab:main-median-posterior-tab) and
+\@ref(tab:main-ci-posterior-tab)). It was closest to 1.0 in 1999 and 2008,
+but catch in 2008 did not exceed the catch limit that was specified,
+based on the best available science and harvest control rules in place at the
+time; however, catch did exceed the catch limit in 1999 (Table~\@ref(tab:main-landings-tac-tab)). Exploitation fraction (catch divided by biomass of fish of age-2 and
+above) has shown relatively similar patterns
+(Figure~\@ref(fig:main-exploitation-fraction-fig) and
+Tables~\@ref(tab:main-median-posterior-tab) and
+\@ref(tab:main-ci-posterior-tab)). Although displaying similar patterns, the exploitation fraction does not necessarily correspond to fishing intensity
+because fishing intensity more directly accounts for the age-structure of
+both the population and the catch. Median relative fishing intensity is
+estimated to have declined from `r median_intensity_2010`% in 2010 to
+`r median_intensity_2015`% in 2015, and then leveled off around 80% from
+2016 to 2019. It then declined to around 70% from 2020 to 2022 before declining further
+to `r median_intensity_2024`% in 2024. The
+median exploitation fraction has increased from a recent low of
+`r exploitation_med_2012` in 2012 to `r exploitation_med_2021` in 2021. It has since declined
+rapidly to `r exploitation_med_2024` in 2024.
+Although there is a considerable amount of imprecision around these
+recent estimates due to uncertainty in recruitment and spawning biomass,
+the 95% posterior credibility interval of relative fishing intensity was
+below 100% from 2013--2015 and again from 2020--2021 (Figure~\@ref(fig:main-fishing-intensity-fig)).
+
+**Management performance**
+
+Over the last decade (`r end_yr - 10`--`r end_yr - 1`), the mean coast-wide
+utilization rate (i.e., proportion of catch target removed) has been
+`r tot_last_10_yrs_attainment`% and catches have been below coast-wide
+targets (Table~\@ref(tab:main-landings-tac-tab)). From `r end_yr - 5` to
+`r end_yr - 1`, the mean utilization rates differed between the U.S.
+(`r us_last_5_yrs_attainment`%) and Canada (`r can_last_5_yrs_attainment`%). While
+Canada's rate was higher than the U.S.'s in 2020, it has dropped considerably
+over the past few years to historic lows.
+The utilization rate for the coast-wide fishery this year was the lowest of
+the previous decade (`r tot_2024_attainment`%) due, in part, to difficulties
+locating aggregations of fish during the Spring and throughout the year in northern
+areas. Prior to 2024, the previous low was in 2015 at `r tot_2015_attainment`%
+coast-wide attainment. Before 2015,
+the under-utilization in the U.S. was mostly a result of unrealized
+catch in the tribal apportionment, while reports from stakeholders in Canada
+suggested that `r sp` were less aggregated in Canada and availability had
+declined. In 2016, the utilization rate increased but remained below pre-2015
+levels, despite the total 2016 catch being one of the highest of the preceding
+years. This is in large part due to increasing catch targets as biomass
+continues to increase. While the total utilization rate between 2017--2021 was
+relatively steady,
+<!-- and close to the average over the last decade (`r tot_last_10_yrs_attainment`%) -->
+it decreased to
+`r tot_penult_yr_attainment`% in `r last_data_yr - 1` and to
+`r tot_last_yr_attainment`% in `r last_data_yr`. This is due to the utilization rate in
+Canada steadily declining since 2020 to the time-series low in 2024, and
+also a fall in the U.S. utilization rate to 40.7% in 2024.
+Country-specific quotas (or catch targets) in 2020 and 2021 were specified
+unilaterally, due to the lack of an agreement on coast-wide 2020 and 2021
+TACs. The usual `r us_allotment_percent`% and `r can_allotment_percent`%
+allocation of coast-wide TAC, as specified in the Joint U.S.-Canada
+Agreement for `r sp`, was once again implemented since 2022.
+Total landings last exceeded the coast-wide quota in 2002 when utilization
+was 112%.
+
+As noted above, the median relative fishing intensity was below 100% (i.e.
+median fishing intensity below `r fspr_40`)
+`r median_intensity_above_1_text`. The median relative spawning biomass
+was above 40% (the `r b_40` reference point) in all years except 2007--2009 and 2011
+(Table~\@ref(tab:main-median-posterior-tab) and
+Figure~\@ref(fig:main-relative-biomass-fig)).
+These are also shown on a phase plot of the joint history of relative
+spawning biomass and relative fishing intensity
+(Figure~\@ref(fig:main-phase-fig)). Relative spawning biomass increased from
+the lows in 2007--2011 with above average recruitment in 2008, 2010, 2014,
+2016, and 2021. Correspondingly, median relative fishing intensity has
+remained below 100%, and total catch has been declining since the
+time series high in 2017. While there is large uncertainty in the `r end_yr-1`
+estimates of relative fishing intensity and relative spawning biomass,
+the model estimates a `r joint_percent_prob_above_below`% joint probability
+of being both above the `r fspr_40` fishing intensity in `r end_yr - 1`
+and below the `r b_40` spawning biomass level at the start of
+`r end_yr`.
+
+## Model uncertainty {#sec:assessment-model-uncertainty}
+
+The base assessment model integrates over the substantial uncertainty
+associated with several important model parameters including: biomass
+index catchability (*q*~b) and
+observation errors, the
+magnitude of the stock (via the `r r_0` parameter for equilibrium recruitment),
+productivity of the stock (via the steepness parameter, *h*, of the
+stock--recruitment relationship), the rate of natural mortality (*M*), annual
+selectivity for key ages, recruitment deviations, and survey and fishery data
+weights (via the D-M parameters
+$\theta_{\text{fish}}$ and $\theta_{\text{surv}}$).
+
+The medians of the key parameters from the posterior distribution changed somewhat
+compared to those in last year's base model
+(Table~\@ref(tab:main-parameter-estimates-tab)). Parameter differences were largely due to
+the removal of the age-1 index this year, but also from other data and structural
+changes (see Section~\@ref(sec:assessment-changes)).
+For derived management quantities, the largest change was a reduction in the
+estimated relative spawning biomass at the start of 2024 from
+`r f(100*last_yr_base_model$mcmccalcs$dmed["2024"], 1)`% in last year's model to
+`r f(100*base_model$mcmccalcs$dmed["2024"], 1)`% this year as a result
+of removing the age-1 index and associated changes to recruitment estimates (e.g.,
+reduced estimate of the 2018 and 2022 year classes).
+
+The `r sp` stock displays a very high degree of recruitment variability,
+perhaps the largest of any west coast groundfish stock, resulting in large and
+rapid biomass changes. This volatility, coupled with a dynamic fishery that
+potentially targets strong cohorts (resulting in time-varying selectivity)
+will in most circumstances continue to result in highly uncertain
+estimates of current stock status and even less-certain projections of the
+stock trajectory. This is particularly true for female spawning biomass
+estimates in `r assess_yr` and throughout the current forecast period, because
+there is considerable uncertainty associated with the absolute size of the, now
+mostly mature, 2020 and 2021 year classes that propagates into forecasts. Although
+the 2023 acoustic survey helped to refine these estimates and reduce uncertainty,
+further observations of these year classes will improve estimates. The removal of
+recruitment deviation estimates from 2023 onward through the forecast period led to
+an underestimation of uncertainty during the forecast period.
+
+Uncertainty measures in the base model underestimate the total uncertainty in
+the current stock status and projections, because they do not account for
+alternative structural models for hake population dynamics and fishery
+processes (e.g., recruitment, selectivity, or spatial fleet or population
+structure), the effects of alternative data-weighting choices, survey
+catchability, and the scientific basis for prior probability distributions. To
+address structural uncertainties, the JTC investigated a range of alternative
+models, and we present the key sensitivity analyses along with other
+informative sensitivity analyses using full MCMC results
+(Section~\@ref(sec:assessment-sensitivity-analyses)).
+
+The JTC continues to be committed to advancing MSE analyses, by coordinating
+research with the `r sp` MSE Working Group and other scientists in the region
+engaged in similar research. Incorporating feedback from the
+Working Group and stakeholders will ensure that operating models will be able
+to provide insight into the important questions defined by interested parties.
+Specifically, the development of MSE tools will evaluate major sources of
+uncertainty relating to data, model structure and the harvest policy for this
+fishery, and will compare potential methods to address them. In the coming
+years, this will include a host of research evaluations (see
+Section~\@ref(sec:assessment-response-review) and
+Section~\@ref(sec:research)), including evaluating the utility of
+incorporating environmentally-driven age-0 recruitment indices into the stock
+assessment.
+
+## Reference points {#sec:assessment-reference-points}
+
+The term 'reference points' is used throughout this document to describe
+common conceptual summary metrics. The Agreement specifically identifies
+`r fspr_40` as the default harvest rate and `r b_40` as a point where the
+40:10 TAC adjustment is triggered (see the Glossary in
+Appendix~\@ref(sec:app-glossary)).
+
+We report estimates of the base reference points (e.g., `r fspr_40`, `r b_40`,
+`r b_msy`, and MSY) with posterior credibility intervals in
+Table~\@ref(tab:main-reference-points-tab). The median of the female spawning
+biomass at `r fspr_40` (namely the median of `r bspr_40`) and the median yield
+at `r fspr_40` have declined slightly from the estimates in the
+`r last_assess_yr` assessment (Table~\@ref(tab:main-parameter-estimates-tab)).
+
+As part of the DFO Sustainable Fisheries Framework, @DFO2009 defined a limit
+reference point as being a biomass below which serious harm is believed to be
+occurring to the stock, and an upper stock reference point above which the
+stock is considered to be healthy. These would equate to the Agreement
+reference points of `r b_10` and `r b_40` (the female spawning biomass being
+10% and 40%, respectively, of the unfished equilibrium female spawning
+biomass). The probabilities of the female spawning biomass at the start of
+`r assess_yr` being above each of these points are
+P(*B*~`r assess_yr`~ > `r b_10`) = `r probs_curr_b10`% and
+P(*B*~`r assess_yr`~ > `r b_40`) = `r probs_curr_b40`%
+such that the stock is estimated to be in the 'healthy zone' (above the upper
+stock reference point of `r b_40`). This probability is slightly lower than in
+last year's assessment, where the equivalent calculation was
+P(*B*~`r assess_yr - 1`~ > `r b_40`) = 98.1%. Note that a probability
+of '100%' (or '0%') is based on the MCMC results, and is not meant to imply
+that something definitely occurs (or definitely does not occur).
+
+With respect to DFO's provisional limit reference point of 0.4`r b_msy` and
+provisional upper stock reference point of 0.8`r b_msy`, the probabilities are
+P(*B*~`r assess_yr`~ > 0.4`r b_msy`) = `r f(pull(dfo_probs_curr[1, 2]), 1)`%
+and
+P(*B*~`r assess_yr`~ > 0.8`r b_msy`) = `r f(pull(dfo_probs_curr[1, 3]), 1)`%
+such that the stock is estimated to be in the provisional `healthy zone'.
+For completeness, we note that
+P(*B*~`r assess_yr`~ > `r b_msy`) = `r f(pull(dfo_probs_curr[1, 1]), 1)`%.
+
+Reference levels of stock status that are used by the U.S. Pacific Fisheries
+Management Council (PFMC) for `r sp` include `r b_40` and a Minimum Stock
+Size Threshold (MSST) of `r b_25`. For `r min(forecast_yrs)`, the
+estimated posterior median relative spawning biomass is
+`r curr_depl_median`%, such that the female spawning biomass is well above
+`r b_40` and `r b_25`. The probability that female spawning biomass
+at the beginning of `r assess_yr` is above `r b_40` is
+P(*B*~`r assess_yr`~ > `r b_40`) = `r probs_curr_b40`% (as noted
+above), and of being above `r b_25` is
+P(*B*~`r assess_yr`~ > `r b_25`) = `r probs_curr_b25`%.
+
+## Model projections {#sec:assessment-model-projections}
+
+The catch limit for `r min(forecast_yrs)` based on the default `r f_40_40_10`
+harvest policy has a median of `r ct_limit_quantiles["median"]`~t and a wide
+range of uncertainty (Figure~\@ref(fig:main-projected-catch-density-fig)),
+with the 95% credibility interval being `r ct_limit_quantiles["lower"]`--
+`r ct_limit_quantiles["upper"]`~t.
+
+Decision tables give projected population status (relative spawning biomass
+and relative fishing intensity) under different catch alternatives for the base
+model
+(Tables~\@ref(tab:main-decisions-biomass-tab) and
+\@ref(tab:main-decisions-spr-tab)). The tables are organized such that the
+projected outcome for each potential catch level and year (each row) can be
+evaluated across the quantiles (columns) of the posterior distribution.
+Table~\@ref(tab:main-decisions-biomass-tab) shows
+projected relative spawning biomass outcomes, and
+Table~\@ref(tab:main-decisions-spr-tab) shows projected fishing intensity
+outcomes relative to `r fspr_40`.
+
+Population dynamics and governing parameters assumed during the forecast
+period include posterior recruitments taken from the stock-recruitment curve;
+selectivity, weight-at-age and maturity (and thus fecundity) averaged over the
+five most recent years (`r assess_yr - 5`--`r assess_yr - 1`); and all
+estimated parameters constant (at their estimates for each particular MCMC
+sample).
+
+Relative fishing intensity exceeding 1 (or 100% when shown as a percentage)
+indicates fishing in excess of the `r fspr_40` default harvest rate limit.
+It is possible for values in forecast years to exceed this slightly because
+the `r fspr_40` default harvest-rate catch limit is calculated using
+baseline selectivity-at-age (`r start_yr`--1990; prior to time-varying
+deviations), whereas the forecasted catches under the default harvest-rate
+are removed using selectivity averaged over the last five years. Recent
+changes in selectivity could be reflected in the projection of slight over-
+or under-fishing relative to the desired `r fspr_40` rate.
+
+Key management metrics are presented for
+`r forecast_yrs[2]` and `r forecast_yrs[3]` projections
+(Tables~\@ref(tab:main-risk-year-1-tab)--
+\@ref(tab:main-risk-year-2-tab) and
+Figures~\@ref(fig:main-risk-year-1-fig)--
+\@ref(fig:main-risk-year-2-fig)). These metrics summarize
+the probability of various outcomes from the base model given each potential
+management action. Although not linear, probabilities can be interpolated
+from this table for intermediate catch values in `r assess_yr`
+(Table~\@ref(tab:main-risk-year-1-tab) and
+Figure~\@ref(fig:main-risk-year-1-fig)). However,
+interpolation may not be applicable for all catches in `r assess_yr + 1`
+because they are conditional on catch levels from the
+previous year or years.
+
+Figure~\@ref(fig:main-depletion-comparison-fig) shows the projected
+relative spawning biomass trajectory through
+`r forecast_yrs[length(forecast_yrs)]` for several of these management
+actions. With zero catch for the next two years, the biomass has a
+`r zero_catch_prob_bio_down_1`% probability of decreasing from
+`r forecast_yrs[1]` to `r forecast_yrs[2]`
+(Table~\@ref(tab:main-risk-year-1-tab) and
+Figure~\@ref(fig:main-risk-year-1-fig)) and a
+`r zero_catch_prob_bio_down_2`% probability of decreasing from
+`r forecast_yrs[2]` to `r forecast_yrs[3]`
+(Table~\@ref(tab:main-risk-year-2-tab) and
+Figure~\@ref(fig:main-risk-year-2-fig)).
+<!--and a `r zero_catch_prob_bio_down_3`% probability of decreasing from-->
+<!--`r forecast_yrs[3]` to `r forecast_yrs[4]`-->
+<!--(Table~\@ref(tab:main-risk-year-3-tab)-->
+<!--and Figure~\@ref(fig:main-risk-year-3-fig)).-->
+
+The probability of the female spawning biomass decreasing from `r end_yr` to
+`r end_yr + 1` is greater or equal to `r prob_all_catch_greater`% for all catch
+levels examined other than zero (Table~\@ref(tab:main-risk-year-1-tab) and
+Figure~\@ref(fig:main-risk-year-1-fig)). For all explored catches, the
+maximum probability of the female spawning biomass dropping below `r b_10`
+at the start of `r end_yr + 1` is
+`r prob_max_below_10_yr1`% and at the start of `r end_yr + 2` is
+`r prob_max_below_10_yr2`%
+<!--and at the start of `r end_yr + 3` is-->
+<!--`r prob_max_below_10_yr3`%-->
+(Tables~\@ref(tab:main-risk-year-1-tab)--\@ref(tab:main-risk-year-2-tab) and
+Figures~\@ref(fig:main-risk-year-1-fig)--
+\@ref(fig:main-risk-year-2-fig)). The similar maximum
+probability of dropping below `r b_40` at the start of `r end_yr + 1` is
+`r prob_max_below_40_yr1`% and at the start of `r end_yr + 2` is
+`r prob_max_below_40_yr2`%.
+<!--and at the start of `r end_yr + 3`-->
+<!--is `r prob_max_below_40_yr3`%.-->
+The model estimates that in two years
+time the stock will be at `r b_40` with a catch
+of 250,000~t in 2026 and 2027, given the current assumption of median recruitment
+from 2023 onward.
+
+It should be noted that forecasted biomass is not only influenced by catch
+levels. As the above average 2014 and 2016 cohorts continue to age, total
+biomass of these cohorts even without fishing mortality will continue to
+decrease (Tables~\@ref(tab:main-est-biomass-at-age-tab) and
+\@ref(tab:main-cohort-effects-tab)) as losses from mortality outweigh
+increases from growth. The above-average 2021 cohort entered this
+growth-mortality transition period around 2024
+(Tables~\@ref(tab:main-est-biomass-at-age-tab) and
+\@ref(tab:main-cohort-effects-tab)).
+The 2021 cohort will play a large role in determining female spawning
+biomass during the forecast years presented here. Similarly, the application
+of no recruitment deviations from 2023 onwards also plays a major role in forecasted
+female spawning biomass levels. The below-average 2015,
+2018, and 2019 cohorts will contribute much less to forecasted spawning
+biomass than the larger cohorts. 
+
+The age composition (in numbers) of the catch in `r forecast_yrs[1]` is
+projected to be (using MCMC medians)
+`r fore_catch_prop[["4"]]`% age-4 fish from the `r forecast_yrs[1] - 4` cohort,
+`r fore_catch_prop[["5"]]`% age-5 fish from the `r forecast_yrs[1] - 5` cohort,
+`r fore_catch_prop[["9"]]`% age-9 fish from the `r forecast_yrs[1] - 9` cohort,
+and
+`r fore_catch_prop[["11"]]`% age-11 fish from the `r forecast_yrs[1] - 11` cohort
+(Figure~\@ref(fig:main-age-comp-forecast-fig)). However, those estimates
+are highly uncertain with the 95% credibility interval for the age-4 fraction
+spanning `r f(fore_catch_prop_age4_lower)`%--
+`r f(fore_catch_prop_age4_upper)`%.
+
+Due to the higher average weight of older fish compared to younger fish, the
+median expected proportion of the `r forecast_yrs[1]` catch by weight
+is `r f(fore_catch_prop_wt_age4_median)`% for the age-4
+`r forecast_yrs[1] - 4` cohort (compared to `r fore_catch_prop[["4"]]`% by
+numbers) and `r f(fore_catch_prop_wt_age11_median)`%
+for the large age-11 `r forecast_yrs[1] - 11` cohort
+(compared to `r fore_catch_prop[["11"]]`% by numbers;
+Figure~\@ref(fig:main-age-comp-forecast-fig)).
+
+With respect to the DFO reference points, with the largest
+`r assess_yr` catch of `r largest_next_catch`~t given in
+Table~\@ref(tab:main-risk-year-1-tab), at the start of `r assess_yr + 1` the
+stock is expected to be above the critical zone with a probability of
+P(*B*~`r assess_yr + 1`~ > `r b_10`) = `r prob_next_over_b10`%
+and in the healthy zone with a probability of
+P(*B*~`r assess_yr + 1`~ > `r b_40`) = `r prob_next_over_b40`%.
+With respect to the DFO provisional reference points (based on `r b_msy`), the
+stock is expected to be above the provisional critical zone with a probability
+of
+P(*B*~`r assess_yr + 1`~ > 0.4`r b_msy`) = `r dfo_prob_next_over_40bmsy`%,
+in the healthy zone with a probability of
+P(*B*~`r assess_yr + 1`~ > 0.8`r b_msy`) = `r dfo_prob_next_over_80bmsy`%,
+and above `r b_msy` with a probability of
+P(*B*~`r assess_yr + 1`~ > `r b_msy`) = `r dfo_prob_next_over_bmsy`% for
+this catch.
+
+With respect to PFMC stock size reference points, a level of `r assess_yr`
+catch consistent with the Agreement default harvest control rule
+(`r next_treaty_catch`~t) has a `r pfmc_prob_next_yr_below_b40`% estimated
+probability of resulting in the biomass going below `r b_40` at the start of
+`r assess_yr + 1` (and `r pfmc_prob_next_yr_below_b25`% probability of going
+below `r b_25`; Table~\@ref(tab:main-risk-year-1-tab)).
+
+## Sensitivity analyses {#sec:assessment-sensitivity-analyses}
+
+Sensitivity analyses were conducted to investigate influence of data inputs
+and structural uncertainty of the base model by investigating how changes to
+the model affected the estimated values and derived quantities. All
+sensitivity analyses compared MCMC posteriors with the same number of posterior
+samples as the base model. Several key underlying structural model assumptions
+were identified that have persisted across many previous hake assessments, and
+thus warrant revisiting annually as a set of reference sensitivity examinations
+to new base models. Many additional sensitivity runs were conducted while
+developing and testing the `r assess_yr` base model. Here we focus on the main
+sensitivities, relative to the base model, which are as follows:
+
+1. Consideration of higher standard deviations on the prior distribution for
+natural mortality;
+
+1. Consideration of an alternative prior distribution (mean and standard
+deviation) for natural mortality based on the @Hamel2015 and @HamelCope2022
+life-history meta-analytic method;
+
+1. Consideration of an alternative prior distribution and a fixed value for
+steepness, to change the resiliency of the stock;
+
+1. Consideration of higher and lower variation about the stock--recruitment
+relationship ($\sigma_r$);
+
+1. Addition of the relative age-1 index as a data source;
+
+1. Down weighting the fishery age-composition data;
+
+1. Consideration of alternative standard deviations for time-varying
+selectivity;
+
+1. Addition of a relative index of abundance based on environmental-DNA;
+
+1. Using the middle of the year to predict maturity-at-age data; and
+
+1. Assuming $M$ is specific to ages 0--1, 2, 3, 4, 5, and 6$^+$.
+
+Most of the sensitivities resulted in a similar trajectory of the population
+dynamics as the base model
+(Tables~\@ref(tab:main-parameter-estimates-sens-1-tab)--
+\@ref(tab:main-parameter-estimates-sens-3-tab) and
+Figures~\@ref(fig:main-biomass-base-alternative-1-fig)--
+\@ref(fig:main-mortality-sens-fig)), with the largest deviations occurring
+in the sensitivities related to natural mortality.
+All sensitivity models matched the base model in terms of trends from the start
+of the model to approximately 2020, e.g., increases in female spawning biomass
+in the early- to mid-2010s driven by the 2010, 2014, and 2016 cohorts, followed
+by a period of general decline during a period of high catches. Some of the
+models differed from the base model in their trajectories of recent trends and
+unfished levels.
+All sensitivity models, except when age-specific natural mortality was fixed,
+indicate that `r assess_yr` median estimate of relative spawning biomass is
+above `r b_40`. As previously mentioned, the overall scale of the population was
+impacted by various alternative assumptions, and the uncertainty about size of
+the recent cohorts was more variable across sensitivity analyses than earlier
+cohorts that have been observed for more years.
+
+The standard deviation of the prior distribution on natural mortality was
+increased from the base model value of 0.1 to 0.2, 0.3, and 0.31. Note that
+the median of the prior was also changed for the latter sensitivity due to the
+use of the @HamelCope2022 prior. Estimates of natural mortality were higher than
+the base model for each of these changes to the prior. The medians of the MCMC
+osteriors for natural mortality increased from `r f(nat_m[2], 3)` to
+`r f_nat_m_02[2]`, `r f_nat_m_03[2]`, and `r f_nat_m_hamel[2]`, respectively.
+The 95% credibility intervals also increased, with the largest differences
+in the upper end rather than the lower end of the intervals. The credible
+interval for the base model was
+`r f(nat_m[1], 3)`--`r f(nat_m[3], 3)`, and for the sensitivity runs were
+`r f_nat_m_02[1]`--`r f_nat_m_02[3]`,
+`r f_nat_m_03[1]`--`r f_nat_m_03[3]` , and
+`r f_nat_m_hamel[1]`--`r f_nat_m_hamel[3]`,
+respectively, (Table~\@ref(tab:main-parameter-estimates-sens-1-tab)).
+In addition to increased estimates of natural mortality, results from these
+sensitivity models also showed increases in the overall scale of the
+population, the estimated stock status relative to `r b_0` prior to 1990, and
+the uncertainty in female spawning biomass on both absolute and relative scales.
+They also led to roughly a halving of the estimated relative fishing intensity
+in `r end_yr - 1` and roughly a doubling of equilibrium yield at `r bspr_40`
+(Table~\@ref(tab:main-parameter-estimates-sens-1-tab) and
+Figures~\@ref(fig:main-biomass-base-alternative-1-fig) and
+\@ref(fig:main-status-base-alternative-1-fig)).
+
+The mean of the prior distribution on steepness was decreased from 0.777
+to 0.5 and, separately, steepness was fixed at 1.0. The decrease in
+the mean of the prior resulted in a decrease in the median estimate of steepness
+from `r f(steep[2], 3)` (`r f(steep[1], 3)`--`r f(steep[3], 3)`) to
+`r f_steep_prior_05[2]` (`r f_steep_prior_05[1]`--`r f_steep_prior_05[3]`;
+Table~\@ref(tab:main-parameter-estimates-sens-1-tab)). However, neither
+sensitivity analysis had a large impact on the overall model results
+(Figures~\@ref(fig:main-biomass-base-alternative-1-fig) and
+\@ref(fig:main-status-base-alternative-1-fig)), because `r sp` female spawning
+biomass has remained above levels where changes in steepness would appreciably
+influence the stock--recruitment relationship
+(Figure~\@ref(fig:main-stock-recruitment-fig)).
+
+The fixed value for $\sigma_r$ was changed from `r sigma_r` to
+alternative low (`r sigma_r_sens[1]`) and high (`r sigma_r_sens[2]`) states.
+Both sensitivities led to results that were similar to the base model and higher
+calculated standard deviation of recruitment deviations (from the main period)
+than the fixed value used in the analysis, i.e., when $\sigma_r$ was
+`r sigma_r_sens[1]` the calculated value was `r sigma_r_lo_main` and when
+$\sigma_r$ was `r sigma_r_sens[2]` the calculated value was `r sigma_r_hi_main`.
+For the base model, the calculated standard deviation of the recruitment
+deviations was intermediate with a median of `r sigma_r_this_year_main`. These
+calculated standard deviations should match the input if the vectors of
+deviations were from the `population' of values rather than just a sample.
+A systematic bias larger than the input value indicates that
+the standard deviation of recruitment deviations is accounting for more
+variability than just variability in recruitment. The high $\sigma_r$ model led
+to a larger difference between the female spawning biomass at unfished
+equilibrium and the female spawning biomass at the initial year of the model
+than the low $\sigma_r$ model
+(Figure~\@ref(fig:main-biomass-base-alternative-1-fig)). Similar to previous
+assessments, estimates of unfished equilibrium recruitment are sensitive to
+$\sigma_r$, whereas absolute estimates of female spawning biomass are relatively
+insensitive. The method that
+@MethotTaylor2011 proposed to tune $\sigma_r$ was developed in the context of
+maximum likelihood estimation and not Bayesian inference, where the latter
+potentially allows for estimating $\sigma_r$ using random effects, and thus,
+this proposed method is not used here to tune the fixed input value.
+
+The sensitivity of the base model to the addition of the relative age-1 index
+provides a method to evaluate how the information about juvenile fish is
+propagated through the model. Estimates of female spawning biomass throughout
+most of the time series are similar between models with and without the relative
+age-1 index, which starts in 1995, but start to noticeably diverge in 2017
+(Table~\@ref(tab:main-parameter-estimates-sens-1-tab),
+Figures~\@ref(fig:main-biomass-base-alternative-2-fig) and
+\@ref(fig:main-status-base-alternative-2-fig)). The `r end_yr` estimates of
+relative spawning biomass are `r f(100 * bratio_curr[2], 1)`% for the base model
+(95% credible interval of `r f(100 * bratio_curr[1], 1)`--
+`r f(100 * bratio_curr[3], 1)`%) and `r f(100 * bratio_age1[2], 1)`%
+for the model where the relative age-1 index is included (95% credible interval of
+`r f(100 * bratio_age1[1], 1)`--`r f(100 * bratio_age1[3], 1)`%). This
+difference is due to the relative age-1 index providing additional information on
+recruitment for cohorts associated with recent age-1 indices (i.e., 2020 and
+2022 cohorts detected in the 2021 and 2023 age-1 indices). In particular, the
+sensitivity with the relative age-1 index indicates slightly larger 2020 and
+2021 year classes than the base model without the relative age-1 index
+(Figure~\@ref(fig:main-recruitment-base-alternative-2-fig)). Similarly,
+recruitment in 2022 is estimated to be somewhat larger for the model with the
+relative age-1 index than the base model, though both median recruitment
+deviations are negative.
+Adding the relative age-1 index led to changes in fit to the
+age-2$+$ survey biomass index. Both models underestimate the 2021 age-2$+$ index
+(the base model more so), and both overestimate the 2023 age-2$+$ (the base model
+less so; Figure~\@ref(fig:main-index-base-alternative-2-fig)). The
+inclusion of the age-1 index leads to higher estimates of female spawning
+biomass in recent years compared to the base model.
+
+The base model includes a Dirichlet-multinomial likelihood component that
+includes two estimated parameters to automatically weight the fishery and
+survey age compositions. The base model was compared to a model that
+down weighted the fishery age compositions relative to the survey age
+compositions. This down weighting was based on the McAllister--Ianelli method,
+which requires manual iterative adjustments to the input sample sizes using a
+derived multiplier. The McAllister--Ianelli method, which was used in
+assessments prior to 2018 (Table~\@ref(tab:main-assessment-changes-tab)),
+attempts to make the arithmetic mean of the input sample size approximately
+equal to the harmonic mean of the effective sample size. Here, this was
+accomplished with weighting factors of 0.14 and 0.46 (ratio of 0.30) for fishery and survey
+age compositions, respectively. These weighting factors are not specific to this
+year's base model because an iterative process is not possible when using
+Bayesian inference, rather they are values calculated from previous maximum
+likelihood estimates. The median estimate from the Dirichlet-multinomial
+method used in the base model was `r f(dm_weight_fishery_median, 3)` and
+`r f(dm_weight_survey_median, 3)`, respectively (ratio of
+`r f(as.numeric(dm_weight_fishery_median) / as.numeric(dm_weight_survey_median), 2)`).
+Down weighting fishery composition data led to minor changes in relative
+spawning biomass, recruitment estimates, and increased uncertainty in estimates
+of early recruitment deviations compared to the base model
+(Figures~\@ref(fig:main-status-base-alternative-2-fig) and
+\@ref(fig:main-recruitment-base-alternative-2-fig)). The majority of these
+changes were realized in the 1980s but estimates of female spawning biomass in
+the most recent years were also different between these two models. In particular,
+estimates of female spawning biomass in the most recent four years indicated
+less recovery of the population when fishery-age composition data were down
+weighted.
+
+A biomass-based index of `r sp` relative abundance has been developed using
+environmental DNA (see Appendix~\@ref(sec:app-eDNA-index)) that covers
+the years
+`r sens_models[[2]][[4]][["cpue"]] |> dplyr::filter(grepl("edna", Fleet_name, ignore.case = TRUE), Use > 0) |> dplyr::pull(Yr) |> glue::glue_collapse(sep = ", ", last = ", and ")`.
+The index was specified as having
+a Student’s t-distribution for the error structure (similar to the
+sensitivity with the relative age-1 index) with
+`r sens_models[[2]][[4]][["dat"]][["CPUEinfo"]] |> tibble::rownames_to_column() |> dplyr::filter(grepl("edna", rowname, ignore.case = TRUE)) |> dplyr::pull(errtype)` degrees of freedom given that
+there are
+`r sens_models[[2]][[4]][["cpue"]] |> dplyr::filter(grepl("edna", Fleet_name, ignore.case = TRUE), Use > 0) |> NROW()`
+data points in the time series. An additional constant and additive
+standard deviation on the log-scale to accommodate
+unaccounted-for sources of process and observation error was determined unneccessary.
+The index is representative of all fish age-1 and older, with a median estimate
+of catchability of
+`r f(as.numeric(exp(sens_models[[2]][[4]]$extra_mcmc$lnq_edna_med)), 3)`.
+Catchability is not as intuitive as for the other indices as it scales copies of
+DNA per microliter to biomass. The eDNA index declined from 2019 to 2023, though
+more steeply between 2019 to 2021 than between 2021 and 2023
+(see Figure~\@ref(fig:app-eDNA-index-1-fig)). The eDNA index is
+fit well in the model (Figure~\@ref(fig:main-index-edna-fig)),
+somewhat at the cost of reduced fits to the age-composition data. While the
+inclusion of the eDNA index did not significantly alter most key parameters and
+management quantities (Table~\@ref(tab:main-parameter-estimates-sens-2-tab)),
+it did lead to reductions in estimates of female spawning biomass from 2021
+onward, similar to when fishery age-composition data are
+down weighted
+(Figure~\@ref(fig:main-biomass-base-alternative-2-fig)). The eDNA index was
+included here as an initial exploration and proof-of-concept. Further explorations
+are needed, such as integrating eDNA data with acoustic data outside the assessment model
+to produce more accurate and robust survey estimates, before it should be used
+for management advice. The construction of a longer time series, through continued
+eDNA sampling, will be advantageous for understanding `r sp` population
+dynamics and the biological communities that interact with `r sp`.
+
+Changing the day of year that maturity was predicted to from
+`r maturity_estimates_df |> dplyr::pull(doy) |> unique() |> max()` to
+`r maturity_estimates_df |> dplyr::pull(doy) |> unique() |> min()`
+led to decreases in estimates of female spawning biomass for the majority of the
+time series except for the terminal year. Estimates of unfished spawning biomass
+were also lower for this model
+(Table~\@ref(tab:main-parameter-estimates-sens-2-tab),
+Figure~\@ref(fig:main-biomass-base-alternative-2-fig)), and thus estimates of 
+relative biomass are similar between this sensitivity and the base model
+(Figure~\@ref(fig:main-status-base-alternative-2-fig)).
+
+The degree of flexibility of annual variation in the fishery selectivity was
+tested using three alternative values of standard deviations ($\Phi$)
+(Figures~\@ref(fig:main-biomass-base-alternative-4-fig)--
+\@ref(fig:main-index-base-alternative-4-fig)). The consideration of alternative
+$\Phi$ values is discussed earlier in
+Section~\@ref(sec:data-variability-selectivity). Changing $\Phi$, which
+controls the flexibility in time-varying selectivity, from
+the base model value of $\Phi = 1.40$ to 0.21, 0.70, and 2.10 did not
+appreciably influence the estimates, or precision, associated with recruitment
+in 2014 or 2016 but it did impact more recent estimates of recruitment
+(Figure~\@ref(fig:main-recruitment-base-alternative-4-fig)). Changes in
+estimates of recruitment did not linearly scale with the changes in $\Phi$ and
+patterns were not consistent across years. For example, in 2011 higher $\Phi$
+values led to higher estimates of recruitment but for the 2021 estimate of
+recruitment a \$Phi$ of 0.70 led to the lowest estimate
+(Figure~\@ref(fig:main-recruitment-devs-base-alternative-4-fig)).
+The higher estimates of recruitment for $\Phi = 0.21$ led to a large increase in female spawning
+biomass in recent years compared to the base model due to the pattern in recruitment
+estimates. Estimates of terminal female spawning biomass decrease as $\Phi$
+changes from 0.21 to 2.1 to 1.4 to 0.7.
+(Figure~\@ref(fig:main-biomass-base-alternative-4-fig)).
+When $\Phi = 0.21$, the fit to the most recent age-2$+$ survey biomass index
+was the worst of the three investigated models
+(Figure~\@ref(fig:main-index-base-alternative-4-fig)).
+
+Cannibalistic mortality at age since 1993 was estimated using CEATTLE
+[@HolsmanEtAl2016] and input into the assessment as fixed values.
+These annual deviations were available for six groups of fish, age-1 fish and younger,
+age-2 fish, age-3 fish, age-4 fish, age-5 fish, and fish ages six and older. The
+annual deviations were used the following sensitivities related to specifying
+natural mortality at age rather than time-invariant and age-invariant natural
+mortality, like what is in the base model. The first sensitivity
+estimated baseline mortality for each age group, while the second
+sensitivity fixed baseline mortality at 0.13 for all groups based on the
+estimate of baseline mortality from CEATTLE. Given the time-varying age-specific
+deviations, mortality was, on average, more than 20 times larger for age-1 fish
+than any other age. Age-2 fish also experienced more cannibalism than older
+fish in most years but estimates of cannibalism were higher for age-3 than
+age-2 fish in some years (Figure~\@ref(fig:main-mortality-sens-fig)). Cannibalism
+for fish age six and above was zero in all years. The annual age-specific
+deviations were estimated by fitting CEATTLE to diet data up to 2019.
+More recent diet data exists but it has yet to be analyzed and included in the regional
+database for its use in CEATTLE. Age-0 and age-1 fish were found in over 7,000
+stomachs of the 17,000 `r sp` stomachs analyzed. Additionally, CEATTLE is informed by temperature at 130 m
+depth from GLORYS output at the same spatial footprint of the acoustic survey.
+More details about fitting data on `r sp` to CEATTLE can be found
+in @WassermannEtAl2025.
+
+Estimates of spawning biomass and other derived quantities were quite similar
+when baseline natural mortality was estimated
+(Figures~\@ref(fig:main-biomass-base-alternative-5-fig)--
+\@ref(fig:main-index-base-alternative-5-fig)), with the largest differences seen
+in the mid-1980s and in the terminal years where the deviations are the highest
+(Figure~\@ref(fig:main-mortality-sens-fig)). Notably, estimates of spawning
+biomass decreased to near target levels when baseline natural mortality was
+fixed at 0.13 for all ages. The uncertainty in almost all estimated
+quantities decreased when baseline mortality was fixed.
+Estimates of recruitment deviations were smaller for the initial period and
+larger for the main period, though the differences were relatively small, when
+age-specific natural mortality was not estimated compared to the other two
+models (Figure~\@ref(fig:main-recruitment-devs-base-alternative-5-fig)).
+
+## Retrospective analyses {#sec:assessment-retrospective-analyses}
+
+Retrospective analyses were performed by iteratively removing the terminal
+year data used to fit the model until ten years of data were removed
+Table~\@ref(tab:main-parameter-estimates-retro-tab). Retrospective analyses are
+informative for identifying consistent under- and over-estimation of estimates,
+particularly for spawning biomass and recruitment deviations.
+
+As more information is gained regarding large cohorts, the estimated strength
+of the cohort tends to decrease
+(Figures~\@ref(fig:main-retrospective-recruitment-fig)
+and~\@ref(fig:main-retrospective-recruitment-2-fig)).
+In this assessment, the previous trend was true for both large (positive) and
+small (negative) recruitment deviations, where all cohorts except the 2016 and
+2018 cohorts were estimated to be smaller with time. For cohorts that have
+positive recruitment deviations, such as the 2014 cohort, the uncertainty is
+narrower around the median due to a higher sampling rate over the years than the
+cohorts with negative recruitments such as the 2015 cohort.
+
+The retrospective plots in this year's assessment look slightly different
+than those from previous assessments; recruitment deviations for the last two
+years of the time series plus the assessment year are fixed at zero.
+
+The latest data confirm that 2020 is not likely to be an extremely large cohort
+(Figures~\@ref(fig:main-retrospective-recruitment-fig)
+and~\@ref(fig:main-retrospective-recruitment-2-fig)). The 2021 cohort at
+age-3 had a lower median than the 2020 cohort at age-3 but did not decrease as
+much as the 2020 cohort at age 4. Confirming cohort strengths for even-numbered
+recruitment years takes longer than for odd-numbered recruitment years because
+the survey does not include them in the age-2$+$ survey until they are of age
+three. Almost all estimates of recruitment deviations, positive or negative,
+stabilize by the age of six
+(Figure~\@ref(fig:main-relative-retrospective-recruitment-fig)).
+
+The stability of the recruitment estimates seen in
+Figure~\@ref(fig:main-retrospective-recruitment-fig) is also evident
+in the absolute estimates of uncertainty for each cohort. Uncertainty in
+biomass for cohorts from 2014--2023 has been substantially reduced in the
+`r assess_yr` base model compared to removing 1--5 years of data
+(Figure~\@ref(fig:main-biomass-recruitment-retrospective-fig), upper and
+lower panels).
+
+Overall, there is little retrospective change to the relative spawning biomass
+trajectory up to the mid-2010s, and most retrospective change occurs in the
+final 5 years of the retrospective model
+(upper panel of Figure~\@ref(fig:main-biomass-recruitment-retrospective-fig)).
+The most change in spawning biomass occurs when two years of data are removed
+because of changes in the estimate of absolute recruitment in 2020 to a much
+larger recruitment event compared to the base model. The large positive
+recruitment event is not present in the three-year peel of data when the terminal-year
+estimates are again informed by both fishery and survey data. Except for the
+previously explained changes, there is very little retrospective bias, with only
+slight year-specific positive bias in female spawning biomass, some minor
+adjustments to recruitment deviates, and a slight negative trend in `r b_0` as the
+retrospective year increases.
+
+## Comparison with past assessments {#sec:assessment-past-assessments}
+
+A comparison of the base models, approved for management, used in each year
+since `r min(assess_history_df$yr, na.rm = TRUE)` indicates that the
+variability between model results, especially early on in the estimated time
+series, is larger than the estimated uncertainty reported from the current base model
+(Figure~\@ref(fig:main-historical-assessments-fig)). There have been substantial
+differences in the structural assumptions of the models and, thus, results
+submitted each year. Prior to 2004, catchability was fixed at 1.0. This
+assumption was investigated between 2004 and 2007, leading to variability in
+model results because of the use of several different, but fixed, values of
+catchability. Since 2008, catchability has been freely estimated by the model
+($q_b$ = `r f(median(base_model$extra_mcmc$q_vector), 2)`). The fixing
+of survey catchability had the effect of driving the estimate of initial
+biomass upward, which in turn scaled the entire biomass trajectory up,
+leading to higher estimates of relative spawning biomass than in more recent
+assessments. The median estimates of female spawning biomass for 2016 and 2017
+have remained similar to the previous assessment, being somewhat lower than in the
+2016 and 2017 assessments. In addition to more
+information about the 2014 and 2016 cohorts, the 2018 assessment model also
+included a change in the data weighting method, an update to maturity and
+fecundity, and a change to selectivity parameterization
+(Table~\@ref(tab:main-assessment-changes-tab)). From 2022 to 2024, the relative
+age-1 index was used to inform cohort size at an early age.  The age-1 index
+was removed in the 2025 assessment. While there was a significant change from
+this assessment to the previous one (see Section~\@ref(sec:assessment-changes)),
+the uncertainty interval associated with the `r end_yr` assessment brackets
+the majority of the historical estimates.
+
+The level of uncertainty associated with each assessment's estimate of that
+year's current female spawning biomass (i.e., that used to convey current
+stock status and inform management advice) changes from assessment to
+assessment given updates in data and `r sp` population structure and
+dynamics. Uncertainty around the absolute amount of `r assess_yr` female
+spawning biomass is similar to the final-year estimates from previous
+assessments, with both absolute interquartile range and the relative amount of
+dispersion (or variability relative to the
+stock size; similar to a coefficient of variation) consistent with
+previous assessments (Figure~\@ref(fig:main-historical-dispersion-fig)).
+
+## Performance of past projections {#sec:assessment-past-projections}
+
+Without rigorous simulation experiments it can be difficult to operationally
+assess the accuracy of projections in stock assessments because the truth is
+never known with 100% certainty. For `r sp`, hindsight comparisons have been
+conducted since 2021 [@JTC2021] to evaluate performance of projections
+provided in decision tables (such as Tables~\@ref(tab:main-risk-year-1-tab)
+and~\@ref(tab:main-risk-year-2-tab)) of past assessments relative to updated
+assessments. Overall, results indicate that assessment model projections give
+a relatively good idea of general projected trends and status.
+
+As an example, the 2019 assessment [@JTC2019] gave the estimated probability
+of the female spawning biomass declining in the subsequent year,
+i.e., P(*B*~2020~ < *B*~2019~), for several possible catches
+in 2019, such as 0~t, 180,000~t, 350,000~t, 410,000~t etc. Now that we 'know'
+the catch in 2019 was 411,635~t, we can select the 410,000~t row (close
+enough to 411,635~t) in the table from the 2019 assessment to give that
+assessment's
+P(*B*~2020~<*B*~2019~) = `r prob_decline_from_2019_to_2020_historic`%;
+Figure~\@ref(fig:main-historical-1-fig). We can also calculate this probability
+from the current assessment model (being the most up-to-date picture we have of
+stock dynamics) which implicitly includes the
+411,635~t catch from 2019, giving
+P(*B*~2020~ < *B*~2019~) = `r prob_decline_from_2019_to_2020_curr`%;
+Figure~\@ref(fig:main-historical-1-fig). We extracted similar probabilities
+from past assessment documents going back to 2012 and calculate analogous
+probabilities,
+P(*B*~t+1~ < *B*~t~), from the current base model
+[Figure~\@ref(fig:main-historical-1-fig); see @JTC2022 for full methods].
+
+Each assessment correctly predicted whether the stock would most likely
+increase or decrease the following year, except for 2017 and 2023
+(Figure~\@ref(fig:main-historical-1-fig)). Estimates from previous assessments
+are almost always closer to 50% than those from the current base model
+(Figure~\@ref(fig:main-historical-1-fig)), because the current assessment model
+has more information and thus provides a more definitive probability (closer
+to 0% or to 100%) than year $t$'s assessment model. It is desirable that the
+probabilities from the assessment documents are not too definitive (too close
+to 0% or to 100%), because they are admitting a wide range of uncertainty
+given unknown recent recruitments.
+
+The 2017 and 2023 assessments `incorrectly' projected that the stock would
+likely decline the following year (given the catch that subsequently occurred),
+because the current assessment model estimates a likely increase
+(Figure~\@ref(fig:main-historical-1-fig)). For the 2017 [@JTC2017] assessment
+the biomass trend was projected to be relatively flat the
+following year, so even slight changes in
+biomass could influence the binomial outcome of an 'increase' or 'decrease' in
+biomass, despite the overall change in biomass not being very substantial.
+The
+2023 assessment [@JTC2023] had minimal information on the 2021 cohort and
+predicted the biomass would probably decline in 2024 with any non-zero 2023
+catch. However, the current assessment estimates that the 2021 cohort was
+potentially large, which further highlights how impactful a realized large
+deviation from average recruitment (rather than assuming average recruitment)
+can be on forecasted outcomes. Similarly, the 2012 assessment had no
+information on the very large 2010 recruitment, and so also over-estimated
+the probability of decline the following year
+(Figure~\@ref(fig:main-historical-1-fig)). A range of catch alternatives are
+shown for the current assessment because realized `r assess_yr` catches are
+not yet known (Figure~\@ref(fig:main-historical-1-fig)), and all (including no catch)
+suggest the stock will decline from `r assess_yr` to `r assess_yr + 1`.
+
+A similar approach was used to calculate the probability of the biomass
+falling below `r b_40` in the subsequent year,
+i.e., P(*B*~t+1~ < `r b_40`); Figure~\@ref(fig:main-historical-2-fig).
+The 2012 assessment was the only one that gave a >50% chance of the
+biomass falling below `r b_40` in the subsequent year, but later data
+determined that the 2010 year class was substantial and so in
+hindsight the probability of going below `r b_40` was 0% (based on the
+current assessment). From the 2016 assessment onwards, the estimated
+P(*B*~t+1~ < `r b_40`) probabilities rose, until falling due to the
+incoming above-average 2020 cohort and lower catches
+(Figure~\@ref(fig:main-historical-2-fig)). The same probabilities calculated
+from the current base model similarly rose, but all remained lower than
+the previous
+assessments' calculations, until being above since 2022 onwards. The
+current assessment estimates a probability of 11--12% that the biomass was below
+`r b_40` in each of 2023--2025, above the respective probabilities of 8%, 3%,
+and 1% estimated in the 2022--2024 assessments.
+<!-- historical_probs_df for values -->
+
+\newpage

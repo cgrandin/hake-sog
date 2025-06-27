@@ -1,0 +1,1987 @@
+\newpage
+
+\rfoot{Figures}
+
+# Figures {#sec:figures}
+
+(ref:main-overview-map-cap) Overview map of the area in the Northeast Pacific
+Ocean occupied by `r sp`. Ports and areas of interest referred to in this
+document or past assessment documents are shown.
+
+(ref:main-overview-map-alt) This figure shows many ports and cities of
+interest for the hake fishery along the United States and Canadian West Coast.
+
+```{r main-overview-map-fig, fig.cap = "(ref:main-overview-map-cap)", fig.height = 10, out.height = "90%"}
+
+plot_overview_map()
+```
+
+(ref:main-acoustic-age2-bs-cap) Spatial distribution of acoustic backscatter
+attributable to age-2 and older `r sp` from the `r survey_name`
+(`r survey_start_yr`--`r survey_end_yr`). Area of the circle is roughly
+proportional to observed backscatter. Bar plots show survey-estimated biomass
+for ages 2 to 20, with major cohorts highlighted in color. Figure produced
+by Julia Clemons (NOAA).
+
+(ref:main-acoustic-age2-bs-alt) This figure shows that `r sp` migrate further
+north in some years and the southern start of the survey varies by year.
+
+BEGIN LANDSCAPE - must have blank line below separating this from figure code
+
+```{r main-acoustic-age2-bs-fig, fig.cap = "(ref:main-acoustic-age2-bs-cap)", results = "asis"}
+
+include_graphics(file.path(figures_dir,"age2-plus-survey-map.png"), error = FALSE)
+```
+
+END LANDSCAPE - must have blank line above separating this from figure code
+
+(ref:main-acoustic-age1-bs-cap) Spatial distribution of acoustic backscatter
+attributable to aggregations of age-1 `r sp` from the `r survey_name`
+2003--`r survey_end_yr` (spatial details are not available for survey years
+1995, 1998, and 2001). Age-1 `r sp` are not fully sampled during the
+acoustic survey and were not explicitly considered during establishment
+of the survey sampling design. Additional backscatter from age-1 fish
+intermixed with older fish is not shown. Area of the circle is roughly
+proportional to observed backscatter. Figure produced by Julia Clemons (NOAA).
+
+(ref:main-acoustic-age1-bs-alt) This figure shows that age-1 fish caught in the
+survey are quite patchy and quite variable distributions among years.
+
+BEGIN LANDSCAPE
+
+```{r main-acoustic-age1-bs-fig, fig.cap = "(ref:main-acoustic-age1-bs-cap)", results = "asis"}
+
+include_graphics(file.path(figures_dir,"age1-survey-map.png"), error = FALSE)
+```
+
+END LANDSCAPE
+
+(ref:main-catches-cap) Total `r sp` catch used in the assessment by sector,
+`r start_yr`--`r last_data_yr`. U.S. tribal catches are included in the
+sectors where they are represented.
+
+(ref:main-catches-alt) This figure shows that catches have declined each year
+from the historical peak in 2017.
+
+```{r main-catches-fig, fig.cap = "(ref:main-catches-cap)", fig.height = 5}
+
+plot_catches(ct, xlim = c(start_yr, last_data_yr))
+```
+
+(ref:main-us-depths-cap) Distribution of fishing depths (left) and bottom
+depths (right), in meters, of hauls targeting `r sp` in the U.S.
+Catcher-Processor and Mothership sectors from
+`r last_data_yr - 4`--`r last_data_yr`. Horizontal lines in each box
+represent the median depth and boxes encompass the middle 50% of the
+data. Whiskers encompass the 95% quantiles.
+
+(ref:main-us-depths-alt) This figure shows that bottom depths have been
+approximately 500 meters and fishing depths approximately 300 meters on
+average in the last 5 years for United States fleets.
+
+```{r main-us-depths-fig, fig.cap = "(ref:main-us-depths-cap)", fig.height = 4}
+
+yrs <- (last_data_yr - 4):last_data_yr
+depth_lims <- c(0, 700)
+depth_breaks <- seq(depth_lims[1], depth_lims[2], 100)
+
+plot_depth_2_panel(us_atsea_fishing_depth_df,
+                   us_atsea_bottom_depth_df,
+                   yrs = yrs,
+                   y_lim = depth_lims,
+                   y_breaks = depth_breaks)
+```
+
+(ref:main-can-depths-cap) Distribution of fishing depths (left) and bottom
+depths (right), in meters, of hauls targeting `r sp` in the Canadian
+fleets from `r last_data_yr - 4`--`r last_data_yr`. Horizontal lines in each
+box represent the median depth and boxes encompass the middle 50% of the
+data. Whiskers encompass the 95% quantiles.
+
+(ref:main-can-depths-alt) This figure shows that for the last five years in
+Canada freezer trawlers fished from 250 to 400 meters
+and shoreside vessels more consistently fished at an approximate bottom depth of 200 meters.
+Freezer trawlers fished at a gear depth of approximately 100 to 300 meters and
+shoreside vessels at a depth of approximately 150 to 250 meters. Bottom depths
+for both fleets have become shallower with fishing being closer to the bottom.
+
+```{r main-can-depths-fig, fig.cap = "(ref:main-can-depths-cap)", fig.height = 8}
+
+plot_depth_4_panel(can_ft_gear_depth_df,
+                   can_ft_bottom_depth_df,
+                   can_ss_gear_depth_df,
+                   can_ss_bottom_depth_df,
+                   fleet_1_name = "Freezer trawlers",
+                   fleet_2_name = "Shoreside",
+                   yrs = yrs,
+                   y_lim = depth_lims,
+                   y_breaks = depth_breaks)
+```
+
+(ref:main-data-overview-cap) Overview of data used in this assessment. Circle
+areas are proportional to total catch for the fishery data, precision for
+the indices, and total sample size for the age compositions (and cannot be
+compared across data types). Additionally, weight-at-age data
+(`r start_yr_age_comps`--`r last_data_yr`; not depicted here but see
+Figure~\@ref(fig:main-sample-size-weight-at-age-fig) for sample sizes)
+are used to account for time-varying growth.
+
+(ref:main-data-overview-alt) This figure gives an overview of the data used
+in this assessment. Fishery catches span the whole time series from 1966 to
+present. Fishery age compositions from 1975 to present were used and all data
+from the age 2 plus acoustic survey were included. This includes the index of
+abundance and age compositions from 1995 to present for odd years.
+
+```{r main-data-overview-fig, fig.cap = "(ref:main-data-overview-cap)", fig.height = 6}
+
+plot_data_summary(base_model,
+                  label_y_placement = c(1.8, 1.8, 2.5))
+```
+
+(ref:main-age-comp-bubbles-cap) Age compositions for the aggregate fishery
+(top, all sectors combined) and acoustic survey (bottom) for the years
+`r max_fishery_age_prop[1]`--`r max_fishery_age_prop[2]`. Proportions in
+each year sum to 1.0 and area of the bubbles are proportional to the
+proportion and consistent in both panels (see key at top). The largest
+bubble in the fishery data is
+`r f(as.numeric(max_fishery_age_prop[3]) / 100, 2)` for age
+`r as.numeric(max_survey_age_prop[5])` in
+`r as.numeric(max_fishery_age_prop[4])` and in the survey data is
+`r f(as.numeric(max_survey_age_prop[3]) / 100, 2)` for age
+`r as.numeric(max_survey_age_prop[5])` in
+`r as.numeric(max_survey_age_prop[4])`. Green lines track large cohorts.
+
+(ref:main-age-comp-bubbles-alt) This figure shows that there are currently
+three large cohorts making their way through the stock. The 2010 cohort is
+the largest followed by the 2014 cohort and the 2016 cohort. The 2020 and
+2021 cohorts are above average but highly uncertain.
+
+```{r main-age-comp-bubbles-fig, fig.cap = "(ref:main-age-comp-bubbles-cap)", fig.height = 10, out.height = "90%"}
+
+p_lst <- NULL
+p_lst[[1]] <-
+  plot_age_comp_bubbles(base_model,
+                        type = "fishery",
+                        leg_pos = "top",
+                        inc_mean_age_line = TRUE,
+                        point_alpha = 0.4,
+                        xlim = c(start_yr_age_comps, last_data_yr),
+                        tick_prop = 0.7,
+                        vjust_x_labels = -1.5,
+                        remove_yr_labels = NULL)
+p_lst[[2]] <-
+  plot_age_comp_bubbles(base_model,
+                        type = "survey",
+                        clines = c(1999, 2010, 2014, 2016, 2020),
+                        inc_mean_age_line = TRUE,
+                        point_alpha = 0.4,
+                        xlim = c(start_yr_age_comps, last_data_yr),
+                        tick_prop = 0.7,
+                        vjust_x_labels = -1.5,
+                        remove_yr_labels = NULL)
+
+plot_grid(plotlist = p_lst, nrow = 2)
+```
+
+(ref:main-survey-extrap-biomass-cap) Acoustic survey biomass index of age-2$+$
+fish (Mt, Table~\@ref(tab:main-survey-history-tab)). Approximate 95% confidence
+intervals are based on sampling variability (intervals without the additional
+squid/`r sp` apportionment uncertainty included in 2009, black line).
+
+(ref:main-survey-extrap-biomass-alt) This figure shows that the survey biomass
+estimate has decreased from years 2019 to 2021 and then to 2023.
+
+```{r main-survey-extrap-biomass-fig,  fig.cap = "(ref:main-survey-extrap-biomass-cap)"}
+
+plot_survey_biomass(base_model,
+                    index = "age2",
+                    y_lim = c(0, 3),
+                    x_labs_mod = 5,
+                    alpha = 0.3,
+                    tick_prop = 1,
+                    vjust_x_labels = -1.5,
+                    remove_yr_labels = NULL)
+```
+
+<!--(ref:main-survey-age1-cap) Relative index of age-1 fish (numbers of fish,-->
+<!--Table~\@ref(tab:main-survey-history-tab)) and approximate 95% confidence-->
+<!--intervals based on sampling variability. The index is relative because-->
+<!--the survey does not attempt to sample all available age-1 fish and the-->
+<!--analysis does not include kriging as is done to estimate age-2$+$ biomass.-->
+
+<!--(ref:main-survey-age1-alt) This figure shows that the age-1 survey estimate-->
+<!--has increased from years 2019 to 2021 and then decreased to 2023.-->
+
+<!--```{r main-survey-age1-fig, fig.cap = "(ref:main-survey-age1-cap)"}-->
+
+<!--plot_survey_biomass(base_model,-->
+<!--                    index = "age1",-->
+<!--                    y_lim = c(0, 16),-->
+<!--                    x_labs_mod = 5,-->
+<!--                    alpha = 0.3,-->
+<!--                    tick_prop = 1,-->
+<!--                    vjust_x_labels = -1.5,-->
+<!--                    remove_yr_labels = NULL)-->
+<!--```-->
+
+(ref:main-maturity-ogive-cap) Maturity ogives by year used in the assessment.
+The thick black line shows the equilibrium ogive which is an average of all
+years; the thick red line shows the forecast ogive which is an average of
+the last five years (`r last_data_yr - 4`--`r last_data_yr`). The colors of
+the year lines move from orange in 2009 through the spectrum to dark blue in
+`r last_data_yr`.
+
+(ref:main-maturity-ogive-alt) Maturity by year is shown beginning in 2009 to
+present. The equilibrium and forecast ogives are also shown and appear to
+be very similar. The equilibrium ogive is an average of all years and
+the forecast ogive is an average of the last five years. Fish appear to
+reach full maturity between the age of 3 and 4 in all years.
+
+```{r main-maturity-ogive-fig, fig.cap = "(ref:main-maturity-ogive-cap)", fig.height = 10, out.height = "90%"}
+
+plot_maturity_ogives(vert_lines = c(2, 3, 4, 5, 6),
+                     vert_lines_thickness = 0.25)
+```
+
+(ref:main-weight-at-age-cap) Empirical weight-at-age (kg) values used for
+the base model as predicted from the time-varying model. Colors correspond
+to the values, with red being the lightest
+fish (across all years and ages) and blue being the heaviest fish. For each
+age, the most transparent cells indicate the lightest fish of that age. Data
+are only available from `r start_yr_age_comps`--`r last_data_yr`. Values
+based on assumptions for the pre-`r start_yr_age_comps` and forecast years
+are shown outside the blue lines. Bold values between
+`r start_yr_age_comps`--`r max_fishery_age_prop[2]` represent unavailable
+data such that weights were predicted from the time-varying model. The bottom
+row (mean) is the mean weight-at-age over all years of data.
+
+(ref:main-weight-at-age-alt) This figure shows how weight at age changes
+through time. The weight of fish about 5 and older are quite variable indicating
+difference in growth over time.
+
+```{r main-weight-at-age-fig, fig.cap = "(ref:main-weight-at-age-cap)", fig.height = 10, out.height = "85%"}
+
+# See `heatmap_extract_wa()` for argument choices, many are passed in `...`
+# from `plot_weight_at_age_heatmap()`
+plot_heatmap_weight_at_age(
+  base_model,
+  cell_font_size = 3,
+  sample_size_df = weight_age_sample_sizes_df,
+  pre_yrs = start_yr_age_comps:base_model$endyr,
+  pre_func = mean,
+  post_yrs = (base_model$endyr - 4):base_model$endyr,
+  post_func = mean,
+  cols = c("red",
+           "yellow",
+           "green",
+           "dodgerblue"))
+```
+
+(ref:main-sample-size-weight-at-age-cap) Sample sizes of empirical
+weight-at-age measurements used to fit the time-varying model used to estimate
+mean weight-at-age that is used in the base model. Colors and transparency are
+identical to Figure~\@ref(fig:main-weight-at-age-fig). Sample sizes of zero
+highlight years for which data are not available, i.e.,
+pre `r start_yr_age_comps` and post `r last_data_yr`. The total sample
+sizes for each age used in the model over all data years are shown at the
+bottom and year-specific sample sizes are shown to the right using the same
+color scale with red indicating small sample sizes and blue indicating the
+large sample sizes.
+
+(ref:main-sample-size-weight-at-age-alt) This figure shows the sample sizes
+of weight at age vary between years and ages with the most samples occurring
+for ages 3 through 7.
+
+```{r main-sample-size-weight-at-age-fig, fig.cap = "(ref:main-sample-size-weight-at-age-cap)", fig.height = 10, out.height = "85%"}
+
+# See `heatmap_extract_wa()` for argument choices, many are passed in `...`
+# from `plot_weight_at_age_heatmap()`
+plot_heatmap_sample_size_weight_at_age(
+  base_model,
+  cell_font_size = 3,
+  sample_size_df = weight_age_sample_sizes_df,
+  pre_yrs = start_yr_age_comps:base_model$endyr,
+  pre_func = mean,
+  post_yrs = (base_model$endyr - 4):base_model$endyr,
+  post_func = mean,
+  cols = c("red",
+           "yellow",
+           "green",
+           "dodgerblue"))
+```
+
+(ref:main-fecundity-at-age-cap) Fecundity-at-age values used for the base
+model. Colors correspond to the values, with red being the least fecund fish
+(across all years and ages) and blue being the most fecund fish. For each age,
+the most transparent cells indicate the least fecund fish of that age.
+Fecundity is the product of maturity and weight-at-age.
+Weight-at-age data are only available from
+`r start_yr_age_comps`--`r last_data_yr`. Values based on assumptions for the
+pre-data and forecast years are shown outside the blue lines.
+Bold values between `r start_yr_age_comps`--`r max_fishery_age_prop[2]`
+represent year/age combinations where weight-at-age data were unavailable to fit
+the model such that weights were predicted rather than estimated.
+
+(ref:main-fecundity-at-age-alt) This figure shows how fecundity at age changes
+through time. See fleet negative 2 in the data files for raw numbers.
+
+```{r main-fecundity-at-age-fig, fig.cap = "(ref:main-fecundity-at-age-cap)", fig.height = 10, out.height = "85%"}
+plot_heatmap_weight_at_age(
+  base_model,
+  fleet = -2,
+  cell_font_size = 3,
+  sample_size_df = weight_age_sample_sizes_df,
+  pre_yrs = start_yr_age_comps:base_model$endyr,
+  pre_func = mean,
+  post_yrs = (base_model$endyr - 4):base_model$endyr,
+  post_func = mean,
+  cols = c("red",
+           "yellow",
+           "green",
+           "dodgerblue"))
+```
+
+(ref:main-weight-at-age-lines-cap) Empirical mean weight-at-age (kg) values
+for ages 2--10 used for the base model, as in
+Figure~\@ref(fig:main-weight-at-age-fig) but shown as time series. Purple
+lines are for the youngest ages and green lines are for the oldest ages
+shown, with age-5 having a thicker line and larger points as a visual aid.
+
+(ref:main-weight-at-age-lines-alt) This figure shows that the annual mean
+weight at age is lower for most ages in the most recent years than for years
+prior to 1980. There is a trend of increasing weight at age for the last
+6 to 7 years.
+
+```{r main-weight-at-age-lines-fig, fig.cap = "(ref:main-weight-at-age-lines-cap)"}
+
+plot_weight_at_age(wt_at_age,
+                   ages = 2:10,
+                   bold_ages = 5,
+                   cols = c("purple",
+                            "darkblue",
+                            "yellow",
+                            "darkgreen"),
+                   y_lim = c(0, 1.5),
+                   y_labs_by = 0.25,
+                   x_labels_mod = 5,
+                   x_labs_mod = 5,
+                   tick_prop = 1,
+                   vjust_x_labels = -1.5,
+                   max.overlaps = 15)
+```
+
+(ref:main-bridge-summary-1-cap) Bridging models showing some of the
+sequential steps made towards the `r assess_yr` base model from the `r last_assess_yr` base
+model. Models include shifting to the newest version of Stock Synthesis and
+amending older data sources.
+Panels are spawning biomass (upper panel); relative spawning biomass
+(spawning biomass in each year relative to the unfished equilibrium spawning
+biomass, middle left); recruitment deviations (middle right); and age-2$+$
+survey biomass (lower left) and age-1 (lower right) indices, with triangles
+representing the observed survey indices.
+
+(ref:main-bridge-summary-2-cap) Bridging models showing some of the
+sequential steps made towards the `r assess_yr` base model from the `r last_assess_yr` base
+model. Models include the last step from the previous figure of updating older
+data, the addition of new data inputs for the current year, and structural changes to the model.
+Panels are spawning biomass (upper panel); relative spawning biomass
+(spawning biomass in each year relative to the unfished equilibrium spawning
+biomass, middle left); recruitment deviations (middle right); and age-2$+$
+survey biomass (lower left) and age-1 (lower right) indices, with triangles
+representing the observed survey indices.
+
+(ref:main-bridge-summary-1-alt) There was little change resulting from
+any of these bridging models.
+
+(ref:main-bridge-summary-2-alt) The largest change amongst the models
+occurred when the age-1 index was removed.  Other notable changes included
+when the new fishery composition data from the current year was added and
+the estimation of recruitment deviations was turned off for 2023 onwards.
+
+```{r main-bridge-summary-1-fig, fig.cap = "(ref:main-bridge-summary-1-cap)", fig.height = 8}
+
+pt_size <- 1
+panels_title_size <- 11
+p <- list()
+p[[1]] <-
+  plot_rel_biomass(d_obj = d_obj_bridge_rel_biomass[[1]],
+                   point_size = 1.5,
+                   ylim = c(0, 2.5),
+                   xlim = c(1966, last_assess_yr),
+                   x_labs_mod = 10,
+                   wrap_y_label = TRUE,
+                   tick_prop = 2,
+                   leg_pos = "none",
+                   rev_colors = TRUE) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+p[[2]] <-
+  plot_recdevs(d_obj = d_obj_bridge_recdev[[1]],
+               point_size = pt_size,
+               xlim = c(1966, last_assess_yr),
+               dodge_val = 1.5,
+               leg_pos = "none",
+               x_labs_mod = 10,
+               tick_prop = 2,
+               line_width = 0.3,
+               rev_colors = TRUE) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+p[[3]] <-
+  plot_survey_index_fits(base_model,
+                         point_size = pt_size,
+                         d_obj = d_obj_bridge_age2_index[[1]],
+                         survey_type = "age2",
+                         rev_colors = TRUE,
+                         tick_prop = 2,
+                         vjust_x_labels = -2,
+                         leg_pos = "none",
+                         xlim = c(1995, last_assess_yr)) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+p[[4]] <-
+  plot_survey_index_fits(base_model,
+                         point_size = pt_size,
+                         d_obj = d_obj_bridge_age1_index[[1]],
+                         xlim = c(1995, last_assess_yr),
+                         ylim = c(0, 11),
+                         y_breaks = seq(0, 11, by = 2),
+                         rev_colors = TRUE,
+                         tick_prop = 2,
+                         vjust_x_labels = -2,
+                         leg_pos = "none") +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+# Grid of 2 rows and 1 column with one plot at the top (biomass)
+# and 4 plots embedded in another grid (quad_grid) at the bottom
+quad_grid <- plot_grid(plotlist = p,
+                       nrow = 2,
+                       ncol = 2)
+full_p <- list()
+full_p[[1]] <-
+  plot_biomass(d_obj = d_obj_bridge_biomass[[1]],
+               point_size = 1.5,
+               xlim = c(1964, last_assess_yr),
+               show_arrows = TRUE,
+               dodge_bo = 0.75,
+               leg_ncol = 2,
+               leg_font_size = 7,
+               wrap_y_label = TRUE,
+               tick_prop = 2,
+               leg_pos = c(0.72, 0.82)) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+full_p[[2]] <- quad_grid
+
+plot_grid(plotlist = full_p,
+          nrow = 2,
+          ncol = 1,
+          rel_heights = c(0.33, 0.67))
+```
+
+```{r main-bridge-summary-2-fig, fig.cap = "(ref:main-bridge-summary-2-cap)", fig.height = 8, eval = length(bridge_models_desc[[1]]) > 1}
+
+pt_size <- 1
+panels_title_size <- 11
+p <- list()
+p[[1]] <-
+  plot_rel_biomass(d_obj = d_obj_bridge_rel_biomass[[2]],
+                   point_size = 1.5,
+                   ylim = c(0, 2.5),
+                   x_labs_mod = 10,
+                   wrap_y_label = TRUE,
+                   tick_prop = 2,
+                   leg_pos = "none",
+                   rev_colors = TRUE) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+p[[2]] <-
+  plot_recdevs(d_obj = d_obj_bridge_recdev[[2]],
+               point_size = pt_size,
+               dodge_val = 1.5,
+               leg_pos = "none",
+               x_labs_mod = 10,
+               tick_prop = 2,
+               line_width = 0.3,
+               rev_colors = TRUE) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+p[[3]] <-
+  plot_survey_index_fits(base_model,
+                         point_size = pt_size,
+                         d_obj = d_obj_bridge_age2_index[[2]],
+                         survey_type = "age2",
+                         rev_colors = TRUE,
+                         tick_prop = 2,
+                         vjust_x_labels = -2,
+                         leg_pos = "none",
+                         xlim = c(1995, end_yr)) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+p[[4]] <-
+  plot_survey_index_fits(base_model,
+                         point_size = pt_size,
+                         d_obj = d_obj_bridge_age1_index[[2]],
+                         survey_type = "age1",
+                         xlim = c(1995, end_yr),
+                         ylim = c(0, 11),
+                         y_breaks = seq(0, 11, by = 2),
+                         rev_colors = TRUE,
+                         tick_prop = 2,
+                         vjust_x_labels = -2,
+                         leg_pos = "none") +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+# Grid of 2 rows and 1 column with one plot at the top (biomass)
+# and 4 plots embedded in another grid (quad_grid) at the bottom
+quad_grid <- plot_grid(plotlist = p,
+                       nrow = 2,
+                       ncol = 2)
+full_p <- list()
+full_p[[1]] <-
+  plot_biomass(d_obj = d_obj_bridge_biomass[[2]],
+               point_size = 1.5,
+               show_arrows = TRUE,
+               dodge_bo = 0.75,
+               leg_ncol = 2,
+               leg_font_size = 7,
+               wrap_y_label = TRUE,
+               tick_prop = 2,
+               leg_pos = c(0.72, 0.82)) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+
+full_p[[2]] <- quad_grid
+
+plot_grid(plotlist = full_p,
+          nrow = 2,
+          ncol = 1,
+          rel_heights = c(0.33, 0.67))
+```
+
+(ref:main-survey-index-fit-mcmc-cap) Fits (thin black lines) to the acoustic
+survey (points) with input 95% intervals around the observations. The
+thin black lines are the results of a random subset of individual Markov chain
+Monte Carlo (MCMC) samples. Thick, vertical black lines around observed
+survey points indicate 95% lognormal uncertainty intervals estimated by the
+kriging method and are used as input to the assessment model. Thin, vertical
+black lines indicate estimated 95% uncertainty intervals that account for the
+model estimate of additional uncertainty.
+
+(ref:main-survey-index-fit-mcmc-alt) This figure shows 1000 posterior
+trajectories of the expected survey biomass fitting well to the observed
+biomass. The lines are very tightly packed together for most of the time
+series but diverge a little near the end of the time series from about 2017
+to 2023. The 2023 survey index point is overfit.
+
+```{r main-survey-index-fit-mcmc-fig, fig.cap = "(ref:main-survey-index-fit-mcmc-cap)", fig.height=6, fig.width=8}
+
+plot_survey_fit_mcmc(base_model,
+                     type = "acoustic",
+                     n_posts = 1000,
+                     glow = TRUE,
+                     glow_color = "black",
+                     glow_offset = 0.5,
+                     leg_ymax = 4.8,
+                     leg_sep = 0.45,
+                     x_lim = c(survey_start_yr, survey_end_yr),
+                     y_lim = c(0, 6),
+                     x_labs_mod = 5,
+                     y_labs_by = 0.5,
+                     tick_prop = 1,
+                     vjust_x_labels = -2,
+                     remove_yr_labels = NULL)
+```
+
+<!--(ref:main-age1-index-fit-mcmc-cap) Assessment model fit to the relative-->
+<!--age-1 index data that was produced from acoustic survey observations. Age-1-->
+<!--index observations (black dots) are input into the assessment model with-->
+<!--uncertainty arising from sampling variability (thick vertical black lines).-->
+<!--Additional uncertainty is estimated within the stock assessment model (thin-->
+<!--vertical black lines) and added to the input sampling variability. A time-->
+<!--series of the assessment model fit to the observations (blue line) represents-->
+<!--the median of the posterior Markov chain Monte Carlo (MCMC) samples. A-->
+<!--random subset of the individual MCMC time series samples are shown (thin-->
+<!--blue lines) to provide context for the description of the median MCMC-->
+<!--estimate.-->
+
+<!--(ref:main-age1-index-fit-mcmc-alt) This figure shows many posterior-->
+<!--trajectories of the expected numbers of age 1 fish fitting well to the-->
+<!--age 1 index. The lines are very tightly packed together for most of the-->
+<!--time series but diverge a little at the end of the time series since 2021.-->
+
+<!--```{r main-age1-index-fit-mcmc-fig, fig.cap = "(ref:main-age1-index-fit-mcmc-cap)", fig.height = 6}-->
+
+<!--plot_survey_fit_mcmc(base_model,-->
+<!--                     type = "age1",-->
+<!--                     n_posts = 1000,-->
+<!--                     glow = TRUE,-->
+<!--                     glow_color = "black",-->
+<!--                     glow_offset = 0.5,-->
+<!--                     leg_ymax = 4.8,-->
+<!--                     leg_sep = 0.45,-->
+<!--                     x_lim = c(survey_start_yr, survey_end_yr),-->
+<!--                     y_lim = c(0, 10),-->
+<!--                     x_labs_mod = 5,-->
+<!--                     y_labs_by = 1,-->
+<!--                     tick_prop = 1,-->
+<!--                     vjust_x_labels = -2,-->
+<!--                     remove_yr_labels = NULL,-->
+<!--                     post_line_col = "blue")-->
+<!--```-->
+
+(ref:main-catchability-density-cap) Density of the Catchability (q) parameter
+for the acoustic survey index. The green vertical line is the median of the
+posterior for `r assess_yr`, which is
+`r f(median(base_model$extra_mcmc$q_vector), 3)`; the red line is
+the median of the posterior for the last assessment year, `r last_data_yr`,
+which was `r f(median(last_yr_base_model$extra_mcmc$q_vector), 3)`.
+
+(ref:main-catchability-density-alt) The distribution of the catchability
+parameter posterior for the acoustic survey index spans from about 0.5 to 1.3
+with a median around 0.89.
+
+```{r main-catchability-density-fig, fig.cap = "(ref:main-catchability-density-cap)", fig.height = 4.5}
+plot_catchability_density(base_model,
+                          last_yr_base_model,
+                          type = "age2",
+                          line_widths = c(1, 1),
+                          line_types = c("solid", "solid")) +
+  xlab("Catchability (q)") +
+  ylab("Distribution") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+<!--(ref:main-catchability-density-age1-cap) Density of the Catchability (q) parameter-->
+<!--for the age-1 index. The green vertical line is the median of the-->
+<!--posterior for `r assess_yr`, which is-->
+<!--`r f(median(base_model$extra_mcmc$q_vector_age1), 3)`; the red line is-->
+<!--the median of the posterior for the last assessment year, `r last_data_yr`,-->
+<!--which was `r f(median(last_yr_base_model$extra_mcmc$q_vector_age1), 3)`.-->
+
+<!--(ref:main-catchability-density-age1-alt) The distribution of the catchability-->
+<!--parameter posterior for the age 1 index is shown with a median around 0.49.-->
+
+<!--```{r main-catchability-density-age1-fig, fig.cap = "(ref:main-catchability-density-age1-cap)", fig.height = 4.5}-->
+<!--plot_catchability_density(base_model,-->
+<!--                          last_yr_base_model,-->
+<!--                          type = "age1",-->
+<!--                          line_widths = c(1, 1),-->
+<!--                          line_types = c("solid", "solid")) +-->
+<!--  xlab("Catchability (q)") +-->
+<!--  ylab("Distribution") +-->
+<!--  theme(axis.text.y = element_blank(),-->
+<!--        axis.ticks.y = element_blank())-->
+<!--```-->
+
+(ref:main-age-comp-fits-fishery-cap) Base model fits to the fishery
+age-composition data. Colored bars show observed proportions with colors
+following each cohort across years. Points with intervals indicate median
+expected proportions and 95% credibility intervals from the Markov chain
+Monte Carlo calculations.
+
+(ref:main-age-comp-fits-fishery-alt) This figure shows the age composition
+fits for the fishery against the data. There is some slight over and
+under fitting in the early part of the time series from 1975 to 1995 but
+otherwise the model fits these data well.
+
+```{r main-age-comp-fits-fishery-fig, fig.cap = "(ref:main-age-comp-fits-fishery-cap)", fig.height = 10, out.height = "90%"}
+
+plot_age_comp_fit(base_model,
+                  type = "fishery",
+                  n_col = 4)
+```
+
+(ref:main-age-comp-fits-survey-cap) Base model fits to the acoustic survey
+age-composition data. Colored bars show observed proportions with
+colors following each cohort across years. Points with intervals indicate
+median expected proportions and 95% credibility intervals from the Markov
+chain Monte Carlo calculations.
+
+(ref:main-age-comp-fits-survey-alt) This figure shows the age composition
+fits for the acoustic survey against the data. There is some over
+fitting from 2001 to 2005. In recent years the data fit quite well.
+
+```{r main-age-comp-fits-survey-fig, fig.cap = "(ref:main-age-comp-fits-survey-cap)", fig.height = 10, out.height = "90%"}
+
+plot_age_comp_fit(base_model,
+                  n_col = 1,
+                  type = "survey",
+                  x_breaks = 2:15,
+                  label_loc = c(14, 0.45))
+```
+
+(ref:main-age-comp-pearson-cap) Pearson residuals for base model fits to
+the age-composition data for the medians of the Markov chain Monte Carlo
+posteriors for the fishery (top) and acoustic survey (bottom).
+Closed bubbles are positive residuals (observed > expected) and
+open bubbles are negative residuals (observed < expected). Green lines track
+cohorts from years of large recruitment events.
+
+(ref:main-age-comp-pearson-alt) This figure shows that there are no obvious
+systematic patterns in the Pearson residuals for the fishery and the survey.
+
+```{r main-age-comp-pearson-fig, fig.cap = "(ref:main-age-comp-pearson-cap)", fig.height = 10, out.height = "90%"}
+
+p <- NULL
+p[[1]] <-
+  plot_pearson_bubbles(base_model,
+                       type = "fishery",
+                       leg_pos = "top",
+                       xlim = c(start_yr_age_comps, last_data_yr),
+                        tick_prop = 0.7,
+                        vjust_x_labels = -1.5,
+                        remove_yr_labels = NULL)
+
+p[[2]] <-
+  plot_pearson_bubbles(base_model,
+                       type = "survey",
+                       alpha = 0.7,
+                       xlim = c(start_yr_age_comps, last_data_yr),
+                        tick_prop = 0.7,
+                        vjust_x_labels = -1.5,
+                        remove_yr_labels = NULL)
+
+plot_grid(plotlist = p, ncol = 1)
+```
+
+(ref:main-prior-posterior-cap) Prior (black lines) and posterior (blue
+histograms) distributions for natural mortality ($M$), equilibrium log
+recruitment ($\ln R_0)$, steepness ($h$), the additional process-error
+standard deviation (SD) for the acoustic survey, and the
+Dirichlet-multinomial parameters for the fishery ($\log \theta_{\text{fish}}$)
+and the survey ($\log \theta_{\text{surv}}$). Green triangles signify the initial
+value for each parameter. Red vertical lines represent the median of the
+posterior. The small downturns at the ends of the uniform priors for
+$ln(R_0)$ and the acoustic survey extra SD parameters represent the hard
+limits (via the smoothed line) set for the priors in the Stock Synthesis control file.
+
+(ref:main-prior-posterior-alt) This figure shows how the posteriors shift
+from the priors for key parameters. The steepness parameter appears to have
+an almost identical prior and posterior distribution.
+
+```{r main-prior-posterior-fig, fig.cap = "(ref:main-prior-posterior-cap)", fig.height = 10, out.height = "85%"}
+
+plot_priors_vs_posts(base_model,
+                     x_range = "prior",
+                     facet_title_font_size = 10,
+                     ncol = 3,
+                     nrow = 3)
+```
+
+(ref:main-prior-posterior-truncated-cap) As for Figure
+\@ref(fig:main-prior-posterior-fig) but the x axis of each panel is truncated
+to the range of the posterior distribution, and thus, there is the potential
+for the full range of the prior and the initial value to be missing from
+individual panels.
+
+(ref:main-prior-posterior-truncated-alt) This figure shows how the posteriors
+shift from the priors for key parameters. The steepness parameter appears to
+have an almost identical prior and posterior distribution.
+
+```{r main-prior-posterior-truncated-fig, fig.cap = "(ref:main-prior-posterior-truncated-cap)", fig.height = 10, out.height = "85%"}
+
+plot_priors_vs_posts(base_model,
+                     x_range = "posterior",
+                     facet_title_font_size = 10,
+                     ncol = 3,
+                     nrow = 3)
+```
+
+(ref:main-tv-selex-cap) Mountains plot of median fishery selectivity in each
+year for the base model. The range of selectivity is scaled to be between
+0 and 1 in each year.
+
+(ref:main-tv-selex-alt) This figure shows individual median selectivity
+plots for each year in a mountain range configuration. There is considerable
+variability among years and ages. In 2024 selectivity is low from age 1 to 5
+before quickly increasing at age 6 and older. 
+
+```{r main-tv-selex-fig, fig.cap = "(ref:main-tv-selex-cap)", fig.height = 9}
+
+tv_selex_start_yr <- 1990
+
+plot_selex_mountains(base_model,
+                     yrs = tv_selex_start_yr:last_data_yr,
+                     ages = 1:8,
+                     fill_num_colors = 50,
+                     scale = 20)
+```
+
+(ref:main-tv-selex-uncertainty-cap) Fishery selectivity sampled from
+posterior probability distribution by year for the base model. Black dots
+and bars indicate the median and 95% credibility interval, respectively.
+The shaded polygon also shows the 95% credibility interval. The range of
+selectivity is scaled to be between 0 and 1 in each year.
+Selectivity for `r tv_selex_start_yr` is shared for all years from
+`r start_yr` to `r tv_selex_start_yr`.
+
+(ref:main-tv-selex-uncertainty-alt) This figure shows individual panels for
+each year with selectivity medians and 0.95 credible intervals. Selectivity patterns
+are the same as in the previous figure.
+
+```{r main-tv-selex-uncertainty-fig, fig.cap = "(ref:main-tv-selex-uncertainty-cap)", fig.height = 9}
+
+plot_selex_uncertainty(base_model,
+                       n_col = 2,
+                       pad_top = TRUE,
+                       pad_bottom = TRUE)
+```
+
+(ref:main-tv-selex-posteriors-cap) Estimated selectivities for the acoustic
+survey age-2$+$ biomass index (top, with selectivity of zero for age-1 fish)
+and fishery (bottom -- shown for `r end_yr - 1` only, age-1 and older) from
+a subsample of 1,000 draws from the posterior distribution for the base model.
+
+(ref:main-tv-selex-posteriors-alt) This plot shows individual median
+selectivity trajectories for a subset of samples from the posteriors of
+fishery and survey selectivity parameters with 95 percent credible intervals.
+Survey selectivity monotonically increases from age 1 to age 6 with the exception
+of a small reduction at age 4. In 2024 fishery selectivity is low from age 1 to 5
+before quickly increasing at age 6 and older.
+
+```{r main-tv-selex-posteriors-fig, fig.cap = "(ref:main-tv-selex-posteriors-cap)", fig.height = 8}
+
+p <- list()
+p[[1]] <- plot_selex_posteriors(base_model,
+                                type = "survey",
+                                age_range = c(1, 8),
+                                n_posts = 1000,  # if change then change below
+                                        # and in caption
+                                show_xlab = FALSE,
+                                post_med_line_color = "red",
+                                unc_line_color = "red",
+                                glow = FALSE)
+p[[2]] <- plot_selex_posteriors(base_model,
+                                type = "fishery",
+                                age_range = c(1, 8),
+                                n_posts = 1000,
+                                glow = FALSE)
+plot_grid(plotlist = p, ncol = 1, align = "v")
+```
+
+\clearpage
+
+(ref:main-biomass-cap) Median (solid line) of the posterior distribution for
+beginning of the year female spawning biomass ($B_t$ in year $t$; Mt)
+through `r end_yr` (solid line) with 95% posterior credibility intervals
+(shaded area). The left-most circle with a 95% posterior credibility interval
+is the estimated unfished equilibrium biomass, $B_0$.
+
+(ref:main-biomass-alt) This figure shows that the median spawning biomass has
+been increasing in size since 2022.
+
+```{r main-biomass-fig, fig.cap = "(ref:main-biomass-cap)", fig.height = 4.5}
+
+plot_biomass(list(base_model),
+             list(base_model_name),
+             ylim = c(0, 5),
+             point_shape = ts_single_model_pointshape,
+             leg_pos = "none")
+```
+
+(ref:main-relative-biomass-cap) Median (solid line) of the posterior
+distribution for relative spawning biomass ($B_t / B_0$) through `r end_yr`
+with 95% posterior credibility intervals (shaded area). Dashed horizontal
+lines show 10%, 40%, and 100% of the unfished equilibrium ($B_0$).
+
+(ref:main-relative-biomass-alt) This figure shows that the relative spawning
+biomass has been increasing since 2022 but the amount of increase has lessened
+each year.
+
+```{r main-relative-biomass-fig, fig.cap = "(ref:main-relative-biomass-cap)", fig.height = 4.5}
+
+plot_rel_biomass(model_lst = list(base_model),
+                 model_names = list(base_model_name),
+                 ylim = c(0, 2.5),
+                 alpha = 0.2,
+                 leg_pos = "none") |>
+  suppressWarnings()
+```
+
+\clearpage
+
+(ref:main-recruitment-cap) Medians (solid circles) and means ($\mathrm{X}$)
+of the posterior distribution for recruitment (billions of age-0 fish) with
+95% posterior credibility intervals (vertical lines). The median of the
+posterior distribution for mean unfished equilibrium recruitment ($R_0$) is
+shown as the horizontal dashed line with the 95% posterior credibility
+interval shaded between the dotted lines.
+
+(ref:main-recruitment-alt) This figure shows the recruitment in each year.
+The 2020 cohort looks to be above average as does the 2021 cohort which is
+characterized by large uncertainty due to it being so young in the data.
+
+```{r main-recruitment-fig, fig.cap = "(ref:main-recruitment-cap)", fig.height = 5}
+
+plot_recruitment(list(base_model),
+                 list(base_model_name),
+                 inc_means = TRUE,
+                 leg_pos = "none") |>
+  suppressWarnings()
+```
+
+(ref:main-recruitment-devs-cap) Medians (solid circles) of the posterior
+distribution for log-scale recruitment deviations with 95% posterior
+credibility intervals (vertical lines). Recruitment deviations for the years
+`r recruit_dev_start_yr`--`r start_yr - 1` are used to calculate the numbers
+at age in `r start_yr`, the initial year of the model. Those after `r main_recdev_end`
+were not estimated in the model.
+
+(ref:main-recruitment-devs-alt) This figure shows recruitment deviations for
+each cohort. The same above-average cohorts seen in the recruitment figure
+are also seen here. The negative deviation for 2022 has high uncertainty but
+the entire uncertainty range remains below zero. 
+
+
+```{r main-recruitment-devs-fig, fig.cap = "(ref:main-recruitment-devs-cap)", fig.height = 5}
+
+plot_recdevs(list(base_model),
+             list(base_model_name),
+             line_color = ts_single_line_color,
+             leg_pos = "none")
+```
+
+\clearpage
+
+(ref:main-numbers-at-age-cap) Bubble plot of the medians of the posterior
+distributions of population numbers at age at the beginning of each year,
+where green diagonal lines follow each larger-than-usual year-class through
+time. The red line represents the mean age. The scale of the bubbles is
+represented in the key where the units are billions of fish; the largest
+overall bubble represents the `r max_median_nat`~billion age-0 recruits
+in `r yr_of_max_median_nat`. See Table~\@ref(tab:main-est-numbers-at-age-tab)
+for values.
+
+(ref:main-numbers-at-age-alt) This figure clearly shows the strong cohorts
+decreasing in numbers as they pass through the stock from one year to the
+next. The mean age has fluctuated over time and is currently rising since
+2021 and is currently just above a mean age of 3.
+
+```{r main-numbers-at-age-fig, fig.cap = "(ref:main-numbers-at-age-cap)", fig.height = 10, out.height = "90%"}
+
+plot_age_comp_bubbles(base_model, type = "fishery",
+                      proportions = FALSE,
+                      leg_pos = "top",
+                      tick_prop = 0.3,
+                      vjust_x_labels = -1.2,
+                      remove_yr_labels = NULL)
+```
+
+(ref:main-recruitment-scale-all-cap) Medians (circles) of the
+posterior distribution of annual recruitment relative to recruitment in
+2010 (recruitment divided by the 2010 recruitment for every MCMC sample),
+with 95% posterior credibility intervals (red lines). This procedure somewhat
+scales out the uncertainty due to uncertainty in mean unfished equilibrium
+recruitment ($R_0$), and better elicits comparisons of relative cohort sizes;
+for example, recruitment in 2014 is clearly smaller than in 2010 (horizontal
+green dashed line). The year 2010 was chosen as the basis for comparison
+due to its well recognized size and the stability of cohort strength
+estimates over time. The median of $R_0/R_{2010}$ is shown as the horizontal
+dashed line with the 95% posterior credibility interval shaded between the
+dotted lines.
+
+(ref:main-recruitment-scale-all-alt) This figure shows distributions of
+recruitment estimates relative to those in 2010 for all years highlighting
+the uncertainty of the 2020 and 2021 year classes.
+
+```{r main-recruitment-scale-all-fig, fig.cap = "(ref:main-recruitment-scale-all-cap)", fig.height = 4.5}
+
+plot_recruitment(list(base_model),
+                 list(base_model_name),
+                 inc_means = FALSE,
+                 relative = TRUE,
+                 ylim = c(0, 1.4),
+                 y_breaks = seq(0, 1.4, by = 0.2),
+                 leg_pos = "none",
+                 color = "red",
+                 point_shape = 16)
+```
+
+(ref:main-stock-recruitment-cap) Estimated stock--recruitment relationship for
+the base model with median predicted recruitments and 95% posterior
+credibility intervals. Colors indicate time-period, with yellow colors in the
+early years and blue colors in the recent years. The thick solid black line
+indicates the central tendency (mean) and the red line indicates the central
+tendency after bias correcting for the lognormal distribution (median).
+Shading around the stock--recruitment relationship indicates uncertainty in
+shape associated with distribution of the steepness parameter ($h$). The blue
+polygon on the right indicates the expected distribution of absolute
+recruitments.
+
+(ref:main-stock-recruitment-alt) This figure shows that the stock--recruitment
+relationship does not fit the estimated recruitments very well for this stock.
+It shows the effect of allowing recruitment deviations to have a large variance.
+
+```{r main-stock-recruitment-fig, fig.cap = "(ref:main-stock-recruitment-cap)", fig.height = 8}
+
+plot_stock_recruitment(base_model,
+                       ylim = c(0, 7))
+```
+
+(ref:main-fishing-intensity-cap) Trend in median relative fishing intensity
+(relative to the `r fspr_40` management level) through `r end_yr - 1` with
+95% posterior credibility intervals. The `r fspr_40` management level defined
+in the Joint U.S.-Canada Agreement for `r sp` is shown as a horizontal line
+at 1.0.
+
+(ref:main-fishing-intensity-alt) This figure shows that we have been below
+the management value of 1 for FSPR 40 percent throughout the entire time
+series.
+
+```{r main-fishing-intensity-fig, fig.cap = "(ref:main-fishing-intensity-cap)"}
+
+plot_fishing_intensity(base_model, line_color="grey32")
+```
+
+(ref:main-exploitation-fraction-cap) Trend in median exploitation fraction
+(catch divided by age-2$+$ biomass) through `r end_yr - 1` with 95% posterior
+credibility intervals.
+
+(ref:main-exploitation-fraction-alt) This figure shows that the current
+exploitation fraction of the female spawning biomass is approximately 0.06.
+This is a drop from the previous seven years where values were close to or well
+above 0.1.
+
+```{r main-exploitation-fraction-fig, fig.cap = "(ref:main-exploitation-fraction-cap)"}
+
+plot_exploitation_fraction(base_model, line_color="grey32")
+```
+
+(ref:main-phase-cap) Estimated historical path of median relative spawning
+biomass at the beginning of year $t$ and corresponding median relative
+fishing intensity in fishing year $t-1$ leading up to year $t$. Labels
+show the time series start and end years;
+labels correspond to year $t$ (i.e., year of the relative spawning biomass).
+Gray bars span the 95% credibility intervals for `r end_yr` relative
+spawning biomass (horizontal) and `r end_yr - 1` relative fishing intensity
+(vertical).
+
+(ref:main-phase-alt) This figure shows that we are currently not overfishing
+nor in an overfished state.
+
+```{r main-phase-fig, fig.cap = "(ref:main-phase-cap)", fig.height = 6}
+
+plot_phase(base_model,
+           start_yr,
+           end_yr,
+           init_lbl_x_off = -0.04,
+           init_lbl_y_off = -0.04,
+           final_lbl_x_off = 0.04,
+           final_lbl_y_off = 0.04)
+```
+
+(ref:main-projected-catch-density-cap) The posterior distribution of the
+default `r end_yr` catch limit calculated using the default harvest policy
+(`r f_40_40_10`). The median is `r ct_limit_quantiles["median"]`~t
+(vertical line), with the dark shaded area ranging from the 2.5%
+quantile to the 97.5% quantile, covering the range
+`r ct_limit_quantiles["lower"]`--`r ct_limit_quantiles["upper"]`~t.
+
+(ref:main-projected-catch-density-alt) This figure shows the wide posterior
+lognormal distribution of the default catch limit using the default harvest policy.
+
+```{r main-projected-catch-density-fig, fig.cap = "(ref:main-projected-catch-density-cap)", fig.height = 4.5}
+
+plot_param_density(base_model,
+                   param_nm = paste0("ForeCatch_", assess_yr),
+                   y_lim = c(0, 0.0017),
+                   expand_vec = c(100, 100),
+                   show_y_labels = FALSE,
+                   x_lab = paste0("Projected ", assess_yr, " catch (kt) ",
+                                  "based on the default harvesy policy"))
+#base_model$plots$catch_fore_density
+```
+
+(ref:main-fished-unfished-biomass-cap) A comparison of female spawning stock
+biomass with fishing (black; as in Figure~\@ref(fig:main-biomass-fig)) and
+when the effects of fishing on the population are removed (red; unfished time series).
+Medians (solid lines) of the posterior distribution for
+beginning of the year female spawning biomass ($B_t$ in year $t$; Mt)
+through `r end_yr` (solid lines) with 95% posterior credibility intervals
+(shaded areas). The left-most circles with 95% posterior credibility intervals
+show the estimated unfished equilibrium biomass, $B_0$. The difference between the
+two lines shows the impact of removing fishing mortality from the population.
+
+(ref:main-fished-unfished-biomass-alt) This figure shows that the female spawning biomass
+time series is higher when fishing is removed from the population dynamics compared to
+when it is included. The influence due to fishing (area between the two curves) has been
+highest since 2000.
+
+```{r main-fished-unfished-biomass-fig, fig.cap = "(ref:main-fished-unfished-biomass-cap)"}
+
+plot_biomass_fished_unfished(base_model,
+                             model_nms = c("Base model - Fished",
+                                           "Base model - Unfished"),
+                             leg_pos = c(0.6, 0.9),
+                             xlim = c(1963, assess_yr),
+                             ylim = c(0, 5),
+                             rel = FALSE)
+```
+
+(ref:main-fished-unfished-rel-biomass-cap) A comparison of relative
+spawning biomass when spawning biomass in year $t$ is related to unfished
+equilibrium biomass, $B_0$ (static $B_0$, black; as in
+Figure~\@ref(fig:main-relative-biomass-fig)) and when spawning biomass in
+year $t$ is related to the unfished biomass time series in year $t$ (dynamic
+$B_0$, red). Median (solid lines) of the posterior distribution for each
+calculation of relative spawning biomass through `r end_yr` with 95% posterior
+credibility intervals (shaded areas). Dashed horizontal lines show 10%,
+40%, and 100% of the unfished equilibrium ($B_0$). The default
+`r f_40_40_10` harvest policy uses relative spawning biomass based on a
+static $B_0$ determination of stock status.
+
+(ref:main-fished-unfished-rel-biomass-alt) This figure compares the relative
+spawning biomass time series when it is calculated using B zero based on
+the standard static equilibrium unfished biomass estimate versus a
+time-varying dynamic estimate of B zero based on the unfished time series.
+While general trends are similar the dynamic approach produces less
+variability. Stock status estimates in recent years are lower using
+the dynamic approach.
+
+```{r main-fished-unfished-rel-biomass-fig, fig.cap = "(ref:main-fished-unfished-rel-biomass-cap)"}
+
+plot_biomass_fished_unfished(base_model,
+                             model_nms = c("Base model - Static B0",
+                                           "Base model - Dynamic B0"),
+                             leg_pos = c(0.6, 0.9),
+                             ylim = c(0, 2.75),
+                             rel = TRUE)
+```
+
+(ref:main-depletion-comparison-cap) Median and 95% posterior
+credibility intervals of estimated relative spawning biomass to the start
+of `r end_yr` from the base model and projections to the start of
+`r forecast_yrs[length(forecast_yrs)]` (vertical shaded rectangle) for
+several management actions, which are defined in the decision tables. The
+default harvest policy catches are
+`r f(base_model$ct_default_policy[1])`~t in `r end_yr`,
+`r f(base_model$ct_default_policy[2])`~t in `r end_yr + 1`, and
+`r f(base_model$ct_default_policy[3])`~t in `r end_yr + 2`.
+
+(ref:main-depletion-comparison-alt) This figure shows that the
+median relative spawning biomass is projected to decline for the next
+3 years with zero catch and all non-zero catch levels
+evaluated.
+
+```{r main-depletion-comparison-fig, fig.cap = "(ref:main-depletion-comparison-cap)", fig.height = 5}
+
+plot_depl_fore_comparison(base_model,
+                          fore_inds = c(1, 2, 6, 10, 11),
+                          forecast_yrs = forecast_yrs)
+```
+
+(ref:main-risk-year-1-cap) Graphical representation of the probabilities
+related to spawning biomass, relative fishing intensity, and the
+`r end_yr + 1` default harvest policy catch for alternative `r end_yr` catch
+options (explained in Table~\@ref(tab:main-decisions-biomass-tab)) as listed in
+Table~\@ref(tab:main-risk-year-1-tab). The symbols indicate points that were
+computed directly from model output and lines interpolate between the points.
+
+(ref:main-risk-year-1-alt) This figure shows that the probability that the
+stock declines in 2025 is near 100 percent for all catch levels.
+The probability that the stock falls under B40 is between 10 percent and 35
+percent for examined catch scenarios.
+
+```{r main-risk-year-1-fig, fig.cap = "(ref:main-risk-year-1-cap)", fig.height = 5}
+
+plot_fore_compare(base_model,
+                  forecast_yrs = forecast_yrs,
+                  fore_yr = forecast_yrs[1],
+                  leg_pos = c(0.25, 0.75),
+                  leg_font_size = 9,
+                  remove_x_val = c(270)) +
+  # Following make the legend smaller and legend items closer together
+  theme(legend.key.size = unit(0.25, "cm"),
+        legend.spacing.y = unit(0.01, "cm"),
+        legend.box.background = element_rect(colour = "black")) +
+  guides(color = guide_legend(byrow = TRUE))
+```
+
+(ref:main-risk-year-2-cap) Graphical representation of the probabilities
+related to spawning biomass, relative fishing intensity, and the
+`r end_yr + 2` default harvest policy catch for alternative `r end_yr + 1`
+catch options (including associated `r end_yr` catch; catch options
+explained in Table~\@ref(tab:main-decisions-biomass-tab)) as listed in
+Table~\@ref(tab:main-risk-year-2-tab). The symbols indicate points that were
+computed directly from model output and lines interpolate between the points.
+
+(ref:main-risk-year-2-alt) This figure shows that the probability that the
+stock declines in 2026 is near 100 percent for all catch levels
+including zero. The probability that the stock falls under B40 rises
+above 50 percent for catches above approximately 400 kilotonnes.
+
+```{r main-risk-year-2-fig, fig.cap = "(ref:main-risk-year-2-cap)", fig.height = 5}
+
+plot_fore_compare(base_model,
+                  forecast_yrs = forecast_yrs,
+                  fore_yr = forecast_yrs[2],
+                  leg_pos = c(0.25, 0.75),
+                  leg_font_size = 9,
+                  remove_x_val = c(264, 342, 651)) +
+  # Following make the legend smaller and legend items closer together
+  theme(legend.key.size = unit(0.25, "cm"),
+        legend.spacing.y = unit(0.01, "cm"),
+        legend.box.background = element_rect(colour = "black")) +
+  guides(color = guide_legend(byrow = TRUE))
+```
+
+<!--(ref:main-risk-year-3-cap) Graphical representation of the probabilities-->
+<!--related to spawning biomass, relative fishing intensity, and the-->
+<!--`r end_yr + 3` default harvest policy catch for alternative `r end_yr + 2`-->
+<!--catch options (including associated `r end_yr` and `r end_yr + 1` catches;-->
+<!--catch options explained in Table~\@ref(tab:main-decisions-biomass-tab)) as-->
+<!--listed in Table~\@ref(tab:main-risk-year-3-tab). The symbols indicate points-->
+<!--that were computed directly from model output and lines interpolate between-->
+<!--the points.-->
+
+<!--(ref:main-risk-year-3-alt) This figure shows that the probability that the-->
+<!--stock declines in 2027 is approximately 65 percent or greater for all catch-->
+<!--levels including zero. The probability that the stock falls under B40 is-->
+<!--below 0.1 for catches up to approximately 350 kilotonnes.-->
+
+<!--```{r main-risk-year-3-fig, fig.cap = "(ref:main-risk-year-3-cap)", fig.height = 5}-->
+
+<!--plot_fore_compare(base_model,-->
+<!--                  forecast_yrs = forecast_yrs,-->
+<!--                  fore_yr = forecast_yrs[3],-->
+<!--                  leg_pos = c(0.25, 0.75),-->
+<!--                  leg_font_size = 9,-->
+<!--                  remove_x_val = c(264, 605)) +-->
+<!--  # Following make the legend smaller and legend items closer together-->
+<!--  theme(legend.key.size = unit(0.25, "cm"),-->
+<!--        legend.spacing.y = unit(0.01, "cm"),-->
+<!--        legend.box.background = element_rect(colour = "black")) +-->
+<!--  guides(color = guide_legend(byrow = TRUE))-->
+<!--```-->
+
+\clearpage
+
+(ref:main-age-comp-forecast-cap) Forecast age compositions in numbers and
+in weight for the `r end_yr` fishery catch (combined across all sectors in
+both countries). Light blue bars show median estimates. Thick black lines
+show 50% credibility intervals and thin black lines show 95% credibility
+intervals. These estimates are based on the posterior distribution for
+selectivity averaged across the most recent five years, weight-at-age
+data averaged across the most recent five years, and the distribution for
+expected numbers at age at the start of `r end_yr` (see
+Table~\@ref(tab:main-est-numbers-at-age-tab) for the Markov chain Monte Carlo
+medians of numbers-at-age for all years). The panel on the right is scaled
+based on the weight at each age averaged across the last five years.
+
+(ref:main-age-comp-forecast-alt) This figure shows how the few dominant
+cohorts are expected to make up most of the coming years catch. The 2021
+cohort is predicted to be the largest cohort in the catch in 2025 followed
+by the 2020 cohort. Both predictions have high uncertainty when compared
+to the other cohorts.
+
+```{r main-age-comp-forecast-fig, fig.cap = "(ref:main-age-comp-forecast-cap)", fig.height = 4.5}
+
+plot_fore_age_comps(base_model, y_lim = c(0, 0.65))
+```
+
+(ref:main-biomass-base-alternative-1-cap) Markov chain Monte Carlo estimates
+of spawning biomass for the base model and alternative sensitivity runs
+representing changing the mean of the prior for steepness from 1.0 to 0.5,
+fixing steepness at 1.0, lower (1.0) and higher (1.6) levels of variation
+assumed about the stock--recruitment relationship ($\sigma_r$), changing the
+standard deviation of the prior for natural mortality, and using the Hamel/Cope
+prior distribution for natural mortality. Note that the results for the base model and first four
+sensitivities are very similar and somewhat hidden by the purple line.
+
+(ref:main-biomass-base-alternative-1-alt) This figure shows how spawning
+biomass changes between the first set of sensitivity runs. Changing the
+standard deviation of the natural mortality parameter has the most notable
+effect and scales the population up with an increase in its size.
+
+```{r main-biomass-base-alternative-1-fig, fig.cap = "(ref:main-biomass-base-alternative-1-cap)", fig.height = 5}
+
+if(!is.null(d_obj_sens_biomass[[1]])){
+  plot_biomass(d_obj = d_obj_sens_biomass[[1]],
+               x_expansion = 3.5,
+               ylim = c(0, 20),
+               y_breaks = seq(0, 20, 2),
+               leg_font_size =8,
+               leg_pos = c(0.65, 0.85),
+               leg_ncol = 2,
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-status-base-alternative-1-cap) Markov chain Monte Carlo estimates
+of stock status (relative spawning biomass) for the base model and alternative
+sensitivity runs representing changing key parameters. See
+Figure~\@ref(fig:main-biomass-base-alternative-1-fig) for sensitivity
+descriptions.
+Note that the results for the base model are very similar to the first two
+sensitivities and so are somewhat hidden by the blue and red lines.
+
+(ref:main-status-base-alternative-1-alt) This figure shows how relative
+spawning biomass changes between the first set of sensitivity runs. As in
+the absolute biomass figure changing the standard deviation of the natural
+mortality parameter has the most notable effect and scales the population
+up with an increase in its size.
+
+```{r main-status-base-alternative-1-fig, fig.cap = "(ref:main-status-base-alternative-1-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_rel_biomass[[1]])){
+  plot_rel_biomass(d_obj = d_obj_sens_rel_biomass[[1]],
+                   ylim = c(0, 4),
+                   x_expansion = 2,
+                   leg_font_size = 8,
+                   leg_pos = c(0.65, 0.85),
+                   leg_ncol = 2,
+                   rev_colors = TRUE)
+}
+```
+
+(ref:main-biomass-base-alternative-2-cap) Markov chain Monte Carlo estimates
+of female spawning biomass for the base model and alternative sensitivity models
+that represent the following changes in data: removing the index of age-1
+fish, down-weighting fishery composition data using the
+McAllister--Ianelli method, adding a relative index of abundance using
+environmental DNA, and using maturity estimates from mid-year rather than later
+in the year.
+
+(ref:main-biomass-base-alternative-2-alt) This figure shows how spawning
+biomass changes between the second set of sensitivity runs. The biomass
+estimate increases in recent years with the addition of the age-1 index and it
+decreases in recent years when the eDNA index is added.
+Female spawning biomass in all years is less when maturity is estimated
+earlier in the year.
+
+```{r main-biomass-base-alternative-2-fig, fig.cap = "(ref:main-biomass-base-alternative-2-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_biomass[[1]])){
+  plot_biomass(d_obj = d_obj_sens_biomass[[2]],
+               x_expansion = 3.5,
+               leg_pos = c(0.65, 0.80),
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-status-base-alternative-2-cap) Markov chain Monte Carlo estimates
+of stock status (relative spawning biomass) for the base model and
+alternative sensitivity models that represent changes in data. See
+Figure~\@ref(fig:main-biomass-base-alternative-2-fig) for sensitivity
+descriptions.
+
+(ref:main-status-base-alternative-2-alt) This figure shows how relative
+spawning biomass changes between the second set of sensitivity runs. As in
+the absolute biomass figure the relative biomass estimate increases with the
+addition of the age-1 index and decreases with the addition of the eDNA index.
+
+```{r main-status-base-alternative-2-fig, fig.cap = "(ref:main-status-base-alternative-2-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_rel_biomass[[1]])){
+  plot_rel_biomass(d_obj = d_obj_sens_rel_biomass[[2]],
+                   x_expansion = 2,
+                   ylim = c(0, 2.5),
+                   leg_pos = c(0.65, 0.80),
+                   rev_colors = TRUE)
+}
+```
+
+(ref:main-recruitment-base-alternative-2-cap) Markov chain Monte Carlo
+estimates of recruitment deviations for the base model and alternative
+sensitivity runs that represent changes in data. See
+Figure~\@ref(fig:main-biomass-base-alternative-2-fig) for sensitivity
+descriptions.
+
+(ref:main-recruitment-base-alternative-2-alt) This figure shows the occasional
+changes in recruitment deviations for some of the sensitivity runs. Adding
+the age 1 index increases the estimates of recruitment after 2018.
+
+```{r main-recruitment-base-alternative-2-fig, fig.cap = "(ref:main-recruitment-base-alternative-2-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_recdev[[1]])){
+  plot_recdevs(d_obj = d_obj_sens_recdev[[2]],
+               leg_pos = c(0.30, 0.90),
+               leg_ncol = 2,
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-index-base-alternative-2-cap) Markov chain Monte Carlo
+estimates of the fit to the acoustic survey biomass time series for the
+base model and alternative sensitivity runs that represent changes in data.
+The black triangles with error bars represent the input data points with
+associated uncertainty, and the blue dots are the estimated values for each
+year. See Figure~\@ref(fig:main-biomass-base-alternative-2-fig) for
+sensitivity descriptions.
+
+(ref:main-index-base-alternative-2-alt) This figure shows the similarity
+between some sensitivity runs of the estimates of the fit to the biomass
+index. Addition of the age-1 index results in a considerable increase in recent survey index
+fits while adding the eDNA index reduces the fit in 2021 but fits well the index in 2023.
+
+```{r main-index-base-alternative-2-fig, fig.cap = "(ref:main-index-base-alternative-2-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_age2_index_grp2[[1]])){
+  plot_survey_index_fits(base_model,
+                         d_obj = d_obj_sens_age2_index_grp2[[1]],
+                         survey_type = "age2",
+                         rev_colors = TRUE,
+                         tick_prop = 1,
+                         leg_pos = c(0.18, 0.8),
+                         xlim = c(1995, end_yr))
+}
+```
+
+(ref:main-index-edna-cap) Markov chain Monte Carlo
+estimates of the fit to the eDNA survey biomass time series for the
+sensitivity model which includes the eDNA survey index. The black triangles
+with error bars represent the input data points with associated uncertainty,
+and the blue dots are the estimated values for each year.
+
+(ref:main-index-edna-alt) This figure shows the three indices and model fits
+to those index points for the eDNA survey for the sensitivity which includes
+eDNA survey as an index of abundance. The eDNA index is fit well in this sensitivity.
+
+```{r main-index-edna-fig, fig.cap = "(ref:main-index-edna-cap)", fig.height = 4.5}
+
+plot_survey_index_fits(sens_models[[2]][[4]],
+                       list(sens_models[[2]][[4]]),
+                       sens_models_desc[[2]][[3]],
+                       survey_type = "edna",
+                       tick_prop = 1,
+                       vjust_x_labels = -2,
+                       leg_pos = "none",
+                       ylim = c(0, 0.5),
+                       y_breaks = seq(0, 0.5, 0.1),
+                       xlim = c(2019, 2023),
+                       x_breaks = seq(2019, 2023, 1),
+                       x_labs_mod = 1,
+                       x_expansion = 0.5,
+                       obs_upper_bar_width = 0.05) +
+  theme(axis.title.y = element_text(size = panels_title_size),
+        axis.title.x = element_text(size = panels_title_size),
+        # plot.margin: top, right,bottom, left
+        plot.margin = margin(12, 12, 6, 12))
+```
+
+(ref:main-maturity-ogive-sens-cap) Maturity ogives by year used in the
+sensitivity to maturity being reached earlier in the year (July 1).
+The thick black line shows the equilibrium ogive which is an average of all
+years; the thick red line shows the forecast ogive which is an average of
+the last five years (`r last_data_yr - 4`--`r last_data_yr`). The colors of
+the year lines move from orange in 2009 through the spectrum to dark blue in
+`r last_data_yr`.
+
+(ref:main-maturity-ogive-sens-alt) Maturity by year is shown beginning in 2009 to
+present. The equilibrium and forecast ogives are also shown and appear to
+be very similar. The equilibrium ogive is an average of all years and
+the forecast ogive is an average of the last five years. Fish appear to
+reach full maturity between the age of 3 and 4 in all years.
+
+```{r main-maturity-ogive-sens-fig, fig.cap = "(ref:main-maturity-ogive-sens-cap)", fig.height = 10, out.height = "90%"}
+
+plot_maturity_ogives(doy = 182,
+                     vert_lines = c(2, 3, 4, 5, 6),
+                     vert_lines_thickness = 0.25)
+```
+
+(ref:main-biomass-base-alternative-4-cap) Markov chain Monte Carlo estimates
+of spawning biomass for the base model and alternative sensitivity runs
+representing different standard deviations ($\Phi$) associated with
+time-varying selectivity. Standard deviations examined are below (0.21
+and 0.70) and above (2.10) the base model value of 1.4.
+
+(ref:main-biomass-base-alternative-4-alt) This figure shows that recent
+spawning biomass varies for some sensitivity runs. Reducing the Phi
+selectivity parameter results in a large increase in current biomass while
+increasing it results in a decrease.
+
+```{r main-biomass-base-alternative-4-fig, fig.cap = "(ref:main-biomass-base-alternative-4-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_biomass[[1]])){
+  plot_biomass(d_obj = d_obj_sens_biomass[[3]],
+               x_expansion = 3.5,
+               leg_font_size = 12,
+               leg_pos = c(0.65, 0.85),
+               leg_ncol = 2,
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-status-base-alternative-4-cap) Markov chain Monte Carlo estimates
+of stock status (relative spawning biomass) for the base model and
+alternative sensitivity runs representing different standard deviations
+($\Phi$) associated with time-varying selectivity. See
+Figure~\@ref(fig:main-biomass-base-alternative-4-fig) for sensitivity
+descriptions.
+
+(ref:main-status-base-alternative-4-alt) This figure shows that recent
+relative spawning biomass varies for some sensitivity runs. As in the
+absolute biomass figure reducing the Phi selectivity parameter results in
+a large increase in current biomass while increasing it results in a decrease.
+
+```{r main-status-base-alternative-4-fig, fig.cap = "(ref:main-status-base-alternative-4-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_rel_biomass[[1]])){
+  plot_rel_biomass(d_obj = d_obj_sens_rel_biomass[[3]],
+                   ylim = c(0, 3),
+                   show_arrows = TRUE,
+                   x_expansion = 2,
+                   leg_font_size = 12,
+                   leg_pos = c(0.65, 0.85),
+                   rev_colors = TRUE)
+}
+```
+
+(ref:main-recruitment-base-alternative-4-cap) Markov chain Monte Carlo
+estimates of recruitment for the base model and alternative sensitivity
+runs representing different standard deviations ($\Phi$) associated with
+time-varying selectivity. See
+Figure~\@ref(fig:main-biomass-base-alternative-4-fig) for sensitivity
+descriptions.
+
+(ref:main-recruitment-base-alternative-4-alt) This figure shows differences
+in recruitment between certain sensitivity runs. The recruitment estimate
+for the large cohorts is highly sensitive to the change in the Phi parameter.
+
+```{r main-recruitment-base-alternative-4-fig, fig.cap = "(ref:main-recruitment-base-alternative-4-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_recr[[1]])){
+  plot_recruitment(d_obj = d_obj_sens_recr[[3]],
+                   leg_font_size = 12,
+                   leg_pos = c(0.45, 0.88),
+                   inc_means = FALSE,
+                   rev_colors = TRUE)
+}
+```
+
+(ref:main-recruitment-devs-base-alternative-4-cap) Markov chain Monte Carlo
+estimates of recruitment deviations for the base model and alternative
+sensitivity runs representing different standard deviations ($\Phi$)
+associated with time-varying selectivity. See
+Figure~\@ref(fig:main-biomass-base-alternative-4-fig) for sensitivity
+descriptions.
+
+(ref:main-recruitment-devs-base-alternative-4-alt) This figure shows
+differences in recruitment deviations between certain sensitivity runs. As
+with the absolute recruitment figure the recruitment estimate for the large
+cohorts is highly sensitive to the change in the Phi parameter.
+
+```{r main-recruitment-devs-base-alternative-4-fig, fig.cap = "(ref:main-recruitment-devs-base-alternative-4-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_recdev[[1]])){
+  plot_recdevs(d_obj = d_obj_sens_recdev[[3]],
+               leg_pos = c(0.15, 0.88),
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-index-base-alternative-4-cap) Markov chain Monte Carlo estimates
+of the fit to the survey index of age-2$+$ biomass for the base model and
+alternative sensitivity runs representing different standard deviations
+($\Phi$) associated with time-varying selectivity. See
+Figure~\@ref(fig:main-biomass-base-alternative-4-fig) for sensitivity
+descriptions.
+
+(ref:main-index-base-alternative-4-alt) This figure shows differences in the
+fit to the biomass index for certain sensitivity runs. There is a large
+scaling upward of recent index estimates when the Phi parameter is
+set to 0.21.
+
+```{r main-index-base-alternative-4-fig, fig.cap = "(ref:main-index-base-alternative-4-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_age2_index_grp3[[1]])){
+  plot_survey_index_fits(base_model,
+                         d_obj = d_obj_sens_age2_index_grp3[[1]],
+                         survey_type = "age2",
+                         rev_colors = TRUE,
+                         tick_prop = 1,
+                         leg_pos = c(0.15, 0.88),
+                         xlim = c(1995, end_yr + 1))
+}
+```
+
+<!-- Natural mortality at age -->
+(ref:main-biomass-base-alternative-5-cap) Markov chain Monte Carlo estimates
+of spawning biomass for the base model and alternative sensitivity runs
+representing different ways to parameterize natural mortality at age, where
+the baseline mortality is estimated (Natural mortality at age) or fixed
+(Fixed natural mortality at age). Year-specific deviations relating to
+cannibalistic mortality are added to the baseline mortality in both
+sensitivities. Natural mortality is assumed to be equal for
+all ages five and above.
+
+(ref:main-biomass-base-alternative-5-alt) This figure shows that recent
+spawning biomass varies for some natural mortality at age sensitivity runs.
+Fixing natural mortality
+at age to the estimates from an external model greatly reduces the uncertainty
+in the estimates of spawning biomass and reduced them to near target levels.
+
+```{r main-biomass-base-alternative-5-fig, fig.cap = "(ref:main-biomass-base-alternative-5-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_biomass[[4]])){
+  plot_biomass(d_obj = d_obj_sens_biomass[[4]],
+               x_expansion = 3.5,
+               ylim = c(0, 5),
+               leg_font_size = 12,
+               leg_pos = c(0.65, 0.9),
+               leg_ncol = 2,
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-status-base-alternative-5-cap) Markov chain Monte Carlo estimates
+of stock status (relative spawning biomass) for the base model and
+alternative sensitivity runs representing different ways to parameterize
+natural mortality at age. See
+Figure~\@ref(fig:main-biomass-base-alternative-5-fig) for sensitivity
+descriptions.
+
+(ref:main-status-base-alternative-5-alt) This figure shows that recent
+relative spawning biomass is near the 40 percent biomass target when
+natural mortality is fixed at values estimated from an external model.
+
+```{r main-status-base-alternative-5-fig, fig.cap = "(ref:main-status-base-alternative-5-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_rel_biomass[[4]])){
+  plot_rel_biomass(d_obj = d_obj_sens_rel_biomass[[4]],
+                   ylim = c(0, 2.5),
+                   show_arrows = TRUE,
+                   x_expansion = 2,
+                   leg_font_size = 12,
+                   leg_pos = c(0.65, 0.85),
+                   rev_colors = TRUE)
+}
+```
+
+(ref:main-recruitment-base-alternative-5-cap) Markov chain Monte Carlo
+estimates of recruitment for the base model and alternative sensitivity runs
+representing different ways to parameterize natural mortality at age. See
+Figure~\@ref(fig:main-biomass-base-alternative-5-fig) for sensitivity
+descriptions.
+
+(ref:main-recruitment-base-alternative-5-alt) Estimates of recruitment are
+much higher when natural mortality at age is estimated and typically the
+lowest from the base model.
+
+```{r main-recruitment-base-alternative-5-fig, fig.cap = "(ref:main-recruitment-base-alternative-5-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_recr[[4]])){
+  plot_recruitment(d_obj = d_obj_sens_recr[[4]],
+                   leg_font_size = 12,
+                   leg_pos = c(0.45, 0.88),
+                   inc_means = FALSE,
+                   rev_colors = TRUE,
+                   ylim = c(0, 100))
+}
+```
+
+(ref:main-recruitment-devs-base-alternative-5-cap) Markov chain Monte Carlo
+estimates of recruitment deviations  for the base model and
+alternative sensitivity runs representing different ways to parameterize
+natural mortality at age. See
+Figure~\@ref(fig:main-biomass-base-alternative-5-fig) for sensitivity
+descriptions.
+
+(ref:main-recruitment-devs-base-alternative-5-alt) The estimates of
+recruitment deviations differ for nearly every year across the three model runs.
+
+```{r main-recruitment-devs-base-alternative-5-fig, fig.cap = "(ref:main-recruitment-devs-base-alternative-5-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_recdev[[4]])){
+  plot_recdevs(d_obj = d_obj_sens_recdev[[4]],
+               leg_pos = c(0.18, 0.88),
+               rev_colors = TRUE)
+}
+```
+
+(ref:main-index-base-alternative-5-cap) Markov chain Monte Carlo estimates
+of the fit to the survey index of age-2$+$ biomass for the base model and
+alternative sensitivity runs representing different ways to parameterize
+natural mortality at age. See
+Figure~\@ref(fig:main-biomass-base-alternative-5-fig) for sensitivity
+descriptions.
+
+(ref:main-index-base-alternative-5-alt) This figure shows differences in the
+fit to the biomass index for certain sensitivity runs. There is only minor differences
+in the fit to the survey across these scenarios.
+
+```{r main-index-base-alternative-5-fig, fig.cap = "(ref:main-index-base-alternative-5-cap)", fig.height = 4.5}
+
+if(!is.null(d_obj_sens_age2_index_grp4[[1]])){
+  plot_survey_index_fits(base_model,
+                         d_obj = d_obj_sens_age2_index_grp4[[1]],
+                         survey_type = "age2",
+                         rev_colors = TRUE,
+                         tick_prop = 1,
+                         leg_pos = c(0.18, 0.88),
+                         xlim = c(1995, end_yr + 1))
+}
+```
+
+(ref:main-mortality-sens-cap) Mortality due to cannibalism for five age groups
+(darker colors for younger ages), where mortality is assumed to be equal for
+all ages five and above. Mortality is highest for younger ages and is increasing
+for all ages in the most recent years of projections from the Climate-Enhanced,
+Age-based model with Temperature-specific Trophic Linkages and Energetics
+(CEATTLE) model.
+
+(ref:main-mortality-sens-alt) Cannibalistic mortality is higher for
+age-1 fish than any other age. Estimates are projected to increase in
+the coming years.
+
+```{r main-mortality-sens-fig, fig.cap = "(ref:main-mortality-sens-cap)", fig.height = 10, out.height = "90%"}
+ggplot2::ggplot(
+  dplyr::filter(m_at_age_df, age < 6, year <= last_data_yr + 5),
+  ggplot2::aes(year, M2, color = age, group = age)
+) +
+  ggplot2::geom_line() +
+  ggplot2::xlab("Year") +
+  ggplot2::ylab("Cannibalistic mortality") +
+  ggplot2::theme(legend.title = ggplot2::element_blank(),
+      # legend.text = ggplot2::element_text(size = leg_font_size),
+      legend.text = ggplot2::element_text(0),
+      # axis.text.x = ggplot2::element_text(vjust = vjust_x_labels),
+      # axis.title.x = ggplot2::element_text(vjust = vjust_x_labels),
+      axis.title.y = ggplot2::element_text(vjust = 2))
+```
+
+<!-- End Natural mortality at age -->
+\clearpage
+
+(ref:main-retrospective-recruitment-cap) Retrospective analysis of
+recruitment deviations from Markov chain Monte Carlo models over the last
+`r length(retro_cohorts)` years. Recruitment deviations are the median
+log-scale differences between recruitment estimated by the model and expected
+recruitment from the stock-recruitment relationship (shading represents
+95% posterior credibility intervals for a select low
+and high deviation). Age-0 recruitment
+deviations are non-zero because Markov chain Monte Carlo allows for
+sampling from the full lognormal distribution. Lines represent estimated
+recruitment deviations for cohorts born from `r min(retro_cohorts)` to
+`r max(retro_cohorts) + 1`, with cohort birth year marked at the right of each
+color-coded line. For example, the right-most point for the `r assess_yr - 8`
+cohort shows the cohort at age-8 (i.e., at the start of `r assess_yr`,
+which represents the base model and includes data through `r assess_yr - 1`).
+The next point to the left is the `r assess_yr - 8` cohort at age-7,
+calculated by removing one year of data (so includes data up to
+`r assess_yr - 2`). Thus, models are fit to data available only up to the
+start of the year in which each cohort became a given age, such that the
+last year of data for a given point equals
+$cohort\ birth\ year + cohort\ age - 1$.
+
+(ref:main-retrospective-recruitment-alt) This figure shows how recruitment
+estimates for age-0 fish tend to be small but positive to allow for
+forecasted landings and that information is not typically available to
+estimate recruitments until fish are of age three. Estimates of larger
+deviates take a longer time to stabilize.
+
+```{r main-retrospective-recruitment-fig, fig.cap = "(ref:main-retrospective-recruitment-cap)", fig.height = 6}
+
+plot_squid(base_model,
+           show_ci = TRUE,
+           ci_yrs = 2012:2015)
+```
+
+<!-- Don't remove the clearpage here, you will get a 'to many
+unprocessed floats' -->
+\clearpage
+
+(ref:main-retrospective-recruitment-2-cap) As for
+Figure~\@ref(fig:main-retrospective-recruitment-fig) but with the credibility
+intervals shown for the 2020 and 2021 cohorts.
+
+(ref:main-retrospective-recruitment-2-alt) This figure shows the high
+uncertainty of the 2020 and 2021 cohorts when there is limited data to inform
+them.
+
+```{r main-retrospective-recruitment-2-fig, fig.cap = "(ref:main-retrospective-recruitment-2-cap)", fig.height = 6}
+
+plot_squid(base_model,
+           show_ci = TRUE,
+           ci_yrs = 2020:2021)
+```
+
+(ref:main-relative-retrospective-recruitment-cap) Retrospective recruitment
+estimates shown in Figure \@ref(fig:main-retrospective-recruitment-fig)
+scaled relative to the most recent estimate of the strength of each cohort.
+
+(ref:main-relative-retrospective-recruitment-alt) The estimates of
+recruitment deviations scaled to the most recent estimate. Almost all trend
+towards zero by age three except for the 2015 cohort which was a strong
+negative recruitment deviation.
+
+```{r main-relative-retrospective-recruitment-fig, fig.cap = "(ref:main-relative-retrospective-recruitment-cap)", fig.height = 6}
+
+plot_squid(base_model,
+           relative = TRUE)
+```
+
+(ref:main-biomass-recruitment-retrospective-cap) Markov chain Monte Carlo
+estimates of spawning biomass at the start of each year (top) and recruitment
+(bottom) for the base model and 5-year retrospective runs.
+
+(ref:main-biomass-recruitment-retrospective-alt) This figure shows how
+spawning biomass and recruitment vary for retrospective runs. The
+retrospectives all follow the same biomass trajectory and have similar
+recruitment estimates for all but the most recent years indicating a
+generally stable model. The minus two year retrospective run indicated an
+extremely high recruitment without the age-1 index to counter fishery age
+composition data.
+
+```{r main-biomass-recruitment-retrospective-fig, fig.cap = "(ref:main-biomass-recruitment-retrospective-cap)", fig.height = 8}
+
+p <- list()
+p[[1]] <- plot_biomass(d_obj = base_model$retrospectives$biomass_df,
+                       ylim = c(0, 5),
+                       leg_font_size = 12,
+                       x_expansion = 3.5,
+                       leg_pos = c(0.6, 0.89),
+                       leg_ncol = 2,
+                       alpha = 0.1)
+p[[2]] <- plot_recruitment(d_obj = base_model$retrospectives$recr_df,
+                           leg_pos = "none")
+
+plot_grid(plotlist = p,
+          nrow = 2,
+          ncol = 1,
+          align = "v",
+          rel_heights = c(1, 1))
+```
+
+\clearpage
+
+(ref:main-historical-assessments-cap) Summary of historical `r sp`
+assessment estimates of spawning biomass. Estimates are MLEs or Markov chain
+Monte Carlo medians depending on the model structure. Shading represents the
+95% credible interval from the `r assess_yr` base model. Line colors are
+shades of orange for the oldest models, yellow shades for the 2000's, green
+shades for the 2010's and into blue shades from 2013 to present.
+
+(ref:main-historical-assessments-alt) This figure shows the varying
+historical estimates of spawning biomass from the annual assessments. The large
+change from this year to last year is mostly due to the removal of the age-1 index.
+
+```{r main-historical-assessments-fig, fig.cap = "(ref:main-historical-assessments-cap)", fig.height = 5.5}
+
+plot_assessment_history_biomass(base_model,
+                                assess_history_df,
+                                leg_pos = c(0.73, 0.7),
+                                leg_font_size = 12) +
+  theme(axis.text.x = element_text(vjust = -2),
+        axis.title.x = element_text(vjust = -2),
+        plot.margin = margin(0, 0, 12, 12))
+```
+
+(ref:main-historical-dispersion-cap) Comparison of absolute (left panel)
+and relative (right panel) variability associated with terminal year
+estimates of spawning biomass from `r sp` stock assessments dating back to
+2012 (note: terminal year is the same as assessment year). The interquartile
+range specifies the width from quartile 1 ($Q_1$: 25th percentile) to quartile
+3 ($Q_3$: 75th percentile) of terminal year spawning biomass from the posterior
+distribution and is a measure of absolute variability (similar to credible
+intervals). The quartile coefficient of dispersion is a relative measure
+of variability that can be compared across different data sets (similar to
+the coefficient of variation but less susceptible to outliers) and is
+calculated as $(Q_3 - Q_1) / (Q_1 + Q_3)$.
+
+(ref:main-historical-dispersion-alt) This figure shows the amount of
+absolute and scaled variability present with terminal year estimates of
+spawning biomass from assessments dating back to 2012. The most recent year
+is in line with earlier years.
+
+<!-- Don't remove the clearpage here, you will get a 'to many
+unprocessed floats' -->
+\clearpage
+
+```{r main-historical-dispersion-fig, fig.cap = "(ref:main-historical-dispersion-cap)"}
+
+p <- list()
+p[[1]] <-
+  plot_assessment_history_disp(base_model)
+p[[2]] <-
+  plot_assessment_history_disp(base_model,
+                               type = "coeff",
+                               y_lim = c(0, 0.6))
+plot_grid(plotlist = p, nrow = 1)
+```
+
+(ref:main-historical-1-cap) For each year $t$, P$(B_{t+1} < B_t)$ is the
+probability that the spawning biomass at the start of $t+1$ is below that
+at the start of $t$. It is calculated in two ways. Red circles: the
+probability is taken from year $t$'s stock assessment document, from the
+row in the decision table corresponding to the consequent catch in year $t$
+(with interpolation if necessary). Blue triangles: the probability is
+calculated using the current `r assess_yr` base model. The grey horizontal
+line is the 50% value. For each year except 2017, 2021, and 2023, both
+probabilities lie on the same side of the grey line, indicating that each
+year's assessment model has almost always `correctly' estimated an increase
+or decrease in the subsequent year's biomass. For the `r assess_yr`
+assessment the probabilities are shown for all catch alternatives for
+`r assess_yr`, as described in Table~\@ref(tab:main-decisions-biomass-tab),
+with 0~t being the lowest probability, shown in pink (the others are all
+overlayed at 100\%).
+
+(ref:main-historical-1-alt) This figure compares historical estimates
+of probabilities of the stock declining with those from the current base
+model.
+
+```{r main-historical-1-fig, fig.cap = "(ref:main-historical-1-cap)", fig.height = 6}
+
+plot_historical_probs(base_model,
+                      hist_probs = assess_history_probs_df,
+                      add.projs = TRUE,
+                      legend.inset = c(0.27, 0),
+                      legend.cex = 0.9)
+```
+
+(ref:main-historical-2-cap) For each year $t$, P$(B_{t+1} <$`r b_40`) is
+the probability that the spawning biomass at the
+start of $t+1$ is below `r b_40`.
+The red circles and blue triangles represent probabilities calculated analogously
+to Figure~\@ref(fig:main-historical-1-fig).
+The grey horizontal line is the 50% value. For each
+year except 2012, both probabilities lie on the same side of the grey line, indicating that
+each year's assessment model almost always
+correctly estimated that the subsequent year's
+biomass will not fall below `r b_40`.
+For the `r assess_yr` assessment the
+probabilities are shown for all catch alternatives for `r assess_yr`, as
+described in Table~\@ref(tab:main-decisions-biomass-tab), with 0~t shown in pink.
+
+(ref:main-historical-2-alt) This figure compares historical estimates
+of probabilities of the stock declining below the B40 value.
+
+```{r main-historical-2-fig, fig.cap = "(ref:main-historical-2-cap)", fig.height = 6}
+
+plot_historical_probs(base_model,
+                      add.projs = TRUE,
+                      type = "bforty",
+                      legend.loc = "topleft")
+```
+
+\clearpage

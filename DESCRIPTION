@@ -1,0 +1,104 @@
+Package: hake-sog
+Title: Pacific Hake Assessment For The Strait Of Georgia
+Version: 0.0.0.9000
+      person(given = "Chris",
+             family = "Grandin",
+             role = c("aut", "cre"),
+             email = "chris.grandin@gmail.com",
+             comment = c(ORCID = "https://orcid.org/0000-0002-6746-3486"))
+Description: Code to compile the stock assessment for Strait of Georgia Pacific Hake.
+License: MIT + file LICENSE
+URL: https://github.com/cgrandin/hake-sog
+BugReports: https://github.com/cgrandin/hake-sog/issues
+VignetteBuilder: knitr
+Depends:
+  R (>= 4.2.0)
+Imports:
+  adnuts,
+  bookdown,
+  cli,
+  clipr,
+  coda,
+  cowplot,
+  crayon,
+  data.table,
+  dplyr,
+  fs,
+  future,
+  furrr,
+  gfdata,
+  gfplot,
+  gfutilities,
+  GGally,
+  ggfx,
+  ggh4x,
+  ggmagnify,
+  ggnewscale,
+  ggplot2,
+  ggrepel,
+  glue,
+  grDevices,
+  grid,
+  gridExtra,
+  graphics,
+  gtable,
+  gtools,
+  here,
+  kableExtra,
+  knitr,
+  lubridate,
+  magick,
+  marmap,
+  microbenchmark,
+  minpack.lm,
+  pacman,
+  parallelly,
+  purrr,
+  RColorBrewer,
+  readr,
+  rgl,
+  rlang,
+  rosettafish,
+  rnaturalearth,
+  rnaturalearthhires,
+  r4ss,
+  scales,
+  sf,
+  stats,
+  stringr,
+  tibble,
+  tidyselect,
+  tidyverse,
+  tidyr,
+  tools,
+  utils,
+  vctrs,
+  withr
+Suggests:
+  data.tree,
+  date,
+  ggpubr,
+  graphics,
+  rmarkdown,
+  sdmTMB,
+  shinystan,
+  testthat
+Remotes:
+  cgrandin/adnuts,
+  cgrandin/kableExtra,
+  hughjonesd/ggmagnify,
+  pbs-assess/gfdata,
+  pbs-assess/gfplot,
+  pbs-assess/gfutilities,
+  r4ss/r4ss,
+  pbs-assess/rosettafish.
+  ropensci/rnaturalearth,
+  ropensci/rnaturalearthhires
+ByteCompile: true
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+SystemRequirements: luahbtex (>= 1.16.0) - https://www.luatex.org/
+Config/testthat/parallel: true
+Config/testthat/edition: 2
+LazyData: true
