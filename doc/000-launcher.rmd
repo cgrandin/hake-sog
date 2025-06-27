@@ -133,6 +133,8 @@ bibliography: bib/refs.bib
 
 ```{r setup, echo = FALSE, cache = FALSE, message = FALSE, results = "hide", warning = FALSE}
 
+load_all(here::here())
+
 # Need rlang library for %||%
 library(rlang)
 
@@ -191,7 +193,6 @@ options(
 options(knitr.graphics.rel_path = FALSE)
 
 
-load_all(here::here())
 yaml_tags <- rmarkdown::metadata
 index_fn <- "000-launcher.rmd"
 ```
