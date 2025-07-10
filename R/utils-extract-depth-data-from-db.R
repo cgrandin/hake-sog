@@ -35,6 +35,9 @@ extract_depth_data_from_db <- function(
   }
   sql <- readLines(sql_fn)
 
+  d <- run_sql("GFFOS", sql) |>
+    as_tibble()
+
   message(msg_end)
 
   if(ret_df){
