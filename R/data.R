@@ -2,7 +2,7 @@
 #  A vector of the major areas codes used for Canadian data for offshore hake
 #
 #' @format A character vector
-"can_major_hake_areas"
+"major_hake_areas"
 #  A data frame containing the Canadian freezer trawler names and ID numbers
 #  for the catch and biological databases
 #
@@ -131,7 +131,7 @@
 #' depths and bottom depths
 #'
 #' @format A character string
-"canada_depth_sql_fn"
+"depth_sql_fn"
 
 # pd-plot-settings.R ----
 #' The point shape to use for the medians in the time series plots
@@ -496,27 +496,12 @@
 #'
 "output_permissions"
 
-# pd-tac-catch-proportions.R ----
-#' The proportion of the U.S. TAC that the Mothership sector gets each year
-#'
-#' @format A numerical value less than one
-"us_ms_prop_tac"
-#' The proportion of the U.S. TAC that the Catcher-processor sector gets
-#' each year
-#'
-#' @format A numerical value less than one
-"us_cp_prop_tac"
-#' The proportion of the U.S. TAC that the Shore-based sector gets each year
-#'
-#' @format A numerical value less than one
-"us_ss_prop_tac"
-
 # pd-data-table-filenames.R ----
 
 #' The filename for the Canadian weight-at-age CSV file
 #'
 #' @format A character string
-"can_waa_fn"
+"waa_fn"
 #' The directory name for the directory containing the data tables as
 #' csv files
 #'
@@ -525,58 +510,23 @@
 #' The filename for the Freezer trawler age proportions by year data file
 #'
 #' @format A character string
-"can_ft_age_props_fn"
+"age_props_fn"
 #' The filename for the Shoreside age proportions by year data file
 #'
 #' @format A character string
-"can_ss_age_props_fn"
-#' The filename for the Joint venture age proportions by year data file
+"age_props_fn"
+#' The filename for the raw age counts by year data file
 #'
 #' @format A character string
-"can_jv_age_props_fn"
-#' The filename for the Freezer trawler raw age counts by year data file
+"raw_age_counts_fn"
+#' The filename for the catch by year and month data file
 #'
 #' @format A character string
-"can_raw_ft_age_counts_fn"
-#' The filename for the Shoreside raw age counts by year data file
+"catch_by_month_fn"
+#' The filename for the catch by year file
 #'
 #' @format A character string
-"can_raw_ss_age_counts_fn"
-#' The filename for the Joint venture raw age counts by year data file
-#'
-#' @format A character string
-"can_raw_jv_age_counts_fn"
-#' The filename for the Catcher-processor fleet age proportions by year
-#' data file
-#'
-#' @format A character string
-"us_cp_age_props_fn"
-#' The filename for the U.S. Mothership fleet age proportions by year
-#' data file
-#'
-#' @format A character string
-"us_ms_age_props_fn"
-#' The filename for the U.S. Shore-based fleet  age proportions by year
-#' data file
-#'
-#' @format A character string
-"us_sb_age_props_fn"
-#' The filename for the Freezer trawler catch by year and month data file
-#'
-#' @format A character string
-"can_ft_catch_by_month_fn"
-#' The filename for the Shoreside catch by year and month data file
-#'
-#' @format A character string
-"can_ss_catch_by_month_fn"
-#' The filename for the Joint venture catch by year and month data file
-#'
-#' @format A character string
-"can_jv_catch_by_month_fn"
-#' The filename for the Canadian catch by year
-#'
-#' @format A character string
-"can_catch_by_year_fn"
+"catch_by_year_fn"
 #' The filename for the landings and TAC history for the US and Canada
 #'
 #' @format A character string
@@ -595,7 +545,7 @@
 #' using [gfdata::get_commercial_samples()]
 #'
 #' @format A character string
-"can_sample_data_rds_fn"
+"sample_data_rds_fn"
 # pd-data-tables.R ----
 #' A data frame containing information on estimated biomass trajectories for
 #' historical assessments from 1991 to present
@@ -809,8 +759,7 @@
 #'   \item{can_jv_tac}{Canadian joint-venture allocation/reallocation in tonnes}
 #' }
 "further_tac_df"
-#' A data frame containing catch information on Canadian Freezer trawlers
-#' by month and year
+#' A data frame containing catch information by month and year
 #'
 #' @format A data frame with 16 rows and 13 variables:
 #' \describe{
@@ -828,97 +777,7 @@
 #'   \item{11}{November catch in tonnes}
 #'   \item{12}{December catch in tonnes}
 #' }
-"can_ft_catch_by_month_df"
-#' A data frame containing catch information on Canadian Shoreside vessels
-#' by month and year
-#'
-#' @format A data frame with 16 rows and 13 variables:
-#' \describe{
-#'   \item{Year}{Year of samples}
-#'   \item{1}{January catch in tonnes}
-#'   \item{2}{February catch in tonnes}
-#'   \item{3}{March catch in tonnes}
-#'   \item{4}{April catch in tonnes}
-#'   \item{5}{May catch in tonnes}
-#'   \item{6}{June catch in tonnes}
-#'   \item{7}{July catch in tonnes}
-#'   \item{8}{August catch in tonnes}
-#'   \item{9}{September catch in tonnes}
-#'   \item{10}{October catch in tonnes}
-#'   \item{11}{November catch in tonnes}
-#'   \item{12}{December catch in tonnes}
-#' }
-"can_ss_catch_by_month_df"
-#' A data frame containing catch information on Canadian Joint-venture
-#' vessels by month# and year
-#'
-#' @format A data frame with 6 rows and 13 variables:
-#' \describe{
-#'   \item{Year}{Year of samples}
-#'   \item{1}{January catch in tonnes}
-#'   \item{2}{February catch in tonnes}
-#'   \item{3}{March catch in tonnes}
-#'   \item{4}{April catch in tonnes}
-#'   \item{5}{May catch in tonnes}
-#'   \item{6}{June catch in tonnes}
-#'   \item{7}{July catch in tonnes}
-#'   \item{8}{August catch in tonnes}
-#'   \item{9}{September catch in tonnes}
-#'   \item{10}{October catch in tonnes}
-#'   \item{11}{November catch in tonnes}
-#'   \item{12}{December catch in tonnes}
-#' }
-"can_jv_catch_by_month_df"
-#' A data frame containing catch information on U.S. shore-based vessels
-#' by month and year
-#'
-#' @format A data frame with 484 rows and 3 variables:
-#' \describe{
-#'   \item{month}{Month of catch}
-#'   \item{year}{Year of catch}
-#'   \item{catch}{Catch in tonnes}
-#' }
-"us_ss_catch_by_month_df"
-#' A data frame containing catch information on U.S. catcher-processor vessels
-#' by month and year
-#'
-#' @format A data frame with 484 rows and 3 variables:
-#' \describe{
-#'   \item{month}{Month of catch}
-#'   \item{year}{Year of catch}
-#'   \item{catch}{Catch in tonnes}
-#' }
-"us_cp_catch_by_month_df"
-#' A data frame containing catch information on U.S. ti vessels
-#' by month and year
-#'
-#' @format A data frame with 85 rows and 3 variables:
-#' \describe{
-#'   \item{month}{Month of catch}
-#'   \item{year}{Year of catch}
-#'   \item{catch}{Catch in tonnes}
-#' }
-"us_ms_catch_by_month_df"
-#' A data frame containing catch information on U.S. tribal vessels
-#' by month and year
-#'
-#' @format A data frame with 88 rows and 3 variables:
-#' \describe{2
-#'   \item{month}{Month of catch}
-#'   \item{year}{Year of catch}
-#'   \item{catch}{Catch in tonnes}
-#' }
-"us_ti_ct_by_month_df"
-#' A data frame containing catch information on U.S. research vessels
-#' by month and year
-#'
-#' @format A data frame with 16 rows and 3 variables:
-#' \describe{2
-#'   \item{month}{Month of catch}
-#'   \item{year}{Year of catch}
-#'   \item{catch}{Catch in tonnes}
-#' }
-"us_research_catch_by_month_df"
+"catch_by_month_df"
 #' A data frame containing information on amount of sampling done by year
 #'
 #' @format A data frame with 48 rows and 11 variables:
@@ -936,35 +795,8 @@
 #'   \item{Canada Freezer trawlers (hauls)}{Number of samples}
 #' }
 "sampling_history_df"
-#' A data frame containing information about the number of fish sampled for
-#' age by year for the Freezer trawlers in Canada
-#'
-#' @format A data frame with 17 rows and 2 variables:
-#' \describe{
-#'   \item{year}{Year of sample}
-#'   \item{num_fish}{The number of fish sampled for each year}
-#' }
-"can_ft_num_fish"
-#' A data frame containing information about the number of fish sampled for
-#' age by year for the Shoreside vessels in Canada
-#'
-#' @format A data frame with 28 rows and 2 variables:
-#' \describe{
-#'   \item{year}{Year of sample}
-#'   \item{num_fish}{The number of fish sampled for each year}
-#' }
-"can_ss_num_fish"
-#' A data frame containing information about the number of fish sampled for
-#' age by year for the Joint-venture vessels in Canada
-#'
-#' @format A data frame with 19 rows and 2 variables:
-#' \describe{
-#'   \item{year}{Year of sample}
-#'   \item{num_fish}{The number of fish sampled for each year}
-#' }
-"can_jv_num_fish"
-#' A data frame containing information about the proportions  of fish
-#' by age and year for the Shoreside vessels in Canada
+#' A data frame containing information about the proportions of fish
+#' by age and year
 #'
 #' @format A data frame with 28 rows and 15 variables:
 #' \describe{
@@ -984,104 +816,7 @@
 #'   \item{14}{Proportion of age 14 for the given year (rowname)}
 #'   \item{15}{Proportion of age 15 for the given year (rowname)}
 #' }
-"can_ss_age_df"
-#' A data frame containing information about the proportions  of fish
-#' by age and year for the Freezer trawlers in Canada
-#'
-#' @format A data frame with 17 rows and 15 variables:
-#' \describe{
-#'   \item{1}{Proportion of age 1 for the given year (rowname)}
-#'   \item{2}{Proportion of age 2 for the given year (rowname)}
-#'   \item{3}{Proportion of age 3 for the given year (rowname)}
-#'   \item{4}{Proportion of age 4 for the given year (rowname)}
-#'   \item{5}{Proportion of age 5 for the given year (rowname)}
-#'   \item{6}{Proportion of age 6 for the given year (rowname)}
-#'   \item{7}{Proportion of age 7 for the given year (rowname)}
-#'   \item{8}{Proportion of age 8 for the given year (rowname)}
-#'   \item{9}{Proportion of age 9 for the given year (rowname)}
-#'   \item{10}{Proportion of age 10 for the given year (rowname)}
-#'   \item{11}{Proportion of age 11 for the given year (rowname)}
-#'   \item{12}{Proportion of age 12 for the given year (rowname)}
-#'   \item{13}{Proportion of age 13 for the given year (rowname)}
-#'   \item{14}{Proportion of age 14 for the given year (rowname)}
-#'   \item{15}{Proportion of age 15 for the given year (rowname)}
-#' }
-"can_ft_age_df"
-#' A data frame containing information about the proportions  of fish
-#' by age and year for the Shore-based vessels in the U.S.
-#'
-#' @format A data frame with 15 rows and 18 variables:
-#' \describe{
-#'   \item{year}{Year of age proportions}
-#'   \item{n.fish}{Number of fish sampled for each year}
-#'   \item{n.trips}{Number of trips samples came from for each year}
-#'   \item{1}{Proportion of age 1 for the given year (rowname)}
-#'   \item{2}{Proportion of age 2 for the given year (rowname)}
-#'   \item{3}{Proportion of age 3 for the given year (rowname)}
-#'   \item{4}{Proportion of age 4 for the given year (rowname)}
-#'   \item{5}{Proportion of age 5 for the given year (rowname)}
-#'   \item{6}{Proportion of age 6 for the given year (rowname)}
-#'   \item{7}{Proportion of age 7 for the given year (rowname)}
-#'   \item{8}{Proportion of age 8 for the given year (rowname)}
-#'   \item{9}{Proportion of age 9 for the given year (rowname)}
-#'   \item{10}{Proportion of age 10 for the given year (rowname)}
-#'   \item{11}{Proportion of age 11 for the given year (rowname)}
-#'   \item{12}{Proportion of age 12 for the given year (rowname)}
-#'   \item{13}{Proportion of age 13 for the given year (rowname)}
-#'   \item{14}{Proportion of age 14 for the given year (rowname)}
-#'   \item{15}{Proportion of age 15 for the given year (rowname)}
-#' }
-"us_ss_age_df"
-#' A data frame containing information about the proportions  of fish
-#' by age and year for the catcher-processor vessels in the U.S.
-#'
-#' @format A data frame with 15 rows and 18 variables:
-#' \describe{
-#'   \item{year}{Year of age proportions}
-#'   \item{n.fish}{Number of fish sampled for each year}
-#'   \item{n.hauls}{Number of hauls samples came from for each year}
-#'   \item{1}{Proportion of age 1 for the given year (rowname)}
-#'   \item{2}{Proportion of age 2 for the given year (rowname)}
-#'   \item{3}{Proportion of age 3 for the given year (rowname)}
-#'   \item{4}{Proportion of age 4 for the given year (rowname)}
-#'   \item{5}{Proportion of age 5 for the given year (rowname)}
-#'   \item{6}{Proportion of age 6 for the given year (rowname)}
-#'   \item{7}{Proportion of age 7 for the given year (rowname)}
-#'   \item{8}{Proportion of age 8 for the given year (rowname)}
-#'   \item{9}{Proportion of age 9 for the given year (rowname)}
-#'   \item{10}{Proportion of age 10 for the given year (rowname)}
-#'   \item{11}{Proportion of age 11 for the given year (rowname)}
-#'   \item{12}{Proportion of age 12 for the given year (rowname)}
-#'   \item{13}{Proportion of age 13 for the given year (rowname)}
-#'   \item{14}{Proportion of age 14 for the given year (rowname)}
-#'   \item{15}{Proportion of age 15 for the given year (rowname)}
-#' }
-"us_cp_age_df"
-#' A data frame containing information about the proportions  of fish
-#' by age and year for the mothership vessels in the U.S.
-#'
-#' @format A data frame with 15 rows and 18 variables:
-#' \describe{
-#'   \item{year}{Year of age proportions}
-#'   \item{n.fish}{Number of fish sampled for each year}
-#'   \item{n.hauls}{Number of hauls samples came from for each year}
-#'   \item{1}{Proportion of age 1 for the given year (rowname)}
-#'   \item{2}{Proportion of age 2 for the given year (rowname)}
-#'   \item{3}{Proportion of age 3 for the given year (rowname)}
-#'   \item{4}{Proportion of age 4 for the given year (rowname)}
-#'   \item{5}{Proportion of age 5 for the given year (rowname)}
-#'   \item{6}{Proportion of age 6 for the given year (rowname)}
-#'   \item{7}{Proportion of age 7 for the given year (rowname)}
-#'   \item{8}{Proportion of age 8 for the given year (rowname)}
-#'   \item{9}{Proportion of age 9 for the given year (rowname)}
-#'   \item{10}{Proportion of age 10 for the given year (rowname)}
-#'   \item{11}{Proportion of age 11 for the given year (rowname)}
-#'   \item{12}{Proportion of age 12 for the given year (rowname)}
-#'   \item{13}{Proportion of age 13 for the given year (rowname)}
-#'   \item{14}{Proportion of age 14 for the given year (rowname)}
-#'   \item{15}{Proportion of age 15 for the given year (rowname)}
-#' }
-"us_ms_age_df"
+"age_df"
 #' A data frame containing information about the Kriging extrapolation
 #' performed on the survey data
 #'
@@ -1117,7 +852,7 @@
 #'   \item{upperhinge}{The upper hinge value (upper IQR)}
 #'   \item{upper95}{The upper 95% percentile (97.5th)}
 #' }
-"can_ft_bottom_depth_df"
+"bottom_depth_df"
 #' A data frame containing information about the depths of the bottom
 #' for catch by year for Canadian Shoreside vessels
 #'
@@ -1130,7 +865,7 @@
 #'   \item{upperhinge}{The upper hinge value (upper IQR)}
 #'   \item{upper95}{The upper 95% percentile (97.5th)}
 #' }
-"can_ss_bottom_depth_df"
+"bottom_depth_df"
 #' A data frame containing information about the depths of the fishing gear
 #' for catch by year for Canadian Freezer trawlers
 #'
@@ -1143,7 +878,7 @@
 #'   \item{upperhinge}{The upper hinge value (upper IQR)}
 #'   \item{upper95}{The upper 95% percentile (97.5th)}
 #' }
-"can_ft_gear_depth_df"
+"gear_depth_df"
 #' A data frame containing information about the depths of the fishing gear
 #' for catch by year for Canadian Shoreside vessels
 #'
@@ -1156,33 +891,7 @@
 #'   \item{upperhinge}{The upper hinge value (upper IQR)}
 #'   \item{upper95}{The upper 95% percentile (97.5th)}
 #' }
-"can_ss_gear_depth_df"
-#' A data frame containing information about the depths of the fishing gear
-#' for catch by year for U.S. at-sea vessels
-#'
-#' @format A data frame with 15 rows and 6 variables:
-#' \describe{
-#'   \item{year}{Year of survey}
-#'   \item{lower95}{The lower 95% percentile (2.5th)}
-#'   \item{lowerhinge}{The lower hinge value (bottom IQR)}
-#'   \item{median}{The median depth value}
-#'   \item{upperhinge}{The upper hinge value (upper IQR)}
-#'   \item{upper95}{The upper 95% percentile (97.5th)}
-#' }
-"us_atsea_fishing_depth_df"
-#' A data frame containing information about the depths of the bottom
-#' for catch by year for U.S. at-sea vessels
-#'
-#' @format A data frame with 15 rows and 6 variables:
-#' \describe{
-#'   \item{year}{Year of survey}
-#'   \item{lower95}{The lower 95% percentile (2.5th)}
-#'   \item{lowerhinge}{The lower hinge value (bottom IQR)}
-#'   \item{median}{The median depth value}
-#'   \item{upperhinge}{The upper hinge value (upper IQR)}
-#'   \item{upper95}{The upper 95% percentile (97.5th)}
-#' }
-"us_atsea_bottom_depth_df"
+"gear_depth_df"
 #' A data frame containing information about the ports used in making the
 #' overview map at the beginning of the figures section
 #'
@@ -1218,7 +927,7 @@
 #'   \item{data_type}{If the fish was collected on a fishing or survey vessel}
 #'   \item{country}{The country the fish was collected in}
 #' }
-#' 
+#'
 #' Proportion mature at each age
 #'
 #' A vector of maturity values from the maturity ogive. The length of the vector

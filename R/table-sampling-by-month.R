@@ -1,7 +1,7 @@
 #' Extract the number of samples by fleet and month for a given year
 #'
 #' @param d A data frame, as one of the list elements of the list output
-#' by [canada_extract_sampling_by_month()]
+#' by [extract_sampling_by_month()]
 #' @param font_size The table data and header font size in points
 #' @param header_font_size The font size for the headers only. If `NULL`,
 #' the headers will have the same font size as the table cell data

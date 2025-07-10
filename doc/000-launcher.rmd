@@ -44,7 +44,11 @@ header: "Draft working paper --- Do not cite or circulate" # or "" to omit
 show_continued_text: false
 # `project_variables` will be variables in the Global Environment that you
 # will have access to throughout the document code. Comonly-used general
-# constant values should be included here
+# constant values should be included here. You don't need to assign an R
+# variable if you add a new tag here, it is done in the call at the beginning
+# of 002-load-globals.Rmd using the following two lines of code:
+# proj_vars <- rmarkdown::metadata$project_variables
+# list2env(proj_vars, envir = globalenv())
 project_variables:
   sp: "Pacific Hake"
   common_name: "Pacific whiting"
@@ -52,6 +56,7 @@ project_variables:
   simple_name: "hake"
   survey_name: "Strait of Georgia Acoustic Survey"
   assess_yr: 2025
+  start_yr: 1979
   last_data_yr: 2024
   model_version: "01"
   ss_version: "3.30.23.1"
@@ -63,15 +68,22 @@ project_variables:
   fig_tick_font_size: 11
   fig_tick_length_cm: 0.15
   fig_height: 5
-  fig_width: 8
+  fig_width: 6.5
+  fig_out_width: "5.5in"
+  #fig_asp: 0.618
   # margin arguments are in this order: top, right,bottom, left
-  fig_margins: "margin(12, 12, 12, 12)"
+  fig_margins: "margin(6, 12, 6, 12)"
   # The latex position by default for all figures. Modify individual
   # figure positions by editing the `doc/object-placement.csv` file
   fig_pos: "htb"
   fig_filetype: "png"
-  # Increasing `dots_per_inch` for figure output increases the file size a LOT issue 1095
-  dots_per_inch: 300
+  # Increasing `dots_per_inch` for figure output increases the file size a
+  # LOT issue 1095 in the hake-assessment repository
+  dots_per_inch: 120
+  knitr_figures_dir: "knitr-figs-pdf"
+  knitr_cache_dir: "knitr-cache-pdf"
+  figures_dir: "image-files"
+
 output:
  csasdown::resdoc_pdf:
    # `lualatex` is required for `accessibile_pdf` to work
@@ -79,9 +91,6 @@ output:
    # If `true`, alternative figure text and figure tags are added for
    # PDF web accessibility compliance
    accessible_pdf: false
-   # The name of the directory containing pre-made figures such as png files
-   # that will be included using `include_graphics()`
-   figures_dir: image-files
    # This value will be the return value for `fr()` in your code
    french: false
    # `copy_sty` is a toggle to copy the style file from the csasdown package
@@ -145,40 +154,60 @@ if(home == ""){
   stop("`home` is an empty string. The `system(echo $HOME)` call failed ",
        "which means the $HOME variable in the OS is not set")
 }
+
 models_dir <- "/srv/hake-sog/models"
 
-knitr_figs_dir <- "knitr-figs-pdf/"
-knitr_cache_dir <- "knitr-cache-pdf/"
-
-fig_asp <- 0.618
-fig_width <- 8
-fig_out_width <- "5.5in"
+# This grabs the YAML `project_variables` from above
+yaml_proj_vars <- rmarkdown::metadata$project_variables
 
 user <- Sys.info()[["user"]]
-opts_chunk$set(
+# Don't modify anything in `opts_chunk$set()`. Modify the YAML
+# `project_variables` above
+knitr::opts_chunk$set(
+  # `collapse` - If `TRUE`, source code and output will remain together in
+  # one chunk (inseparable from each other in the document). Probably
+  # doesn't apply for this document but remains in case any source code is
+  # shown
   collapse = TRUE,
+  # Don't show warnings, messages, or source code (respectively)
+  # in the document
   warning = FALSE,
   message = FALSE,
-  results = 'hide',
-  comment = "#>",
-  fig.path = knitr_figs_dir,
-  cache.path = knitr_cache_dir,
-  fig.asp = fig_asp,
-  fig.width = fig_width,
-  out.width = fig_out_width,
   echo = FALSE,
-  # autodep = isTRUE(user %in% "seananderson"),
-  # cache = isTRUE(user %in% "seananderson"),
+  # Create the `knitr_cache_dir` and `knitr_figs_dir` directories for caching
+  cache = TRUE,
+    # `cache.path` is required to have a trailing slash
+  cache.path = ifelse(substr(yaml_proj_vars$knitr_cache_dir,
+                             nchar(yaml_proj_vars$knitr_cache_dir),
+                             nchar(yaml_proj_vars$knitr_cache_dir)) != "/",
+                      paste0(yaml_proj_vars$knitr_cache_dir, "/"),
+                      yaml_proj_vars$knitr_cache_dir),
+  # cache.lazy - if `FALSE`, load the models at the beginning all at once
+  cache.lazy = FALSE,
+  # Prevents invalidation of the cache when only comments are entered
+  # in chunks
   cache.comments = FALSE,
-  # These two lines needed for the maps with geom_sf() to be rendered
-  # correctly
-  dev = "ragg_png",
-  fig.ext = "png",
-  dpi = 180,
+  results = "hide",
+  comment = "#>",
+  dev = yaml_proj_vars$fig_filetype,
+  dpi = yaml_proj_vars$dots_per_inch,
+  # `fig.path` is required to have a trailing slash
+  fig.path = ifelse(substr(yaml_proj_vars$knitr_figures_dir,
+                           nchar(yaml_proj_vars$knitr_figures_dir),
+                           nchar(yaml_proj_vars$knitr_figures_dir)) != "/",
+                    paste0(yaml_proj_vars$knitr_figures_dir, "/"),
+                    yaml_proj_vars$knitr_figures_dir),
   fig.align = "center",
-  fig.pos = "H")
+  #fig.asp = yaml_proj_vars$fig_asp,
+  fig.pos = yaml_proj_vars$fig_pos,
+  fig.height = yaml_proj_vars$fig_height,
+  fig.width = yaml_proj_vars$fig_width,
+  fig.out.width <- yaml_proj_vars$fig_out_width)
+  #out.height = "\\textheight",
+  #out.width = "\\textwidth")
+
 options(
-  # Prevent xtable from adding a timestamp comment to the table code
+  # Prevent xtable from adding a time stamp comment to the table code
   # it produces
   xtable.comment = FALSE,
   # Don't allow kableExtra to load packages, we add them manually in
@@ -192,8 +221,6 @@ options(
 # is relative
 options(knitr.graphics.rel_path = FALSE)
 
-
-yaml_tags <- rmarkdown::metadata
 index_fn <- "000-launcher.rmd"
 ```
 

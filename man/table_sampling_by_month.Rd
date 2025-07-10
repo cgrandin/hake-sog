@@ -16,7 +16,7 @@ table_sampling_by_month(
 }
 \arguments{
 \item{d}{A data frame, as one of the list elements of the list output
-by \code{\link[=canada_extract_sampling_by_month]{canada_extract_sampling_by_month()}}}
+by \code{\link[=extract_sampling_by_month]{extract_sampling_by_month()}}}
 
 \item{font_size}{The table data and header font size in points}
 

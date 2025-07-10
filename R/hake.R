@@ -19,7 +19,7 @@
 #' @importFrom cli cli_abort cli_inform cli_warn symbol
 #' @importFrom clipr clipr_available write_clip dr_clipr
 #' @importFrom crayon green
-#' @importFrom cowplot get_legend plot_grid
+#' @importFrom cowplot get_legend get_plot_component plot_grid
 #' @importFrom data.table fread
 #' @importFrom fs dir_ls path file_chmod
 #' @importFrom future availableCores plan

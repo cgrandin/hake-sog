@@ -26,7 +26,7 @@ hake_theme <- function(ax_label_color = axis_label_color,
                        ax_tick_length_cm = 0.15,
                        margin_def = margin(0, 0, 0, 0)){
 
-  theme_bw() +
+  theme_csas() +
     theme(legend.key = element_blank(),
           legend.text.align = 1,
           panel.grid.major = element_blank(),

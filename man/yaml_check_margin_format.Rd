@@ -4,10 +4,12 @@
 \alias{yaml_check_margin_format}
 \title{Check the format of the margin command entered into the YAML header.}
 \usage{
-yaml_check_margin_format(fig_margins)
+yaml_check_margin_format(fig_margins, index_fn = "index.Rmd")
 }
 \arguments{
 \item{fig_margins}{The string containing the command to verify}
+
+\item{index_fn}{The index RMD file name. \code{index.Rmd} by default}
 }
 \value{
 \code{\link[=invisible]{invisible()}} if format is correct, or stops if the format is

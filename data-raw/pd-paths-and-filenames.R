@@ -25,4 +25,4 @@ create_data_hake("forecast_descriptions_fn", "forecast-descriptions.csv")
 create_data_hake("caption_adjustments_fn", "caption-adjustments.csv")
 create_data_hake("object_placement_fn", "object-placement.csv")
 
-create_data_hake("canada_depth_sql_fn", "canada-depths.sql")
+create_data_hake("depth_sql_fn", "depths.sql")

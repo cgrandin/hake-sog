@@ -2,59 +2,13 @@
 # any new package data to file R/data.R
 
 load_dir <- here("data-tables")
-# Assessment history ----
-create_data_hake("assess_history_df",
-                 read_csv(file.path(load_dir,
-                                    "assessment-history.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("assess_history_probs_df",
-                 read_csv(file.path(load_dir,
-                                    "assessment-history-probs.csv"),
-                          col_types = cols(),
-                          comment = "#",
-                          show_col_types = FALSE))
-
-create_data_hake("assess_changes_df",
-                 read_csv(file.path(load_dir,
-                                    "assessment-changes.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
 # Maturity and weight-at-age ----
-create_data_hake("ovary_samples_df",
-                 read_csv(file.path(load_dir,
-                                    "ovary-samples.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
 create_data_hake("maturity_samples_df",
                  read_csv(file.path(load_dir,
                                     "maturity-samples.csv"),
                           guess_max = Inf,
                           show_col_types = FALSE))
 
-# estimates_for_assessment.rds from Eric Ward
-# utils::write.csv(
-#   x = readRDS(fs::path("", "srv", "hake", "other", "tv", "estimates_for_assessment.rds")) |>
-#     dplyr::ungroup() |>
-#     dplyr::bind_rows(
-#       readRDS(fs::path("~", "Downloads", "spline.rds")) |>
-#         dplyr::filter(age > 0, age < 21) |>
-#         dplyr::rename(p_mature = Maturity) |>
-#         dplyr::mutate(year = 2007, model = "Spline"),
-#       data.frame(
-#         p_mature = maturity_at_age,
-#         year = 2007,
-#         age = 0:(length(maturity_at_age) - 1),
-#         model = "Spline w/ CAN"
-#       )
-#     ) |>
-#     dplyr::arrange(model, year, age),
-#   file = fs::path(load_dir, "maturity-ogives.csv"),
-#   row.names = FALSE
-# )
 create_data_hake("maturity_estimates_df",
                  read_csv(file.path(load_dir,
                                     "maturity-ogives.csv"),
@@ -71,11 +25,6 @@ create_data_hake("weight_age_sample_sizes_df",
                                     "wtatage-all-samplesize.csv"),
                           col_types = cols(),
                           show_col_types = FALSE))
-
-# Natural mortality
-create_data_hake("m_at_age_df",
-                 read_csv(file.path(load_dir,"M2.csv"))
-)
 
 # Catch and TAC ----
 create_data_hake("ct",
@@ -115,52 +64,9 @@ create_data_hake("further_tac_df",
                           comment = "#",
                           show_col_types = FALSE))
 
-create_data_hake("can_ft_catch_by_month_df",
+create_data_hake("catch_by_month_df",
                  read_csv(file.path(load_dir,
-                                    "can-ft-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("can_ss_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "can-ss-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("can_jv_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "can-jv-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-# * US catch ----
-create_data_hake("us_ss_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "us-shore-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_cp_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "us-cp-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_ms_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "us-ms-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_ti_ct_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "us-ti-catch-by-month.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_research_catch_by_month_df",
-                 read_csv(file.path(load_dir,
-                                    "us-research-catch-by-month.csv"),
+                                    "catch-by-month.csv"),
                           col_types = cols(),
                           show_col_types = FALSE))
 
@@ -172,40 +78,9 @@ create_data_hake("sampling_history_df",
                           show_col_types = FALSE))
 
 # * Canada age proportions ----
-create_data_hake("can_ft_age_df",
+create_data_hake("age_df",
                  read_csv(file.path(load_dir,
-                                             can_ft_age_props_fn),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("can_ss_age_df",
-                 read_csv(file.path(load_dir,
-                                             can_ss_age_props_fn),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-#load_can_age_data
-create_data_hake("can_jv_age_df",
-                 read_csv(file.path(load_dir,
-                                    can_jv_age_props_fn),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-# * US age proportions ----
-create_data_hake("us_cp_age_df",
-                 read_csv(file.path(load_dir,
-                                    us_cp_age_props_fn),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_ms_age_df",
-                 read_csv(file.path(load_dir,
-                                    us_ms_age_props_fn),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_sb_age_df",
-                 read_csv(file.path(load_dir,
-                                    us_sb_age_props_fn),
+                                    age_props_fn),
                           col_types = cols(),
                           show_col_types = FALSE))
 
@@ -231,40 +106,15 @@ create_data_hake("survey_by_country_df",
 
 # Depth data ----
 # * Canada depths ----
-create_data_hake("can_ft_bottom_depth_df",
+create_data_hake("bottom_depth_df",
                  read_csv(file.path(load_dir,
-                                    "depth-can-ft-bottom.csv"),
+                                    "depth-bottom.csv"),
                           col_types = cols(),
                           show_col_types = FALSE))
 
-create_data_hake("can_ss_bottom_depth_df",
+create_data_hake("gear_depth_df",
                  read_csv(file.path(load_dir,
-                                    "depth-can-ss-bottom.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("can_ft_gear_depth_df",
-                 read_csv(file.path(load_dir,
-                                    "depth-can-ft-gear.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("can_ss_gear_depth_df",
-                 read_csv(file.path(load_dir,
-                                    "depth-can-ss-gear.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-# * US depths ----
-create_data_hake("us_atsea_fishing_depth_df",
-                 read_csv(file.path(load_dir,
-                                    "depth-us-atsea-fishing.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("us_atsea_bottom_depth_df",
-                 read_csv(file.path(load_dir,
-                                    "depth-us-atsea-bottom.csv"),
+                                    "depth-gear.csv"),
                           col_types = cols(),
                           show_col_types = FALSE))
 

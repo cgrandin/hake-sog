@@ -1,19 +1,20 @@
 ```{r load-globals, echo = FALSE}
 
+# Show only 2 rows when looking at a tibble
+options(pillar.print_min = 2)
 # Extract YAML sections -------------------------------------------------------
-proj_vars <- rmarkdown::metadata$project_variables
 output <- rmarkdown::metadata$output$`csasdown::resdoc_pdf`
 
-if(!length(proj_vars)){
+if(!length(yaml_proj_vars)){
   bail("Document compilation not run properly. You must run this code ",
-       "using the Bookdown/Rmarkdown system, by calling `hake::render()` ",
+       "using the Bookdown/Rmarkdown system, by calling `csasdown::render()` ",
        "which is a simple wrapper for `bookdown::render_book()`")
 }
 
 # Globals for YAML tags -------------------------------------------------------
 # Create a global variable for each item in the `project_variables` section
 # of the YAML part of `000-launcher.rmd`.
-list2env(proj_vars, envir = globalenv())
+list2env(yaml_proj_vars, envir = globalenv())
 
 # System info variables -------------------------------------------------------
 sys_info <- Sys.info()
@@ -82,4 +83,14 @@ theme_set(hake_theme(ax_label_color = fig_label_color,
                      ax_tick_font_face = fig_tick_font_face,
                      ax_tick_length_cm = fig_tick_length_cm,
                      margin_def = fig_margins))
+
+if(!exists("dat")){
+  dat <- readRDS("/srv/hake-sog/hake-2025-06-26.rds") 
+}
+
+ct <- dat$catch |> 
+  dplyr::filter(species_code == 225,
+                major_stat_area_code == "01",
+                minor_stat_area_code != "20")
+
 ```

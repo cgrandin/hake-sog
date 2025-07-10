@@ -6,8 +6,8 @@
 \usage{
 plot_overview_map(
   crs_ll = 4326,
-  x_lim = c(-137, -110),
-  y_lim = c(29, 58),
+  x_lim = c(-125, -122),
+  y_lim = c(48, 50),
   label_size = 4,
   label_color_default = "white",
   label_fill_default = "white",

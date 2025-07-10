@@ -2,49 +2,6 @@
 # like the other types if necessary
 base_models_dirs <- "01-base"
 base_models_desc <- "Base model"
-# This is a list of vectors of bridge groups (bridge models that will be
-# plotted against each other). It can be `NA` if you want it to be ignored.
-# `prepend_to_bridge` is the same length as the number of groups in
-# `bridge_models_dirs` and for those groups set to `TRUE`, last year's base
-# model will be prepended to the group.
-# See `set_dirs()`
-bridge_models_dirs <-
-  list(c("00-update-ss3-exe",
-         "01-fix-catches",
-         "02-fix-weight-at-age",
-         #"03-fix-survey-1",
-         "04-fix-fishery-comps"),
-       c("04-fix-fishery-comps",
-         "10-add-catches",
-         "20-add-weight-at-age",
-         "50-add-fishery-ages",
-         "60-fix-late-devs",
-         "70-age-1-index"))
-bridge_models_desc <-
-  list(c("Update the SS3 model",
-         "Add changes to catch data",
-         "Add changes to weight-at-age data",
-         #"Add changes to survey indices",
-         "Add changes to fishery age comps"),
-       c("Add changes to fishery age comps",
-         paste0("Add ", last_data_yr, " catches"),
-         paste0("Add ", last_data_yr, " weight-at-age"),
-         paste0("Add ", last_data_yr, " fishery ages"),
-         "Fix last two years rec devs",
-         "Remove Age-1 index"))
-prepend_to_bridge <- c(TRUE, FALSE)
-# Subtract the following number of years of the end of the models
-# when plotting. Should only be 1 for the first one or two, then zeroes.
-# This vector must be 1 longer than the above lists, because last year's
-# base model is prepended to those lists
-bridge_model_end_yr <-
-  list(end_yr - c(1, rep(0, length(bridge_models_desc[[1]]))),
-       end_yr - rep(0, length(bridge_models_desc[[2]])))
-
-# Uncomment these if you do not want to load bridge models
-# bridge_models_dirs <- NA
-# bridge_models_desc <- NA
-# prepend_to_bridge <- NA
 
 # This is a list of vectors of sensitivity groups (sensitivity models that
 # will be plotted against each other). It can be `NA` if you want it to be
@@ -88,8 +45,8 @@ sens_models_desc <-
          "Fixed natural mortality at age"))
 
 # Uncomment these if you do not want to load sensitivity models
-#sens_models_dirs <- NA
-#sens_models_desc <- NA
+sens_models_dirs <- NA
+sens_models_desc <- NA
 
 request_models_dirs <-
   list(c("01-max-sel-age-8",
@@ -109,8 +66,8 @@ request_models_desc <-
          "No 2015, 2017, 2019, 2021, 2023 age-1 ind."))
 
 # Uncomment these if you do not want to load request models
-#request_models_dirs <- NA
-#request_models_desc <- NA
+request_models_dirs <- NA
+request_models_desc <- NA
 
 test_models_dirs <- NA
 test_models_desc <- NA
