@@ -21,7 +21,7 @@
 #' assessment
 #'
 #' @export
-canada_load_catch_data <- function(dr = "/srv/hake/other/landings/canada",
+load_catch_data <- function(dr = "/srv/hake-sog/other/landings",
                                    min_date = as.Date("2007-04-01")){
 
   if(!dir.exists(dr)){
@@ -65,11 +65,6 @@ canada_load_catch_data <- function(dr = "/srv/hake/other/landings/canada",
     dplyr::filter(landing_date >= min_date) |>
     dplyr::filter(grepl("(GULF)|(OPT B)", licence_trip_type))
 
-  d <- d |>
-    mutate(landing_date = as.Date(landing_date, "%B %d %Y")) |>
-    dplyr::filter(landing_date >= min_date) |>
-    dplyr::filter(!grepl("(GULF)|(OPT B)", licence_trip_type))
-
   # Read in LOGS files ----
   logs_df <- map_dfr(logs_fns, \(fn){
     logs_vec <- readLines(fn)
@@ -95,21 +90,11 @@ canada_load_catch_data <- function(dr = "/srv/hake/other/landings/canada",
   logs_df <- logs_df |>
     mutate(landing_date = as.Date(landing_date, "%B %d %Y")) |>
     dplyr::filter(landing_date >= min_date) |>
-    dplyr::filter(!grepl("(GULF)|(OPT B)", trip_type))
+    dplyr::filter(grepl("GULF|OPT B", trip_type))
 
-  logs_inside_df <- NULL
-  if(any(logs_df$area == "4B")){
-    logs_inside_df <- logs_df |>
-      dplyr::filter(area == "4B")
-    # logs_df <- logs_df |>
-    #   dplyr::filter(landing_port != "FRENCH CREEK") |>
-    #   mutate(month = month(landing_date)) |>
-    #   dplyr::filter(!(area == "4B" & month < 6)) |>
-    #   select(-month)
-  }
+  logs_inside_df <- logs_df |>
+    dplyr::filter(area == "4B")
 
-  list(dmp_df = d,
-       dmp_inside_df = d_inside,
-       logs_df = logs_df,
-       logs_inside_df = logs_inside_df)
+  list(dmp_df = d_inside,
+       logs_df = logs_inside_df)
 }

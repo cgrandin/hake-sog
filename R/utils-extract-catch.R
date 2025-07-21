@@ -1,51 +1,29 @@
-#' Merge Canadian DMP and LOGS catch data and extract into 3 data frames,
-#' for Freezer trawlers, Shoreside, and Joint-venture
+#' Merge DMP and LOGS catch data and extract into a data frame
 #'
-#' @param lst a list of three data frames as returned by
-#' [load_catch_data_canada()]
+#' @param lst a list of two data frames as returned by
+#' [load_catch_data()]
 #' @return A list of three data frames, one for each gear: Freezer trawlers,
 #' Shoreside, and Joint Venture
 #' @export
-canada_extract_fleet_catch <- function(lst){
+extract_catch <- function(lst){
 
-  if(length(lst) != 4){
-    stop("The length of the input list `lst` does not equal 4")
+  if(length(lst) != 2){
+    stop("The length of the input list `lst` does not equal 2")
   }
   if(!all(names(lst) %in% c("dmp_df",
-                            "dmp_inside_df",
-                            "logs_df",
-                            "logs_inside_df"))){
-    stop("The names of the elements in the list `lst` are not correct. ",
-         "They must be `dmp_df`, `dmp_inside_df`, `logs_df`, and ",
-         "`logs_inside_df`")
+                            "logs_df"))){
+    bail("The names of the elements in the list `lst` are not correct. ",
+         "They must be `dmp_df`, and `logs_df`")
   }
 
-  # If the non-JV vessel was fishing in JV, remove those catches
-  dmp_df <- lst$dmp_df |>
-    dplyr::filter(!grepl("JV", licence_trip_type))
-  logs_df <- lst$logs_df |>
-    dplyr::filter(!grepl("JV", trip_type))
+  dmp_df <- lst$dmp_df
+  logs_df <- lst$logs_df
 
   # At Sea Observer Program records only (all of those are discards in the
   # LOGS data), for all fleet types
   discards_df <- lst$logs_df |>
     dplyr::filter(source == "ASOP") |>
     dplyr::filter(!is.na(released_wt))
-
-  dmp_ft_df <- dmp_df |>
-    dplyr::filter(vrn %in% pull(freezer_trawlers, fos_id))
-  discards_ft_df <- discards_df |>
-    dplyr::filter(vrn %in% pull(freezer_trawlers, fos_id))
-
-  dmp_ss_df <- dmp_df |>
-    dplyr::filter(!vrn %in% pull(freezer_trawlers, fos_id))
-  discards_ss_df <- discards_df |>
-    dplyr::filter(!vrn %in% pull(freezer_trawlers, fos_id))
-
-  dmp_jv_df <- lst$dmp_df |>
-    dplyr::filter(grepl("JV", licence_trip_type))
-  discards_jv_df <- discards_df |>
-    dplyr::filter(grepl("JV", trip_type))
 
   summarize_dmp <- \(d, wt_col){
 
@@ -66,10 +44,10 @@ canada_extract_fleet_catch <- function(lst){
       mutate(landings = ifelse(is.na(landings), 0, landings))
   }
 
-  dmp_lst <- map(list(dmp_ft_df, dmp_ss_df, dmp_jv_df),
-                 ~{summarize_dmp(.x, "converted_wght_lbs_")})
-  discards_lst <- map(list(discards_ft_df, discards_ss_df, discards_jv_df),
-                      ~{summarize_dmp(.x, "released_wt")})
+  dmp_summary <- dmp_df |>
+    summarize_dmp("converted_wght_lbs_")
+  discards_summary <- discards_df |>
+    summarize_dmp("released_wt")
 
   join_dmp <- \(d, d_discards){
 
@@ -93,7 +71,6 @@ canada_extract_fleet_catch <- function(lst){
       arrange(year, month, day)
   }
 
-  map2(dmp_lst, discards_lst,
-       join_dmp) |>
-    setNames(c("ft", "ss", "jv"))
+  map2(list(dmp_summary), list(discards_summary),
+       join_dmp)
 }

@@ -9,8 +9,6 @@ create_depth_by_year_csv_files(
   d = NULL,
   col_name_depth = "best_depth",
   col_name_year = "year",
-  country = c("can", "us"),
-  fleet = c("ft", "ss", "atsea", "cp", "ms", "sb"),
   type = c("bottom", "gear"),
   output_path = here(data_tables_path),
   probs = probs_forecast,
@@ -27,12 +25,6 @@ create_depth_by_year_csv_files(
 contains the depths}
 
 \item{col_name_year}{The name of the column which holds the years}
-
-\item{country}{The country the data is from (used in the output file
-name only)}
-
-\item{fleet}{The fleet shorthand for the fleet/sector (used in the
-output file name only)}
 
 \item{type}{One of \code{bottom} or \code{gear} for depth type (used in the output
 file name only)}

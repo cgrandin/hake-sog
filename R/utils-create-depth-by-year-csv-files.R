@@ -5,10 +5,6 @@
 #' @param col_name_depth The name of the column in the data frame `d` that
 #' contains the depths
 #' @param col_name_year The name of the column which holds the years
-#' @param country The country the data is from (used in the output file
-#' name only)
-#' @param fleet The fleet shorthand for the fleet/sector (used in the
-#' output file name only)
 #' @param type One of `bottom` or `gear` for depth type (used in the output
 #' file name only)
 #' @param output_path The directory in which to write the output CSV file
@@ -31,8 +27,6 @@ create_depth_by_year_csv_files <- function(
     d = NULL,
     col_name_depth = "best_depth",
     col_name_year = "year",
-    country = c("can", "us"),
-    fleet = c("ft", "ss", "atsea", "cp", "ms", "sb"),
     type = c("bottom", "gear"),
     output_path = here(data_tables_path),
     probs = probs_forecast,
@@ -45,8 +39,6 @@ create_depth_by_year_csv_files <- function(
     stop("The input data frame `d` cannot be `NULL`")
   }
 
-  country <- match.arg(country)
-  fleet <- match.arg(fleet)
   type <- match.arg(type)
 
   if(is.null(col_name_depth)){
@@ -95,7 +87,7 @@ create_depth_by_year_csv_files <- function(
     mutate(across(-!!col_sym_year, round, digits))
 
   # Create the output filename
-  out_fn <- paste0("depth-", country, "-", fleet, "-", type, ".csv")
+  out_fn <- paste0("depth-", type, ".csv")
   out_fn <- file.path(output_path, out_fn)
   write_csv(dpth, out_fn)
   message("Created depth file:\n`", out_fn, "`")

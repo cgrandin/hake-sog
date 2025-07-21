@@ -39,5 +39,17 @@ plot_grid(plotlist = p, ncol = 1, align = "v", rel_heights = c(1, 1))
 
 ```
 
+```{r depth-ca-ft, fig.height = 4, out.height = "85%"}
+depth_y_lim <- c(0, 700)
+depth_y_breaks <- seq(min(depth_y_lim), max(depth_y_lim), by = 100)
+
+plot_depth_2_panel(can_ft_gear_depth_df,
+                   can_ft_bottom_depth_df,
+                   yrs = yrs,
+                   y_lim = depth_lims,
+                   y_breaks = depth_breaks)
+```
+
+
 \clearpage
 
