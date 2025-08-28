@@ -28,8 +28,7 @@ plot_selex_mountains <- function(model,
   fill_reduction_prop <- 1 - (1 / fill_num_colors)
   prop_seq <- seq(0, fill_reduction_prop, 1 / fill_num_colors)
 
-  sel_med <- model$extra_mcmc$sel_fishery_med |>
-    select(-iter)
+  sel_med <- model$extra_mcmc$sel_fishery_med
 
   if(!is.null(yrs)){
     sel_med <- sel_med |>

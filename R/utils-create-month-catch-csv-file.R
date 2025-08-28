@@ -1,6 +1,6 @@
 #' Create a CSV file with catch by year and month
 #'
-#' @param df A data.frame as returned by [extract_catch()]
+#' @param df A data.frame as returned by [extract_catch_sog()]
 #' @param catch_scale A value to divide the catch by prior to writing to
 #' the file
 #' @param digits The number of decimal points to report on the catches in

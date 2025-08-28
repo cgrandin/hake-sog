@@ -73,43 +73,21 @@ test_models_dirs <- NA
 test_models_desc <- NA
 
 drs <- set_dirs(models_dir = models_dir,
-                last_yr_models_dir = last_yr_models_dir,
                 base_models_dirs = base_models_dirs,
-                bridge_models_dirs = bridge_models_dirs,
                 sens_models_dirs = sens_models_dirs,
                 request_models_dirs = request_models_dirs,
-                test_models_dirs = test_models_dirs,
-                prepend_to_bridge = prepend_to_bridge)
+                test_models_dirs = test_models_dirs)
 
 if(!exists("models")){
   models <- model_setup(drs = drs,
                         base_models_desc = base_models_desc,
-                        bridge_models_desc = bridge_models_desc,
                         sens_models_desc = sens_models_desc,
                         request_models_desc = request_models_desc,
-                        test_models_desc = test_models_desc,
-                        prepend_to_bridge = prepend_to_bridge)
+                        test_models_desc = test_models_desc)
 }
-
-
-if(!exists("last_yr_base_model")){
-  last_yr_base_model <-
-    readRDS(file.path(drs$last_yr_base_model_dir,
-                      paste0(basename(drs$last_yr_base_model_dir), ".rds")))
-}
-last_yr_base_model_name <- paste0(last_assess_yr, " Base model")
 
 base_model <- models$base_models_dirs[[1]][[1]]
 base_model_name <- attr(base_model, "desc")
-
-bridge_models <- models$bridge_models_dirs
-if(is.na(bridge_models)[1]){
-  bridge_models_names <- NA
-}else{
-  bridge_models_names <- map(bridge_models, ~{
-    map_chr(.x, ~{attr(.x, "desc")})
-  })
-}
 
 sens_models <- models$sens_models_dirs
 if(is.na(sens_models)[1]){

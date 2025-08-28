@@ -4,7 +4,9 @@
 #'
 #' @return Either "beamer" or "doc". "doc" means the main assessment document
 #' @export
-get_doc_type <- function(fn){
+get_doc_type <- function(fn, bookdown_lst = NULL){
+
+  stopifnot(!is.null(bookdown_lst))
 
   x <- readLines(fn)
   ind_output <- grep("output:", x)

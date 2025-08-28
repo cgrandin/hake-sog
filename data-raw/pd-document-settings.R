@@ -18,7 +18,7 @@ create_data_hake("recruit_dev_start_yr", 1946)
 create_data_hake("unfished_eq_yr", 1964)
 create_data_hake("start_yr", 1966)
 create_data_hake("start_yr_age_comps", 1975)
-create_data_hake("survey_start_yr", 1995)
-create_data_hake("survey_end_yr", 2023)
-create_data_hake("surv_yrs", c(1995, 1998, 2001, 2003, 2005, 2007, 2009,
-                               2011, 2012, 2013, 2015, 2017, 2019, 2021, 2023))
+create_data_hake("survey_start_yr", 1981)
+create_data_hake("survey_end_yr", 2024)
+create_data_hake("surv_yrs", c(1981, 1988, 1993, 1996, 1997, 1998, 2010,
+                               2011, 2014, 2016, 2023, 2024))

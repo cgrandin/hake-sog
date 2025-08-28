@@ -12,7 +12,7 @@ create_year_catch_csv_file(
 )
 }
 \arguments{
-\item{df}{A data.frame as returned by \code{\link[=extract_catch]{extract_catch()}}}
+\item{df}{A data.frame as returned by \code{\link[=extract_catch_sog]{extract_catch_sog()}}}
 
 \item{catch_scale}{A value to divide the catch by prior to writing to
 the file}

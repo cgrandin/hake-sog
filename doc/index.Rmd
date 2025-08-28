@@ -23,6 +23,7 @@ french_region: "Région du Pacifique"
 isbn: "XXX-X-XXX-XXXXX-X"
 cat_no: "XX-X/2025-XXX-PDF"
 citation_english: "Grandin, C.J. 2025. Pacific Hake (*Merluccius productus*) Stock Assessment for the Strait of Georgia in 2025. DFO Can. Sci. Advis. Sec. Res. Doc. 2025/nnn. iv + XX p."
+citation_french: "Grandin, C.J. 2025. Évaluation des stocks de merlu du Pacifique (*Merluccius productus*) dans le détroit de Georgia en 2025. DFO Secr. can. des avis sci. du MPO. Doc. de rech 2025/nnn. iv + XX p."
 citation_other_language: "Grandin, C.J. 2025. Évaluation des stocks de merlu du Pacifique (*Merluccius productus*) dans le détroit de Georgia en 2025. DFO Secr. can. des avis sci. du MPO. Doc. de rech 2025/nnn. iv + XX p."
 
 abstract: |
@@ -86,8 +87,6 @@ project_variables:
 
 output:
  csasdown::resdoc_pdf:
-   # `lualatex` is required for `accessibile_pdf` to work
-   latex_engine: lualatex
    # If `true`, alternative figure text and figure tags are added for
    # PDF web accessibility compliance
    accessible_pdf: false
@@ -142,18 +141,10 @@ bibliography: bib/refs.bib
 
 ```{r setup, echo = FALSE, cache = FALSE, message = FALSE, results = "hide", warning = FALSE}
 
-load_all(here::here())
-
 # Need rlang library for %||%
 library(rlang)
 
-# system_() figures out which OS you are on and runs the proper function
-home <- system_("echo $HOME", intern = TRUE)
-
-if(home == ""){
-  stop("`home` is an empty string. The `system(echo $HOME)` call failed ",
-       "which means the $HOME variable in the OS is not set")
-}
+devtools::load_all("/home/grandin/github/pacific-hake/hake-sog")
 
 models_dir <- "/srv/hake-sog/models"
 
@@ -207,20 +198,20 @@ knitr::opts_chunk$set(
   #out.width = "\\textwidth")
 
 options(
-  # Prevent xtable from adding a time stamp comment to the table code
-  # it produces
-  xtable.comment = FALSE,
   # Don't allow kableExtra to load packages, we add them manually in
   # csasdown
   kableExtra.latex.load_packages = FALSE,
   # Stop chunk output (echo) running into the margins
   width = 80,
   # Don't use scientific notation (stops tables from showing 1.2e3, etc.)
-  scipen = 999)
-# Fixes weird bug where knitr::include_graphics() thinks the non-git folder
-# is relative
-options(knitr.graphics.rel_path = FALSE)
+  scipen = 999,
+  # Fixes weird bug where knitr::include_graphics() thinks the non-git folder
+  # is relative
+  knitr.graphics.rel_path = FALSE,
+  out.height = "\\textheight",
+  out.width = "\\textwidth"
+)
 
-index_fn <- "000-launcher.rmd"
+index_fn <- "index.Rmd"
 ```
 

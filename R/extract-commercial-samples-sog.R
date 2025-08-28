@@ -10,13 +10,13 @@
 #'
 #' @param d The output of [gfdata::get_commercial_samples()]
 #'
-#' @returns A data.frame of the catch by year for hake in the SoG
+#' @returns A data.frame of the commercial samples by year for hake in the SoG
 #' @export
 extract_commercial_samples_sog <- \(d){
 
   j <- d |>
     dplyr::filter(major_stat_area_code == "01",
-                  minor_stat_area_code != "20",
+                  !minor_stat_area_code %in% c("12", "20"),
                   gear_desc == "MIDWATER TRAWL")
 
   j

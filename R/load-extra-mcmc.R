@@ -99,7 +99,7 @@ load_extra_mcmc <- function(model,
     progress_n = progress_n,
     verbose = verbose,
     beg_pat = paste0("^\\d+\\s*Early_InitAge_", max_age),
-    end_pat = "^\\d+\\s*Early_InitAge_1\\s+",
+    end_pat = "^\\d+\\s*Early_InitAge_1\\s*",
     ...)
 
   # Recruitment deviatons ------------------------------------------------------

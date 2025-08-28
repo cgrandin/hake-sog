@@ -16,7 +16,7 @@ post_process_landscape_tables <- function(x,
   if(!length(lscape_inds)){
     return(x)
   }
-  browser()
+
   lst <- post_process_extract_chunks(x, lscape_inds, lscape_inds)
   # Replace the begin landscape line with the KOMA options lines
   lst$between <- map2(lst$between, lscape_inds, \(lscape_line, ind){

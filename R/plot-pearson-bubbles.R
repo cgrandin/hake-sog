@@ -23,7 +23,7 @@
 #' @export
 plot_pearson_bubbles <- function(model,
                                  type = c("fishery", "survey"),
-                                 clines = age_bubble_cohorts,
+                                 clines = NULL,
                                  tick_prop = 1,
                                  vjust_x_labels = -1.5,
                                  remove_yr_labels = NULL,
@@ -61,7 +61,7 @@ plot_pearson_bubbles <- function(model,
   y_breaks <- min(d$age):max(d$age)
   y_lim <- c(min(d$age), max(d$age))
 
-  g <- ggplot(d, aes(x =yr,
+  g <- ggplot(d, aes(x = yr,
                      y = age,
                      size = abs(pearson_med),
                      fill = factor(sign(as.numeric(pearson_med))))) +
@@ -126,14 +126,14 @@ plot_pearson_bubbles <- function(model,
                           override.aes =
                             list(fill = c("white", "white", "white",
                                           point_fill, point_fill, point_fill),
-                                color = c(point_color,
-                                          point_color,
-                                          point_color),
+                                 color = c(point_color,
+                                           point_color,
+                                           point_color),
                                  alpha = c(point_alpha,
                                            point_alpha,
                                            point_alpha),
-                                 size = c(8, 4, 0.1,
-                                          0.1, 4, 8))))
+                            size = c(8, 4, 0.1,
+                                     0.1, 4, 8))))
 
   g
 }

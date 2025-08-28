@@ -13,7 +13,7 @@
 #' successfully and `FALSE` otherwise
 #' @export
 check_forecasts <- function(model_path = NULL,
-                            forecast_yrs = get_assess_yr():(get_assess_yr() + 3),
+                            forecast_yrs = (get_assess_yr() + 1):(get_assess_yr() + 4),
                             ...){
 
   if(is.null(model_path)){

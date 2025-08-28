@@ -1,6 +1,6 @@
 #' Calculate the catch by year
 #'
-#' @param df A data.frame as returned by [extract_catch()]
+#' @param df A data.frame as returned by [extract_catch_sog()]
 #' @param catch_scale A value to divide the catch by prior to writing to
 #' the file
 #' @param write_file If `TRUE`, write the output to the data file given by

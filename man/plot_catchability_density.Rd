@@ -3,29 +3,23 @@
 \name{plot_catchability_density}
 \alias{plot_catchability_density}
 \title{Plot the density histogram for the posteriors for catchability for
-either the acoustic age-2+ survey or the age-1 index}
+the acoustic age-2+ survey}
 \usage{
 plot_catchability_density(
   model,
-  model2 = NULL,
-  type = c("age2", "age1"),
   num_bins = 30,
-  x_breaks = seq(0, 1.4, 0.1),
+  x_breaks = seq(0, 1.2, 0.1),
   y_breaks = seq(0, 3, 0.5),
   bar_outline_color = "black",
   bar_fill = main_fill,
   bar_alpha = main_alpha,
-  line_colors = c("green", "red"),
-  line_types = c("solid", "solid"),
-  line_widths = c(1, 1)
+  line_color = "green",
+  line_type = "solid",
+  line_width = 1
 )
 }
 \arguments{
 \item{model}{The base model}
-
-\item{model2}{The second model, typically last year's base model}
-
-\item{type}{One of "age2" or "age1}
 
 \item{num_bins}{The number of bins to use for the histogram created using
 \code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}}
@@ -40,18 +34,16 @@ plot_catchability_density(
 
 \item{bar_alpha}{The amount of transparency for each bar in the histogram}
 
-\item{line_colors}{A vector of two line colors, one for the base model
-(\code{model}) median catchability and the second for last year's model
-(\code{model2})median catchability}
+\item{line_color}{The line color to use for the median line}
 
-\item{line_types}{A vector of two line types for the two median lines}
+\item{line_type}{The line type to use for the median line}
 
-\item{line_widths}{A vector of two line widths for the two median lines}
+\item{line_width}{The line width to use for the median line}
 }
 \value{
 A \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}} object
 }
 \description{
 Plot the density histogram for the posteriors for catchability for
-either the acoustic age-2+ survey or the age-1 index
+the acoustic age-2+ survey
 }

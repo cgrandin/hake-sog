@@ -43,13 +43,13 @@ if(!fore_num_yrs){
   bail("There are no column names containing `catch_year` in the forecast ",
        "definition file `", fore_file, "`")
 }
-forecast_yrs <- seq(assess_yr, (assess_yr + fore_num_yrs - 1))
+forecast_yrs <- seq(assess_yr + 1, (assess_yr + fore_num_yrs))
 
 # Figure margins  -------------------------------------------------------------
 # `figure_margins` is special because it is an R expression in the YAML
 # code and not just a plain value. It has to be parsed from a text string
 # into an R expression using `eval(parse())`
-yaml_check_margin_format(fig_margins, index_fn)
+yaml_check_margin_format(fig_margins)
 fig_margins <- eval(parse(text = fig_margins))
 
 # Document title --------------------------------------------------------------
@@ -85,7 +85,7 @@ theme_set(hake_theme(ax_label_color = fig_label_color,
                      margin_def = fig_margins))
 
 if(!exists("dat")){
-  dat <- readRDS("/srv/hake-sog/hake-2025-06-26.rds") 
+  dat <- readRDS("/srv/hake-sog/hake-2025-07-24.rds")
 }
 
 ct <- dat$catch |> 

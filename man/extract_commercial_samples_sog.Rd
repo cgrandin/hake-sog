@@ -11,7 +11,7 @@ extract_commercial_samples_sog(d)
 \item{d}{The output of \code{\link[gfdata:get_data]{gfdata::get_commercial_samples()}}}
 }
 \value{
-A data.frame of the catch by year for hake in the SoG
+A data.frame of the commercial samples by year for hake in the SoG
 }
 \description{
 Extract the Strait of Georgia commercial samples by year for the SS3

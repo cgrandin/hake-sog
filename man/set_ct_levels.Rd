@@ -7,7 +7,7 @@ the catch levels and extra information used for the assessment document}
 \usage{
 set_ct_levels(
   fn = here(doc_path, forecast_descriptions_fn),
-  inc_fi_and_stable_catch = FALSE
+  inc_fi_and_stable_catch = TRUE
 )
 }
 \arguments{

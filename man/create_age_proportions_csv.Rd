@@ -2,11 +2,11 @@
 % Please edit documentation in R/utils-create-age-proportions-csv.R
 \name{create_age_proportions_csv}
 \alias{create_age_proportions_csv}
-\title{Create an age proportion CSV data from the sample data}
+\title{Create an age proportion CSV data file from the sample data}
 \usage{
 create_age_proportions_csv(
   d,
-  min_date = as.Date("1972-01-01"),
+  min_date = as.Date("1979-01-01"),
   raw_counts = FALSE,
   plus_grp = 15,
   lw_tol = 0.1,
@@ -17,7 +17,8 @@ create_age_proportions_csv(
 )
 }
 \arguments{
-\item{d}{A data frame as returned by \code{\link[gfdata:get_data]{gfdata::get_commercial_samples()}}}
+\item{d}{A data frame as returned by \code{\link[=extract_commercial_samples_sog]{extract_commercial_samples_sog()}} or
+\code{\link[=extract_survey_samples_sog]{extract_survey_samples_sog()}}}
 
 \item{min_date}{Earliest date to include}
 
@@ -42,7 +43,7 @@ and catch weights}
 The age proportion data frame, invisibly
 }
 \description{
-Create an age proportion CSV data from the sample data
+Create an age proportion CSV data file from the sample data
 }
 \details{
 A CSV file will be written, and the data frame will also be returned

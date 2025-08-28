@@ -7,7 +7,7 @@
 plot_pearson_bubbles(
   model,
   type = c("fishery", "survey"),
-  clines = age_bubble_cohorts,
+  clines = NULL,
   tick_prop = 1,
   vjust_x_labels = -1.5,
   remove_yr_labels = NULL,

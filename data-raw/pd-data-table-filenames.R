@@ -10,7 +10,8 @@ create_data_hake("weight_age_sample_sizes_fn","wtatage-all-samplesize.csv")
 create_data_hake("weight_age_estimates_fn", "weight-at-age-ogives.csv")
 
 # Age proportions ----
-create_data_hake("age_props_fn", "age-proportions.csv")
+create_data_hake("age_props_commercial_fn", "age-proportions-commercial.csv")
+create_data_hake("age_props_survey_fn", "age-proportions-survey.csv")
 create_data_hake("raw_age_counts_fn", "raw-age-counts.csv")
 
 # Catch data ----

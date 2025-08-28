@@ -6,7 +6,6 @@
 \usage{
 table_catch(
   ct,
-  country = c("both", "can", "us"),
   start_yr,
   end_yr,
   inc_foreign_jv = FALSE,
@@ -19,8 +18,6 @@ table_catch(
 }
 \arguments{
 \item{ct}{Data frame as in the file \code{landing-tac-history.csv}}
-
-\item{country}{One of "both", "can", or "us"}
 
 \item{start_yr}{Start year in table}
 
@@ -38,6 +35,8 @@ the headers will have the same font size as the table cell data}
 See \code{header_vert_spacing}}
 
 \item{...}{Arguments passed to \code{\link[knitr:kable]{knitr::kable()}}}
+
+\item{country}{One of "both", "can", or "us"}
 
 \item{vert_spacing}{The vertical spacing between newlines for this font.
 If \code{NULL} this will be calculated as \code{header_font_size * header_vert_scale}}

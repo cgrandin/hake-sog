@@ -6,7 +6,7 @@
 \usage{
 check_forecasts(
   model_path = NULL,
-  forecast_yrs = get_assess_yr():(get_assess_yr() + 3),
+  forecast_yrs = (get_assess_yr() + 1):(get_assess_yr() + 4),
   ...
 )
 }

@@ -6,7 +6,6 @@
 input into the model}
 \usage{
 table_age_data(
-  fleet = c("can_ft", "can_ss", "can_jv", "us_cp", "us_ms", "us_sb"),
   start_yr,
   end_yr,
   digits = 2,
@@ -18,10 +17,6 @@ table_age_data(
 )
 }
 \arguments{
-\item{fleet}{Use codes of \code{can_ft} = Canada Freezer trawlers, \code{can_ss} =
-Canada Shoreside, \code{can_jv} = Canada Joint venture, \code{us_cp} = U.S. Catcher-
-processor, \code{us_ms} = U.S. Mothership, or \code{us_sb} = U.S. Shoreside}
-
 \item{start_yr}{Start year in table}
 
 \item{end_yr}{End year in table}

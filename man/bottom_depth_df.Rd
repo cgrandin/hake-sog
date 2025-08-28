@@ -3,17 +3,13 @@
 \docType{data}
 \name{bottom_depth_df}
 \alias{bottom_depth_df}
-\title{A data frame containing information about the depths of the bottom
-for catch by year for Canadian Freezer trawlers}
+\title{A data frame containing information about the survey index values}
 \format{
-A data frame with 16 rows and 6 variables:
+A data frame with 3 variables:
 \describe{
-\item{year}{Year of survey}
-\item{lower95}{The lower 95\% percentile (2.5th)}
-\item{lowerhinge}{The lower hinge value (bottom IQR)}
-\item{median}{The median depth value}
-\item{upperhinge}{The upper hinge value (upper IQR)}
-\item{upper95}{The upper 95\% percentile (97.5th)}
+\item{Year}{Year of survey}
+\item{Index}{The biomass estimate in tonnes}
+\item{Standard deviation}{The standard deviation for the estimate}
 }
 
 A data frame with 16 rows and 6 variables:
@@ -32,8 +28,7 @@ bottom_depth_df
 bottom_depth_df
 }
 \description{
-A data frame containing information about the depths of the bottom
-for catch by year for Canadian Freezer trawlers
+A data frame containing information about the survey index values
 
 A data frame containing information about the depths of the bottom
 for catch by year for Canadian Shoreside vessels

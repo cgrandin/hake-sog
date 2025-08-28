@@ -27,7 +27,7 @@
 #'
 #' @export
 load_ct_levels <- function(model_path,
-                           inc_fi_and_stable_catch = FALSE,
+                           inc_fi_and_stable_catch = TRUE,
                            ...){
 
   if(!check_catch_levels(model_path,

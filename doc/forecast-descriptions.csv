@@ -1,14 +1,12 @@
 catch_year1,catch_year2,catch_year3,catch_year4,description,directory,forecast_type,special
 0.01,0.01,0.01,0.01,No Fishing,01-0,constant,
-150000,150000,150000,150000,"150,000 t",02-150000,constant,
-200000,200000,200000,200000,"200,000 t",03-200000,constant,
-250000,250000,250000,250000,"250,000 t",04-250000,constant,
-300000,300000,300000,300000,"300,000 t",05-300000,constant,
-350000,350000,350000,350000,"350,000 t",06-350000,constant,
-400000,400000,400000,400000,"400,000 t",07-400000,constant,
-450000,450000,450000,450000,"450,000 t",08-450000,constant,
-500000,500000,500000,500000,"500,000 t",09-500000,constant,
-555000,555000,555000,555000,"2024 TAC: 555,000 t",10-555000,constant,tac
-,,,,FI = 100%,11-spr-100, calculated,spr100
-,,,,Default Harvest Policy,12-default-hr, calculated,default_hr
-,,,,Stable Catch,13-stable-catch, calculated,stable_catch
+2500,2500,2500,2500,"2,500 t",02-2500,constant,
+5000,5000,5000,5000,"5,000 t",03-5000,constant,
+7500,7500,7500,7500,"7,500 t",04-7500,constant,
+10000,10000,10000,10000,"10,000 t",05-10000,constant,
+12500,12500,12500,12500,"12,500 t",06-12500,constant,
+15000,15000,15000,15000,"15,000 t",07-15000,constant,
+7000,7000,7000,7000,"2024 TAC: 7,000 t",08-7000,constant,tac
+,,,,FI = 100%,09-spr-100,calculated,spr100
+,,,,Default Harvest Policy,10-default-hr,calculated,default_hr
+,,,,Stable Catch,11-stable-catch,calculated,stable_catch

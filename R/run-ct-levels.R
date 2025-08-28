@@ -10,7 +10,7 @@
 #' @export
 run_ct_levels <- function(model = NULL,
                           model_path = NULL,
-                          forecast_yrs = get_assess_yr():(get_assess_yr() + 3),
+                          forecast_yrs = (get_assess_yr() + 1):(get_assess_yr() + 4),
                           run_default_hr = TRUE,
                           run_spr_100 = TRUE,
                           run_stable_catch = TRUE,

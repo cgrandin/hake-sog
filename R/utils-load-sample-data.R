@@ -27,7 +27,7 @@ load_sample_data <- function(
   }
 
   out <- readRDS(fn) |>
-    dplyr::filter(major_stat_area_code %in% c("01", "02") & minor_stat_area_code != "20")
+    dplyr::filter(major_stat_area_code %in% c("01", "02") & !minor_stat_area_code %in% c("12", "20"))
 
   if(!is.null(gear_type)){
     gear_type <- toupper(gear_type)

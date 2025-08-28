@@ -14,7 +14,7 @@ post_process <- function(x, ...){
 
   # Make sure the LaTeX code is viable (basic checks)
   #post_process_error_check(x, ...)
-  browser()
+
   # Need to add this here - cannot be done anywhere else - to ensure the
   # xcolor colors are all loaded
   x <- post_process_add_xcolor_package(x, ...)

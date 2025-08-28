@@ -1,9 +1,6 @@
 #' Creates a table containing single-fleet age proportions which are
 #' input into the model
 #'
-#' @param fleet Use codes of `can_ft` = Canada Freezer trawlers, `can_ss` =
-#' Canada Shoreside, `can_jv` = Canada Joint venture, `us_cp` = U.S. Catcher-
-#' processor, `us_ms` = U.S. Mothership, or `us_sb` = U.S. Shoreside
 #' @param start_yr Start year in table
 #' @param end_yr End year in table
 #' @param font_size The table data and header font size in points
@@ -17,9 +14,7 @@
 #'
 #' @return A [knitr::kable()] object
 #' @export
-table_age_data <- function(fleet = c("can_ft", "can_ss", "can_jv",
-                                     "us_cp", "us_ms", "us_sb"),
-                           start_yr,
+table_age_data <- function(start_yr,
                            end_yr,
                            digits = 2,
                            font_size = 10,
@@ -28,38 +23,8 @@ table_age_data <- function(fleet = c("can_ft", "can_ss", "can_jv",
                            header_vert_scale = 1.2,
                            ...){
 
-  fleet <- match.arg(fleet)
-  switch(fleet,
-         can_ft = {
-           flt <- "Freezer Trawler age comps"
-           flt_num_hauls <- "Freezer Trawler number of hauls sampled for age"
-           d <- can_ft_age_df
-         },
-         can_ss = {
-           flt <- "Shoreside age comps"
-           flt_num_hauls <- "Shoreside number of trips sampled for age"
-           d <- can_ss_age_df
-         },
-         can_jv = {
-           flt <- "Joint Venture age comps"
-           flt_num_hauls <- "Joint Venture number of hauls sampled for age"
-           d <- can_jv_age_df
-         },
-         us_cp = {
-           flt <- "Catcher-processor age comps"
-           flt_num_hauls <- "Catcher-processor number of hauls sampled for age"
-           d <- us_cp_age_df
-         },
-         us_ms = {
-           flt <- "Mothership age comps"
-           flt_num_hauls <- "Mothership number of hauls sampled for age"
-           d <- us_ms_age_df
-         },
-         us_sb = {
-           flt <- "Shore-based age comps"
-           flt_num_hauls <- "Shore-based number of trips sampled for age"
-           d <- us_sb_age_df
-         })
+  d <- age_df
+  num_hauls <- "Number of trips sampled for age"
 
   yrs <- d$year
   start_yr <- start_yr %||% min(yrs)
@@ -83,12 +48,11 @@ table_age_data <- function(fleet = c("can_ft", "can_ss", "can_jv",
   names(d) <- nms
   col_names <- nms
 
-  th <- ifelse(fleet %in% c("us_sb", "can_ss"), "trips", "hauls")
   # Extra header
   header <-
     c("Year",
       "Number\nof fish",
-      paste0("Number\nof ", th),
+      "Number\nof samples",
       "Age (% of total for each year)" = length(ages))
 
   # Insert custom header fontsize before linebreaker

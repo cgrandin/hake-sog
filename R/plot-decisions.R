@@ -23,5 +23,4 @@ plot_decisions <- function(d){
     geom_line() +
     geom_point(mapping = aes())
 
-  browser()
 }

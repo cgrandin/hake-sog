@@ -510,11 +510,11 @@
 #' The filename for the Freezer trawler age proportions by year data file
 #'
 #' @format A character string
-"age_props_fn"
-#' The filename for the Shoreside age proportions by year data file
+"age_props_survey_fn"
+#' The filename for the survey ge proportions by year data file
 #'
 #' @format A character string
-"age_props_fn"
+"age_props_commercial_fn"
 #' The filename for the raw age counts by year data file
 #'
 #' @format A character string
@@ -727,18 +727,15 @@
 #'   \item{can_attain}{Canadian proportion of Canadian TAC caught each year}
 #'   \item{tot_attain}{Proportion of total TAC caught each year}
 #' }
-"ct"
-#' A data frame containing information on the actual catch, biomass estimate
-#' and Total Allowable Catch by year
+"landings_tac_df"
+#' A data frame containing information on the actual catch, and Total
+#' Allowable Catch by year
 #'
-#' @format A data frame with 21 rows and 6 variables:
+#' @format A data frame with 3 variables:
 #' \describe{
 #'   \item{Year}{Year of catch/TAC}
-#'   \item{Realized catch}{Actual catch take for the year in tonnes}
+#'   \item{Catch}{Actual catch take for the year in tonnes}
 #'   \item{TAC}{Total allowable catch for the year}
-#'   \item{Biomass estimate}{The biomass estimate for the year from the current assessment}
-#'   \item{Depletion}{The depletion estimate for the year from the current assessment}
-#'   \item{Default HCR TAC}{The default harvest control rule TAC (F40%)}
 #' }
 "catch_targets_df"
 #' A data frame containing information on extra TAC information
@@ -839,18 +836,14 @@
 #'   \item{vessels}{A list of the vessels involved in the survey}
 #'   \item{hauls.with.samples}{The number of hauls with samples taken}
 #' }
-"survey_history_df"
-#' A data frame containing information about the depths of the bottom
-#' for catch by year for Canadian Freezer trawlers
+"survey_indices_df"
+#' A data frame containing information about the survey index values
 #'
-#' @format A data frame with 16 rows and 6 variables:
+#' @format A data frame with 3 variables:
 #' \describe{
-#'   \item{year}{Year of survey}
-#'   \item{lower95}{The lower 95% percentile (2.5th)}
-#'   \item{lowerhinge}{The lower hinge value (bottom IQR)}
-#'   \item{median}{The median depth value}
-#'   \item{upperhinge}{The upper hinge value (upper IQR)}
-#'   \item{upper95}{The upper 95% percentile (97.5th)}
+#'   \item{Year}{Year of survey}
+#'   \item{Index}{The biomass estimate in tonnes}
+#'   \item{Standard deviation}{The standard deviation for the estimate}
 #' }
 "bottom_depth_df"
 #' A data frame containing information about the depths of the bottom

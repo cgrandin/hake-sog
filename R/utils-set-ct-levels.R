@@ -16,7 +16,7 @@
 #'
 #' @export
 set_ct_levels <- function(fn = here(doc_path, forecast_descriptions_fn),
-                          inc_fi_and_stable_catch = FALSE){
+                          inc_fi_and_stable_catch = TRUE){
 
   ret <- list()
 

@@ -7,7 +7,7 @@
 load_forecasts(
   model_path = NULL,
   first = 0,
-  forecast_yrs = get_assess_yr():(get_assess_yr() + 3),
+  forecast_yrs = (get_assess_yr() + 1):(get_assess_yr() + 4),
   verbose = TRUE,
   ...
 )

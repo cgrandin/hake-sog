@@ -15,7 +15,7 @@ extract_catch_sog <- \(ct){
 
   j <- ct |>
     dplyr::filter(major_stat_area_code == "01",
-                  minor_stat_area_code != "20",
+                  !minor_stat_area_code %in% c("12", "20"),
                   gear == "MIDWATER TRAWL") |>
     mutate(year = year(best_date)) |>
     group_by(year) |>

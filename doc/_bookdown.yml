@@ -1,10 +1,9 @@
- # name of the pdf file that is created: hake.pdf
 book_filename: "resdoc"
-rmd_files: ["000-launcher.rmd",
+rmd_files: ["index.Rmd",
             "001-load-packages.rmd",
             "002-load-globals.rmd",
-            #"003-load-models.rmd",
-            #"004-load-project-variables.rmd",
+            "003-load-models.rmd",
+            "004-load-project-variables.rmd",
             # Always leave the above (files 000-004) uncommented,
             # comment out sections below only.
             #"005-one-page-summary.rmd",
@@ -15,8 +14,8 @@ rmd_files: ["000-launcher.rmd",
             #"010-research-needs-loader.rmd",
             #"011-acknowledgements.rmd",
             #"012-references.rmd",
-            #"013-tables.rmd",
-            "014-figures.rmd",
+            "013-tables.rmd",
+            #"014-figures.rmd",
             # File 100 is required to make all that follow it appendices.
             #"100-start-appendices.rmd",
             #"101-appendix-base-mcmc-diagnostics.rmd",

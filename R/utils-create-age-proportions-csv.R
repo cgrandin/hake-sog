@@ -1,4 +1,4 @@
-#' Create an age proportion CSV data from the sample data
+#' Create an age proportion CSV data file from the sample data
 #'
 #' @details
 #' A CSV file will be written, and the data frame will also be returned
@@ -6,7 +6,8 @@
 #' in the data, and the number of samples (hauls/trips) in the data.
 #' Shoreside uses trips as a sampling unit and the other two use hauls.
 #'
-#' @param d A data frame as returned by [gfdata::get_commercial_samples()]
+#' @param d A data frame as returned by [extract_commercial_samples_sog()] or
+#' [extract_survey_samples_sog()]
 #' @param min_date Earliest date to include
 #' @param raw_counts Logical. If `TRUE`, return raw, unweighted age
 #' proportions. If `FALSE`, return the age proportions weighted by sample
@@ -23,7 +24,7 @@
 #' @export
 create_age_proportions_csv <- function(
     d,
-    min_date = as.Date("1972-01-01"),
+    min_date = as.Date("1979-01-01"),
     raw_counts = FALSE,
     plus_grp = 15,
     lw_tol = 0.1,
@@ -38,6 +39,7 @@ create_age_proportions_csv <- function(
     d <- d |>
       rename(trip_start_date = trip_end_date)
   }
+
   d <- d |>
     dplyr::filter(!is.na(age)) |>
     mutate(age = ifelse(age > plus_grp, plus_grp, age)) |>
@@ -54,6 +56,7 @@ create_age_proportions_csv <- function(
       select(year, sample_id, length, weight,
              age, sample_weight, catch_weight)
   }
+
   if(raw_counts){
 
     out <- d |>
@@ -170,7 +173,7 @@ create_age_proportions_csv <- function(
     full_join(age_props, by = "year")
 
   # Write the csv files out ----
-  fn <- here(data_tables_path, age_props_fn)
+  fn <- here(data_tables_path, age_props_commercial_fn)
 
   write_csv(out, fn)
   message("The file:\n`", fn, "`\nwas written with new age proportion data\n")

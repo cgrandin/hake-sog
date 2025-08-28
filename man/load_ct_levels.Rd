@@ -4,7 +4,7 @@
 \alias{load_ct_levels}
 \title{Load catch levels from SS forecast files.}
 \usage{
-load_ct_levels(model_path, inc_fi_and_stable_catch = FALSE, ...)
+load_ct_levels(model_path, inc_fi_and_stable_catch = TRUE, ...)
 }
 \arguments{
 \item{model_path}{The model directory name}

@@ -4,7 +4,7 @@
 \alias{get_doc_type}
 \title{Get the document type for the given RMD file}
 \usage{
-get_doc_type(fn)
+get_doc_type(fn, bookdown_lst = NULL)
 }
 \arguments{
 \item{fn}{The RMD filename}

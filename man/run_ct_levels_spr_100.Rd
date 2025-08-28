@@ -7,7 +7,7 @@ SPR to 1, within the tolerance given by (\code{ct_levels_spr_tol})}
 \usage{
 run_ct_levels_spr_100(
   model,
-  forecast_yrs = get_assess_yr():(get_assess_yr() + 3),
+  forecast_yrs = (get_assess_yr() + 1):(get_assess_yr() + 4),
   ss_exe = NULL,
   keep_files = FALSE,
   ...

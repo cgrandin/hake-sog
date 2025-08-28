@@ -27,29 +27,14 @@ create_data_hake("weight_age_sample_sizes_df",
                           show_col_types = FALSE))
 
 # Catch and TAC ----
-create_data_hake("ct",
+create_data_hake("landings_tac_df",
                  read_csv(file.path(load_dir,
                                     "landings-tac-history.csv"),
                           col_types = cols(),
                           show_col_types = FALSE) |>
-                   mutate(`U.S. Total` =
-                            `U.S. Foreign` +
-                            `U.S. Joint-venture` +
-                            `U.S. Mothership` +
-                            `U.S. Catcher-processor` +
-                            `U.S. Shoreside` +
-                            `U.S. Research`,
-                          `Canada Total` =
-                            `Canada Foreign` +
-                            `Canada Joint-venture` +
-                            `Canada Shoreside` +
-                            `Canada Freezer-trawler`,
-                          Total = `U.S. Total` + `Canada Total`,
-                          us_prop = `U.S. Total` / Total * 100,
-                          can_prop = `Canada Total` / Total * 100,
-                          us_attain = `U.S. Total` / `U.S. TAC` * 100,
-                          can_attain = `Canada Total` / `Canada TAC` * 100,
-                          tot_attain = `Total` / `Total TAC` * 100))
+                   rename(`Catch (t)` = Catch,
+                          `TAC (t)` = TAC) |>
+                   mutate(`Attainment (\\%)` = `Catch (t)` / `TAC (t)` * 100))
 
 create_data_hake("catch_targets_df",
                  read_csv(file.path(load_dir,
@@ -91,18 +76,13 @@ create_data_hake("kriging_pars_df",
                           comment = "#",
                           show_col_types = FALSE))
 
-create_data_hake("survey_history_df",
+create_data_hake("survey_indices_df",
                  read_csv(file.path(load_dir,
-                                    "survey-history.csv"),
-                          col_types = cols(),
-                          show_col_types = FALSE))
-
-create_data_hake("survey_by_country_df",
-                 read_csv(file.path(load_dir,
-                                    "survey-by-country.csv"),
+                                    "survey-indices.csv"),
                           col_types = cols(),
                           comment = "#",
-                          show_col_types = FALSE))
+                          show_col_types = FALSE) |>
+                   rename(`Index (t)` = Index))
 
 # Depth data ----
 # * Canada depths ----

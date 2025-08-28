@@ -49,6 +49,7 @@ plot_age_comp_fit <- function(model,
 
   d <- d |>
     select(-c(pearson_lo, pearson_med, pearson_hi)) |>
+    dplyr::filter(age >= min(ages)) |>
     mutate(age = factor(age))
 
   colors <- plot_color(length(ages))
@@ -114,7 +115,12 @@ plot_age_comp_fit <- function(model,
     colors <- rot_vec(colors, yr_diffs[i])
     cols <- c(cols, colors)
   }
+
   d <- d |>
+    group_by(yr) |>
+    complete(age = as.factor(as.integer(ages)),
+             fill = list(exp_lo = 0, exp_hi = 0, exp_med = 0, obs_med = 0)) |>
+    ungroup() |>
     mutate(col = cols)
 
   g <- ggplot(d,
