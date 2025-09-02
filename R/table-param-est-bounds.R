@@ -63,13 +63,14 @@ table_param_est_bounds <- function(model,
   row$latex_nm <- paste0("Recruitment variability (",
                          latex_italics("$\\sigma_r$"),
                          ")")
-  if(row$type < 0 && row$phase > 0){
+  if(row$type < 0 && as.numeric(row$phase) > 0){
     row$num_param <- "1"
     row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
   }else{
     row$num_param <- "--"
     row$bounds <- "--"
   }
+
   row$prior_str <- get_prior_string(row, digits)
   sr_params[sr_params$param == "sigma_r", ] <- row
 
@@ -106,7 +107,7 @@ table_param_est_bounds <- function(model,
          "control file or there is more than one of them")
   }
   row$param <- "m"
-  row$num_param <- ifelse(row$phase <= 0 , "--", "1")
+  row$num_param <- ifelse(as.numeric(row$phase) <= 0 , "--", "1")
   row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
   row$latex_nm <- paste0("Natural mortality (", latex_italics("M"), ")")
   row$prior_str <- get_prior_string(row, digits)
@@ -125,7 +126,7 @@ table_param_est_bounds <- function(model,
   }
 
   row$param <- "extra_sd_survey"
-  row$num_param <- ifelse(row$phase <= 0 , "--", "1")
+  row$num_param <- ifelse(as.numeric(row$phase) <= 0 , "--", "1")
   row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
   row$latex_nm <- "Additional variance for survey log(SE)"
   row$prior_str <- get_prior_string(row, digits)
@@ -180,7 +181,7 @@ table_param_est_bounds <- function(model,
 
   if(nrow(row) == 1){
     row$param <- "extra_sd_age1"
-    row$num_param <- ifelse(row$phase <= 0 , "--", "1")
+    row$num_param <- ifelse(as.numeric(row$phase) <= 0 , "--", "1")
     row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
     row$latex_nm <- "Additional variance for age-1 index log(SE)"
     row$prior_str <- get_prior_string(row, digits)
@@ -286,7 +287,7 @@ table_param_est_bounds <- function(model,
   }
 
   row$param <- "dm_fishery"
-  row$num_param <- ifelse(row$phase <= 0 , "--", "2")
+  row$num_param <- ifelse(as.numeric(row$phase) <= 0 , "--", "2")
   row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
   row$latex_nm <- paste0("Dirichlet-multinomial fishery likelihood, ",
                          latex_italics("$\\log(\\theta_{fishery})$"))
@@ -304,7 +305,7 @@ table_param_est_bounds <- function(model,
   }
 
   row$param <- "dm_survey"
-  row$num_param <- ifelse(row$phase <= 0 , "--", "2")
+  row$num_param <- ifelse(as.numeric(row$phase) <= 0 , "--", "2")
   row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
   row$latex_nm <- paste0("Dirichlet-multinomial survey likelihood, ",
                          latex_italics("$\\log(\\theta_{survey})$"))

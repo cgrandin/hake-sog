@@ -39,17 +39,17 @@ plot_grid(plotlist = p, ncol = 1, align = "v", rel_heights = c(1, 1))
 
 ```
 
-```{r depth-ca-ft, fig.height = 4, out.height = "85%"}
-yrs <- 2019:2024
-depth_y_lim <- c(0, 700)
-depth_y_breaks <- seq(min(depth_y_lim), max(depth_y_lim), by = 100)
+<!-- ```{r depth-ca-ft, fig.height = 4, out.height = "85%"} -->
+<!-- yrs <- 2019:2024 -->
+<!-- depth_y_lim <- c(0, 700) -->
+<!-- depth_y_breaks <- seq(min(depth_y_lim), max(depth_y_lim), by = 100) -->
 
-plot_depth_2_panel(can_ft_gear_depth_df,
-                   can_ft_bottom_depth_df,
-                   yrs = yrs,
-                   y_lim = depth_y_lim,
-                   y_breaks = depth_y_breaks)
-```
+<!-- plot_depth_2_panel(can_ft_gear_depth_df, -->
+<!--                    can_ft_bottom_depth_df, -->
+<!--                    yrs = yrs, -->
+<!--                    y_lim = depth_y_lim, -->
+<!--                    y_breaks = depth_y_breaks) -->
+<!-- ``` -->
 
 (ref:main-data-overview-cap) Overview of data used in this assessment. Circle
 areas are proportional to total catch for the fishery data, precision for
@@ -262,7 +262,9 @@ plot_grid(plotlist = p, ncol = 1, align = "v")
 
 plot_biomass(list(base_model),
              list(base_model_name),
-             ylim = c(0, 3),
+             ylim = c(0, 3.5),
+             xlim = c(start_yr - 2, assess_yr),
+             x_breaks = seq(start_yr + 1, assess_yr, by = 5),
              point_shape = ts_single_model_pointshape,
              leg_pos = "none")
 ```
@@ -273,6 +275,7 @@ plot_biomass(list(base_model),
 
 plot_rel_biomass(model_lst = list(base_model),
                  model_names = list(base_model_name),
+                 xlim = c(start_yr, assess_yr),
                  ylim = c(0, 2.5),
                  alpha = 0.2,
                  leg_pos = "none") |>
@@ -285,6 +288,7 @@ plot_rel_biomass(model_lst = list(base_model),
 
 plot_recruitment(list(base_model),
                  list(base_model_name),
+                 xlim = c(start_yr, assess_yr),
                  #ylim = c(0, 10),
                  inc_means = TRUE,
                  leg_pos = "none") |>
@@ -297,6 +301,8 @@ plot_recruitment(list(base_model),
 
 plot_recdevs(list(base_model),
              list(base_model_name),
+             xlim = c(start_yr - 15, assess_yr),
+             ylim = c(-3.5, 3.5),
              line_color = ts_single_line_color,
              leg_pos = "none")
 ```
@@ -307,7 +313,8 @@ plot_recdevs(list(base_model),
 
 plot_age_comp_bubbles(base_model, type = "fishery",
                       proportions = FALSE,
-                      clines = c(1978, 1991, 2012, 2021),
+                      xlim = c(start_yr, assess_yr),
+                      clines = c(1978, 1991, 2012, 2014, 2021),
                       leg_pos = "top",
                       tick_prop = 0.3,
                       vjust_x_labels = -1.2,
@@ -328,6 +335,7 @@ plot_stock_recruitment(base_model,
 ```{r main-fishing-intensity-fig, fig.cap = "(ref:main-fishing-intensity-fig-cap)"}
 
 plot_fishing_intensity(base_model,
+                       xlim = c(start_yr, assess_yr),
                        ylim = c(0, 1.1),
                        line_color="grey32")
 ```
@@ -337,6 +345,7 @@ plot_fishing_intensity(base_model,
 ```{r main-exploitation-fraction-fig, fig.cap = "(ref:main-exploitation-fraction-fig-cap)"}
 
 plot_exploitation_fraction(base_model,
+                           xlim = c(start_yr, assess_yr),
                            ylim = c(0, 0.04),
                            y_breaks = seq(0, 0.04, by = 0.005),
                            line_color="grey32")

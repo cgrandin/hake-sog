@@ -61,10 +61,11 @@ plot_pearson_bubbles <- function(model,
   y_breaks <- min(d$age):max(d$age)
   y_lim <- c(min(d$age), max(d$age))
 
-  g <- ggplot(d, aes(x = yr,
-                     y = age,
-                     size = abs(pearson_med),
-                     fill = factor(sign(as.numeric(pearson_med))))) +
+  g <- ggplot(d,
+              aes(x = yr,
+                  y = age,
+                  size = abs(pearson_med),
+                  fill = factor(sign(as.numeric(pearson_med))))) +
     geom_point(pch = 21,
                alpha = point_alpha,
                color = point_color,
@@ -78,7 +79,7 @@ plot_pearson_bubbles <- function(model,
     scale_fill_manual(values = c("white",
                                  point_fill),
                       guide = "none") +
-    scale_size_continuous(breaks = c(1, 1, 2, 2, 3, 3),
+    scale_size_continuous(breaks = c(0.25, 0.5, 0.75, 1, 1.25, 1.4),
                           labels = c(-8, -4, -0.1, 0.1, 4, 8),
                           range = c(0.1, 8))  +
     theme(axis.text.x = element_text(vjust = vjust_x_labels),
@@ -123,6 +124,7 @@ plot_pearson_bubbles <- function(model,
              guide_legend(title = "Residuals",
                           nrow = ifelse(leg_pos == "right" |
                                           leg_pos == "left", 10, 1),
+
                           override.aes =
                             list(fill = c("white", "white", "white",
                                           point_fill, point_fill, point_fill),
@@ -132,8 +134,8 @@ plot_pearson_bubbles <- function(model,
                                  alpha = c(point_alpha,
                                            point_alpha,
                                            point_alpha),
-                            size = c(8, 4, 0.1,
-                                     0.1, 4, 8))))
+                                 size = c(8, 4, 0.1,
+                                          0.1, 4, 8))))
 
   g
 }

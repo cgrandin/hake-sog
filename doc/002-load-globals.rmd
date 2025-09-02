@@ -2,6 +2,7 @@
 
 # Show only 2 rows when looking at a tibble
 options(pillar.print_min = 2)
+
 # Extract YAML sections -------------------------------------------------------
 output <- rmarkdown::metadata$output$`csasdown::resdoc_pdf`
 

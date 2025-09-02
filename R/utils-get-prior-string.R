@@ -19,10 +19,10 @@ get_prior_string <- function(row, digits = 2){
                   "4" = "Normal",
                   "6" = "Normal")
 
-  if(row$type <= 0 && row$phase > 0){
+  if(as.numeric(row$type) <= 0 && as.numeric(row$phase) > 0){
     return("Uniform")
   }
-  if(row$type <= 0 && row$phase < 0){
+  if(as.numeric(row$type) <= 0 && as.numeric(row$phase) < 0){
     # Fixed parameter, initial value
     return(as.character(row$init))
   }

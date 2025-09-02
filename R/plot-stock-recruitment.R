@@ -186,16 +186,16 @@ plot_stock_recruitment <- \(model,
                           R[0],
                           ")"))) +
     theme(legend.position = "none") +
-    geom_text(x = 0.95,
+    geom_text(x = 0.85,
               y = median_recr_text_loc,
               label = "Median recruitment",
-              size = 5,
+              size = 4,
               color = "red",
               hjust = 0) +
-    geom_text(x = 0.95,
+    geom_text(x = 0.85,
               y = mean_recr_text_loc,
               label = "Mean recruitment",
-              size = 5,
+              size = 4,
               color = "black",
               hjust = 0)
 
