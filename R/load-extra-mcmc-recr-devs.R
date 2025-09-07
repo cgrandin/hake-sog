@@ -21,6 +21,7 @@ load_extra_mcmc_recr_devs <- function(reps,
   # Get the max age, so it can be subtracted from the start year to get the
   # initial recdev year
   age_label_pat <- "Early_InitAge_(\\d+)"
+
   age_labels <- grep(age_label_pat, x[[1]]$Label, value = T)
   ages <- gsub("Early_InitAge_(\\d+)", "\\1", age_labels) |>
     as.numeric()

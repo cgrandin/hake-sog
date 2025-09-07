@@ -62,7 +62,7 @@ plot_squid <- function(model,
 
   # Add flag for whether the year was a survey year or not.
   d <- d |>
-    mutate(point_type = ifelse(model %in% survey_age1_yrs,
+    mutate(point_type = ifelse(model %in% survey_age2_yrs,
                                surv_point_type,
                                reg_point_type))
 
@@ -136,6 +136,7 @@ plot_squid <- function(model,
       ribbon_dat <- ribbon_dat |>
         dplyr::filter(year %in% ci_yrs)
     }
+
     vert_lines_dat <- ribbon_dat |>
       dplyr::filter(model %in% min(model):max(model)) |>
       mutate(year = factor(year)) |>

@@ -108,6 +108,7 @@ plot_mcmc_histogram <- function(d,
             bind_rows(row)
         }
       }
+
       d <- d |>
         mutate(x = factor(x, levels = lvls))
     }
@@ -269,9 +270,17 @@ plot_mcmc_histogram <- function(d,
     gr <- ggplot_build(g)$data[[1]]
     wch_less <- which(gr$xmin < ro_val / scale_effn)
     wch_more <- which(gr$xmin >= ro_val / scale_effn)
-    if(tail(wch_less, 1) + 1 != head(wch_more, 1)){
-      stop("The R0 value does not seem to fit into a bin on the histogram")
+    if(!length(wch_less)){
+      wch_less <- 1
+      # Must be in the first bin
     }
+    if(!length(wch_more)){
+      wch_more <- length(gr$xmin)
+      # Must be in the last bin
+    }
+    #if(tail(wch_less, 1) + 1 != head(wch_more, 1)){
+    #  stop("The R0 value does not seem to fit into a bin on the histogram")
+    #}
     ro_xmin <- gr |>
       slice(tail(wch_less, 1)) |>
       pull(xmin)

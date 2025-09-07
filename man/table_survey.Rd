@@ -2,24 +2,23 @@
 % Please edit documentation in R/table-survey.R
 \name{table_survey}
 \alias{table_survey}
-\title{Create a table of values of the age 2+ survey biomass estimates by country}
+\title{Create a table of values of the age 2+ survey biomass estimates}
 \usage{
 table_survey(
   d,
-  digits = 3,
+  digits = 0,
   font_size = 10,
   header_font_size = 10,
   header_vert_spacing = 12,
   header_vert_scale = 1.2,
-  ret_df = FALSE,
   ...
 )
 }
 \arguments{
 \item{d}{A data frame containing the survey history as read in from
-the file \code{survey-by-country.csv}}
+the file \code{survey-indices.csv}}
 
-\item{digits}{Number of decimal places}
+\item{digits}{Number of decimal places for the index values}
 
 \item{font_size}{The table data and header font size in points}
 
@@ -28,9 +27,6 @@ the headers will have the same font size as the table cell data}
 
 \item{header_vert_scale}{Scale factor to create the vertical spacing value.
 See \code{header_vert_spacing}}
-
-\item{ret_df}{Logical. If \code{TRUE}, return a data frame of the table, If
-\code{FALSE}, return a \code{\link[kableExtra:kbl]{kableExtra::kbl()}} object}
 
 \item{...}{Arguments passed to \code{\link[kableExtra:kbl]{kableExtra::kbl()}}}
 
@@ -41,5 +37,5 @@ If \code{NULL} this will be calculated as \code{header_font_size * header_vert_s
 A \code{\link[knitr:kable]{knitr::kable()}} object
 }
 \description{
-Create a table of values of the age 2+ survey biomass estimates by country
+Create a table of values of the age 2+ survey biomass estimates
 }

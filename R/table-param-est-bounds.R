@@ -150,23 +150,24 @@ table_param_est_bounds <- function(model,
 
   ages_estimated_df <- sel_params |>
     dplyr::filter(phase > 0)
-  row <- ages_estimated_df |>
-    slice(1)
-  if(nrow(ages_estimated_df)){
-    row$num_param <- as.character(nrow(ages_estimated_df))
-  }else{
-    row$num_param <- "--"
+  if(nrow(ages_estimated_df) > 0){
+    row <- ages_estimated_df |>
+      slice(1)
+    if(nrow(ages_estimated_df)){
+      row$num_param <- as.character(nrow(ages_estimated_df))
+    }else{
+      row$num_param <- "--"
+    }
+    row$param <- "age_sel_survey"
+    row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
+    row$latex_nm <- paste0("Non-parametric age-based selectivity: ages ",
+                           min(ages_estimated_df$param),
+                           "--",
+                           max(ages_estimated_df$param))
+    row$prior_str <- get_prior_string(row, digits)
+    sr_params <- sr_params |>
+      bind_rows(row)
   }
-  row$param <- "age_sel_survey"
-  row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
-  row$latex_nm <- paste0("Non-parametric age-based selectivity: ages ",
-                         min(ages_estimated_df$param),
-                         "--",
-                         max(ages_estimated_df$param))
-
-  row$prior_str <- get_prior_string(row, digits)
-  sr_params <- sr_params |>
-    bind_rows(row)
 
   # Age-1 survey additional value for SE ----
   q_params <- convert_ctl_file_param_dfs(ctl, "Q_parms")
@@ -206,74 +207,77 @@ table_param_est_bounds <- function(model,
 
   ages_estimated_df <- sel_params |>
     dplyr::filter(phase > 0)
-  # Assumes all estimated age selectivities have same starting conditions
-  row <- ages_estimated_df |>
-    slice(1)
-  if(nrow(ages_estimated_df)){
-    row$num_param <- as.character(nrow(ages_estimated_df))
-  }else{
-    row$num_param <- "--"
+  if(nrow(ages_estimated_df) > 0){
+    # Assumes all estimated age selectivities have same starting conditions
+    row <- ages_estimated_df |>
+      slice(1)
+    if(nrow(ages_estimated_df)){
+      row$num_param <- as.character(nrow(ages_estimated_df))
+    }else{
+      row$num_param <- "--"
+    }
+    row$param <- "age_sel_fishery"
+    row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
+    row$latex_nm <- paste0("Non-parametric age-based selectivity: ages ",
+                           min(ages_estimated_df$param),
+                           "--",
+                           max(ages_estimated_df$param))
+    row$prior_str <- get_prior_string(row, digits)
+    sr_params <- sr_params |>
+      bind_rows(row)
   }
-  row$param <- "age_sel_fishery"
-  row$bounds <- paste0("(", row$lo, ", ", row$hi, ")")
-  row$latex_nm <- paste0("Non-parametric age-based selectivity: ages ",
-                         min(ages_estimated_df$param),
-                         "--",
-                         max(ages_estimated_df$param))
-
-  row$prior_str <- get_prior_string(row, digits)
-  sr_params <- sr_params |>
-    bind_rows(row)
 
   # Selectivity deviations for fishery ----
   sel_devs <- model$parameter_priors$`Fishery recruitment deviations`
-  sel_devs_tv <- ctl$age_selex_parms_tv |>
-    as_tibble(rownames = "param")
+  if(nrow(sel_devs) > 0){
+    sel_devs_tv <- ctl$age_selex_parms_tv |>
+      as_tibble(rownames = "param")
 
-  sel_dev_mean <- sel_devs_tv |>
-    dplyr::filter(grepl("dev_auto", param)) |>
-    first() |>
-    pull(INIT) |>
-    as.character()
+    sel_dev_mean <- sel_devs_tv |>
+      dplyr::filter(grepl("dev_auto", param)) |>
+      first() |>
+      pull(INIT) |>
+      as.character()
 
-  sel_dev_sd <- sel_devs_tv |>
-    dplyr::filter(grepl("dev_se", param)) |>
-    first() |>
-    pull(INIT) |>
-    as.character()
+    sel_dev_sd <- sel_devs_tv |>
+      dplyr::filter(grepl("dev_se", param)) |>
+      first() |>
+      pull(INIT) |>
+      as.character()
 
-  sel_dev_yrs <- gsub(".*DEVadd_([0-9]+)$", "\\1", sel_devs$label)
-  start_sel_dev_yr <- min(sel_dev_yrs)
-  end_sel_dev_yr <- max(sel_dev_yrs)
+    sel_dev_yrs <- gsub(".*DEVadd_([0-9]+)$", "\\1", sel_devs$label)
+    start_sel_dev_yr <- min(sel_dev_yrs)
+    end_sel_dev_yr <- max(sel_dev_yrs)
 
-  prior_type <- first(sel_devs$pr_type)
-  if(prior_type == "dev"){
-    prior_type <- "4"
+    prior_type <- first(sel_devs$pr_type)
+    if(prior_type == "dev"){
+      prior_type <- "4"
+    }
+
+    row <- tibble(param = "seldevs",
+                  hi = as.character(first(sel_devs$min)),
+                  lo = as.character(first(sel_devs$max)),
+                  type = prior_type,
+                  phase = as.character(ctl$recdev_phase),
+                  init = as.character(first(sel_devs$init)),
+                  mean = sel_dev_mean,
+                  sd = sel_dev_sd,
+                  latex_nm = paste0("Selectivity deviations (",
+                                    start_sel_dev_yr, "--", end_sel_dev_yr,
+                                    ", ages ",
+                                    min(ages_estimated_df$param),
+                                    "--",
+                                    max(ages_estimated_df$param),
+                                    ")"),
+                  num_param = nrow(sel_devs),
+                  bounds = paste0("(", first(sel_devs$min), ", ",
+                                  first(sel_devs$max), ")"),
+                  prior_str = NA) |>
+      mutate(across(everything(), as.character))
+    row$prior_str <- get_prior_string(row, digits)
+    sr_params <- sr_params |>
+      bind_rows(row)
   }
-
-  row <- tibble(param = "seldevs",
-                hi = as.character(first(sel_devs$min)),
-                lo = as.character(first(sel_devs$max)),
-                type = prior_type,
-                phase = as.character(ctl$recdev_phase),
-                init = as.character(first(sel_devs$init)),
-                mean = sel_dev_mean,
-                sd = sel_dev_sd,
-                latex_nm = paste0("Selectivity deviations (",
-                                  start_sel_dev_yr, "--", end_sel_dev_yr,
-                                  ", ages ",
-                                  min(ages_estimated_df$param),
-                                  "--",
-                                  max(ages_estimated_df$param),
-                                  ")"),
-                num_param = nrow(sel_devs),
-                bounds = paste0("(", first(sel_devs$min), ", ",
-                                first(sel_devs$max), ")"),
-                prior_str = NA) |>
-    mutate(across(everything(), as.character))
-  row$prior_str <- get_prior_string(row, digits)
-  sr_params <- sr_params |>
-    bind_rows(row)
 
   # Dirichlet-Multinomial - fishery ----
   dm_params <- convert_ctl_file_param_dfs(ctl, "dirichlet_parms")
@@ -334,7 +338,7 @@ table_param_est_bounds <- function(model,
                      "", "", ""), 7)
   d <- insert_row(d,
                   c(paste0("\\textbf{\\underline{Data Weighting}}"),
-                    "", "", ""), 12)
+                    "", "", ""), 10)
   d <- insert_row(d,
                    c(paste0("\\textbf{\\emph{Acoustic Survey}}"),
                      "", "", ""), 8)
@@ -353,8 +357,8 @@ table_param_est_bounds <- function(model,
 
   d <- insert_row(d,
                   c(paste0("\\textbf{\\emph{Fishery and Survey}}"),
-                    "", "", ""), 11)
-  sec_inds <- c(1, 7, 13)
+                    "", "", ""), 9)
+  sec_inds <- c(1, 7, 11)
   # Add spaces after commas and before opening parentheses
   d <- map_df(d, ~{gsub(",", ", ", .x)})
   d <- map_df(d, ~{gsub("\\(", " \\(", .x)})

@@ -22,11 +22,11 @@
 # December.
 . ./get-assess-year.sh
 
-repo_path=`Rscript -e "cat(here::here())"`
+repo_path="/home/grandin/github/pacific-hake/hake-sog"
 # If running on a local machine and the model folder is in your
 # repo root, uncomment the next line and comment the line after it
 #project  path=`Rscript -e "cat(dirname(here::here()))"`
-project_path="/srv/hake"
+project_path="/srv/hake-sog"
 
 models_path="models"
 # *Never* change `year_path` manually here. Instead, to assign a manual year,

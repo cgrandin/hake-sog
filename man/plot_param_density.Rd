@@ -22,7 +22,7 @@ plot_param_density(
   show_y_labels = TRUE,
   show_med_label = TRUE,
   med_label_units = "kt",
-  med_label_digits = 3,
+  med_label_digits = 0,
   arrow_obj = arrow(length = unit(0.5, "cm"), angle = 20, type = "closed"),
   label_x_offset = 500,
   label_y_offset = 1e-04,

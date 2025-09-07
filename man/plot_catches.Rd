@@ -16,7 +16,8 @@ plot_catches(
   x_expansion = 1,
   x_labs_mod = 5,
   ylim = c(0, 12),
-  y_breaks = seq(ylim[1], ylim[2], 1)
+  y_breaks = seq(ylim[1], ylim[2], 1),
+  ret_df = FALSE
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ regardless of what this number is}
 \item{ylim}{The y-axis min and max limits for the plot}
 
 \item{y_breaks}{The tick mark values to show for the y axis}
+
+\item{ret_df}{If \code{TRUE}, return a data frame of the catch by year. For
+populating the \code{data-tables/landings-tac-history.csv} file}
 
 \item{leg_ratio}{A vector of length two, for the ratio of the legend size
 vs the plot size respectively. Default is c(1, 2). You will likely need to

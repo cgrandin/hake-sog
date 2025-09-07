@@ -1388,4 +1388,11 @@ main_recdev_end <- max(base_model$recruit$Yr[recr_era_main_tmp])
 #     max() |>
 #     f(1)
 # }
+
+high_recruit_yrs <- c(1978, 1984, 1991, 2012, 2021)
+retro_cohorts <- (assess_yr - 5):(assess_yr - 1)
+survey_age2_yrs <- base_model$dat$CPUE |>
+  dplyr::filter(index == 2) |>
+  pull(year)
+
 ```

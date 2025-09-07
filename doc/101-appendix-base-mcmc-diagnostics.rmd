@@ -150,31 +150,32 @@ plist[[2]] <-
                         line_bar_alpha = 0.8)
 plot_grid(plotlist = plist, nrow = 2)
 ```
-(ref:app-mcmc-diag-hists-cap) Summary histograms of Markov chain Monte Carlo
-diagnostics for all base model parameters. The level of autocorrelation in
-the chain (distribution across lag times, i.e., distance between samples in
-the chain, shown in the top left panel) influences the effective sample size
-(top right panel) used to estimate posterior distributions. The Geweke
-statistic (lower left panel) tests for equality between means located in the
-first part of the chain against means in the last part of the chain. The
-Heidelberger and Welch statistic (lower right panel) tests if the sampled
-values come from a stationary distribution by comparing different sections
-of the chain. Values for the unfished equilibrium recruitment ($R_0$) are
-explicitly highlighted. Values inside the bars represent the number of
-parameters counted in that bin.
 
-(ref:app-mcmc-diag-hists-alt) This figure shows good summary Markov chain
-Monte Carlo diagnostics for all base model parameters.
+<!-- (ref:app-mcmc-diag-hists-cap) Summary histograms of Markov chain Monte Carlo -->
+<!-- diagnostics for all base model parameters. The level of autocorrelation in -->
+<!-- the chain (distribution across lag times, i.e., distance between samples in -->
+<!-- the chain, shown in the top left panel) influences the effective sample size -->
+<!-- (top right panel) used to estimate posterior distributions. The Geweke -->
+<!-- statistic (lower left panel) tests for equality between means located in the -->
+<!-- first part of the chain against means in the last part of the chain. The -->
+<!-- Heidelberger and Welch statistic (lower right panel) tests if the sampled -->
+<!-- values come from a stationary distribution by comparing different sections -->
+<!-- of the chain. Values for the unfished equilibrium recruitment ($R_0$) are -->
+<!-- explicitly highlighted. Values inside the bars represent the number of -->
+<!-- parameters counted in that bin. -->
 
-```{r app-mcmc-diag-hists-fig, fig.cap = "(ref:app-mcmc-diag-hists-cap)", fig.height = 6}
+<!-- (ref:app-mcmc-diag-hists-alt) This figure shows good summary Markov chain -->
+<!-- Monte Carlo diagnostics for all base model parameters. -->
 
-plot_mcmc_diagnostics_all_params(base_model,
-                                 show_ro = TRUE,
-                                 ro_arrow_lengths = c(20, 30, 5, 30),
-                                 ro_text_nudges = c(0.3, 0, -0.55, 0),
-                                 ro_text_size = 5,
-                                 y_lim_geweke = c(0, 40))
-```
+<!-- ```{r app-mcmc-diag-hists-fig, fig.cap = "(ref:app-mcmc-diag-hists-cap)", fig.height = 6} -->
+
+<!-- plot_mcmc_diagnostics_all_params(base_model, -->
+<!--                                  show_ro = TRUE, -->
+<!--                                  ro_arrow_lengths = c(20, 30, 5, 30), -->
+<!--                                  ro_text_nudges = c(0.3, 0, -0.55, 0), -->
+<!--                                  ro_text_size = 5, -->
+<!--                                  y_lim_geweke = c(0, 40)) -->
+<!-- ``` -->
 
 (ref:app-mcmc-pairs-cap) Posterior correlations among the objective
 function which is minimized during model fitting, key base-model parameters,

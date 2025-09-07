@@ -21,6 +21,8 @@
 #' regardless of what this number is
 #' @param ylim The y-axis min and max limits for the plot
 #' @param y_breaks The tick mark values to show for the y axis
+#' @param ret_df If `TRUE`, return a data frame of the catch by year. For
+#' populating the `data-tables/landings-tac-history.csv` file
 #'
 #' @return A [ggplot2::ggplot()] object
 #' @export
@@ -35,7 +37,8 @@ plot_catches <- function(ct,
                          x_expansion = 1,
                          x_labs_mod = 5,
                          ylim = c(0, 12),
-                         y_breaks = seq(ylim[1], ylim[2], 1)){
+                         y_breaks = seq(ylim[1], ylim[2], 1),
+                         ret_df = FALSE){
 
   type <- match.arg(type)
 
@@ -56,6 +59,10 @@ plot_catches <- function(ct,
     ungroup() |>
     pivot_longer(-!!yr_col) |>
     mutate(value = value / divisor)
+
+  if(ret_df){
+    return(d |> select(-name))
+  }
 
   x_labels <- make_major_tick_labels(x_breaks = x_breaks,
                                      modulo = x_labs_mod)

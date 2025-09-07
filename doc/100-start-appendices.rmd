@@ -5,5 +5,10 @@ still build properly.
 The tag below is used to inject LaTeX code in the
 hake::post_process_add_start_appendices_code() function
 -->
+\clearpage
 
-APPENDICES START HERE
+`r if(knitr:::is_latex_output()) '\\Appendices'`
+
+`r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'`
+
+

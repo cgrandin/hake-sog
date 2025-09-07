@@ -36,12 +36,14 @@ year_path=$assess_year
 version_path="01-version"
 type_path="01-base-models"
 model_name="01-base"
+#type_path="03-test-models"
+#model_name="02-fake-age-data"
 
 ss_exe="ss3"
 num_chains=8
-num_samples=2000
+num_samples=8000
 num_warmup_samples=250
-adapt_delta=0.8
+adapt_delta=0.9
 run_extra_mcmc=TRUE
 
 model_path=$models_path/$year_path/$version_path/$type_path/$model_name

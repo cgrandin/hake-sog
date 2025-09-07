@@ -15,7 +15,7 @@ table_catch(
   landings_tac_df,
   inc_foreign_jv = TRUE,
   start_yr = start_yr,
-  end_yr = last_data_yr,
+  end_yr = assess_yr,
   country = "us",
   caption = cap,
   font_size = 8,
@@ -56,21 +56,131 @@ table_survey(
   longtable = TRUE)
 ```
 
-```{r main-parameters-estimated-summary-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-parameters-estimated-summary-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Summary of estimated model parameters and priors in the base model. The beta prior is parameterized with a mean and standard deviation (SD). The lognormal prior is parameterized with the median and SD in log space."
+<!-- cap <- "Summary of estimated model parameters and priors in the base model. The beta prior is parameterized with a mean and standard deviation (SD). The lognormal prior is parameterized with the median and SD in log space." -->
 
+<!-- if(fr()) -->
+<!--   cap <- "Résumé des paramètres estimés du modèle et des a priori dans le modèle de base. L'a priori bêta est paramétré avec une moyenne et un écart type (ET). L'a priori lognormal est paramétré avec la médiane et l'ET dans l'espace logarithmique." -->
+
+<!-- table_param_est_bounds( -->
+<!--   base_model, -->
+<!--   start_rec_dev_yr = recruit_dev_start_yr, -->
+<!--   end_rec_dev_yr = main_recdev_end, -->
+<!--   section_sep_lines = TRUE, -->
+<!--   digits = 2, -->
+<!--   caption = cap, -->
+<!--   font_size = 9, -->
+<!--   header_font_size = 9, -->
+<!--   longtable = TRUE) -->
+<!-- ``` -->
+
+```{r main-est-numbers-at-age-tab, results = "asis", echo = FALSE}
+
+cap <- "Estimated numbers-at-age at the beginning of the year from the base model (posterior medians; millions)."
 if(fr())
-  cap <- "Résumé des paramètres estimés du modèle et des a priori dans le modèle de base. L'a priori bêta est paramétré avec une moyenne et un écart type (ET). L'a priori lognormal est paramétré avec la médiane et l'ET dans l'espace logarithmique."
+  cap <- "Estimation du nombre de personnes par âge au début de l'année à partir du modèle de base (médianes postérieures ; en millions)."
 
-table_param_est_bounds(
+table_at_age(
   base_model,
-  start_rec_dev_yr = recruit_dev_start_yr,
-  end_rec_dev_yr = main_recdev_end,
-  section_sep_lines = TRUE,
-  digits = 2,
+  type = "naa",
+  end_yr = end_yr,
   caption = cap,
   font_size = 9,
-  header_font_size = 9,
-  longtable = TRUE)
+  header_font_size = 10,
+  longtable = TRUE) |>
+  landscape()
 ```
+
+```{r main-est-biomass-at-age-tab, results = "asis", echo = FALSE}
+
+cap <- "Estimated total biomass-at-age at the beginning of the year from the base model (posterior medians; kilotonnes)."
+if(fr())
+  cap <- "Estimation de la biomasse totale par âge au début de l'année à partir du modèle de base (médianes postérieures ; kilotonnes)."
+
+table_at_age(
+  base_model,
+  type = "baa",
+  end_yr = end_yr,
+  caption = cap,
+  font_size = 9,
+  header_font_size = 10,
+  longtable = TRUE) |>
+  landscape()
+```
+
+```{r main-est-exp-rate-at-age-tab, results = "asis", echo = FALSE}
+
+cap <- "Estimated exploitation-fraction-at-age (catch-at-age divided by biomass-at-age at the beginning of the year) presented as a percentage for each year from the base model (posterior medians; percentage of age class removed by fishing)."
+if(fr())
+  cap <- "Fraction d'exploitation estimée par âge (captures par âge divisées par la biomasse par âge au début de l'année) présentée sous forme de pourcentage pour chaque année à partir du modèle de base (médianes postérieures ; pourcentage de la classe d'âge éliminée par la pêche)."
+
+table_at_age(
+  base_model,
+  type = "eraa",
+  end_yr = end_yr - 1,
+  digits = 2,
+  caption = cap,
+  font_size = 8,
+  header_font_size = 10,
+  longtable = TRUE) |>
+  landscape()
+```
+
+```{r main-est-catch-at-age-tab, results = "asis", echo = FALSE}
+
+cap <- "Estimated catch-at-age in numbers for each year from the base model (posterior medians; thousands)."
+if(fr())
+  cap <- "Estimation du nombre de prises par âge pour chaque année à partir du modèle de base (médianes postérieures ; en milliers)."
+
+table_at_age(
+  base_model,
+  type = "caan",
+  end_yr = end_yr - 1,
+  caption = cap,
+  font_size = 6,
+  header_font_size = 10,
+  longtable = TRUE) |>
+  landscape()
+```
+
+```{r main-est-catch-at-age-biomass-tab, results = "asis", echo = FALSE}
+
+cap <- "Estimated catch-at-age in total biomass for each year from the base model (posterior medians; tonnes)."
+if(fr())
+  cap <- "Estimation des captures par âge en biomasse totale pour chaque année à partir du modèle de base (médianes postérieures ; tonnes)."
+
+table_at_age(
+  base_model,
+  type = "caab",
+  end_yr = end_yr - 1,
+  caption = cap,
+  font_size = 6,
+  header_font_size = 10,
+  longtable = TRUE) |>
+  landscape()
+```
+
+<!-- ```{r main-cohort-effects-tab, results = "asis", echo = FALSE} -->
+<!-- table_cohort( -->
+<!--   base_model, -->
+<!--   cohorts = high_recruit_yrs, -->
+<!--   cohort_bold = TRUE, -->
+<!--   cohort_italics = TRUE, -->
+<!--   cohort_underline = TRUE, -->
+<!--   cohort_line_above = TRUE, -->
+<!--   cohort_line_below = FALSE, -->
+<!--   reverse_cohorts = TRUE, -->
+<!--   caption = paste0( -->
+<!--     "Calculations showing changes in biomass at each age due to natural ", -->
+<!--     "mortality and fishing for recent strong cohorts. Start Biomass is the ", -->
+<!--     "biomass at the beginning of the year, Catch Weight is the catch for ", -->
+<!--     "the cohort for the year, Natural Mortality is the biomass attributed ", -->
+<!--     "to natural mortality, and Surviving Biomass is what survives to the ", -->
+<!--     "end of the year. Surviving Biomass does not equal the Start Biomass ", -->
+<!--     "in the following year because the empirical weights-at-age change ", -->
+<!--     "between years. Estimated quantities are posterior medians."), -->
+<!--   font_size = 9, -->
+<!--   header_font_size = 9, -->
+<!--   longtable = TRUE) -->
+<!-- ``` -->

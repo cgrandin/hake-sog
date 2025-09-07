@@ -39,6 +39,7 @@ run_ct_levels_default_hr <- function(
       stop("The forecast column `", fore_yr_label, "` does not exist in the ",
            "derived posteriors file `", dest_derposts_fullpath_fn, "`")
     }
+
     fore_yr_label_sym <- sym(fore_yr_label)
     default_hr_catch[i] <- out |>
       pull(!!fore_yr_label_sym) |>

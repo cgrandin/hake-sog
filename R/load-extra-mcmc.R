@@ -90,7 +90,7 @@ load_extra_mcmc <- function(model,
   # Initial numbers-at-age -----------------------------------------------------
   ages <- model$natage |> names() |> as.numeric() |> suppressWarnings()
   ages <- ages[!is.na(ages)]
-  max_age <- max(ages)
+  max_age <- max(ages) - 1
 
   extra_mcmc$init_natage <- load_extra_mcmc_init_nage(
     reps = reps,
@@ -105,7 +105,7 @@ load_extra_mcmc <- function(model,
   # Recruitment deviatons ------------------------------------------------------
   ages <- model$natage |> names() |> as.numeric() |> suppressWarnings()
   ages <- ages[!is.na(ages)]
-  max_age <- max(ages)
+
   # Test endyr is last year
   available_late_years <- gsub(
     pattern = ".+Late_RecrDev_([0-9]{4}) .+",
