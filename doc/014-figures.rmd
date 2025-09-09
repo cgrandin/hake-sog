@@ -13,23 +13,22 @@
 plot_overview_map()
 ```
 
-(ref:main-catches-fig-cap-en) Total `r sp` catch used in the assessment, `r start_yr`--`r last_data_yr`. The upper panel with blue bars shows landings and is in kilotonnes. The lower panel with red bars shows discards and is in tonnes.
+(ref:main-catches-fig-cap-en) Total `r sp` catch used in the assessment, `r start_yr`--`r last_data_yr`. The `r assess_yr` value is not actual catch but was selected to be the same value as the `r assess_yr - 1` value so that the model could be run to the beginning of `r assess_yr + 1`.
 
-(ref:main-catches-fig-cap-fr) Total des captures `r sp` utilisées dans l'évaluation, `r start_yr`--`r last_data_yr`. Le panneau supérieur avec les barres bleues indique les débarquements en kilotonnes. Le panneau inférieur avec les barres rouges indique les rejets en tonnes.
+(ref:main-catches-fig-cap-fr) XX
 
 ```{r main-catches-fig, fig.cap = ifelse(fr(), "(ref:main-catches-fig-cap-fr)", "(ref:main-catches-fig-cap-en)")}
 # + theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
-p <- list()
-p[[1]] <- plot_catches(ct,
-                       xlim = c(start_yr, assess_yr))
-p[[2]] <- plot_catches(ct,
-                       type = "Discarded",
-                       xlim = c(start_yr, assess_yr),
-                       ylim = c(0, 100),
-                       y_breaks = seq(0, 100, 10),
-                       fill_color = "red")
-plot_grid(plotlist = p, ncol = 1, align = "v", rel_heights = c(1, 1))
+#p <- list()
+plot_catches(landings_tac_df, xlim = c(start_yr, assess_yr))
+# p[[2]] <- plot_catches(ct,
+#                        type = "Discarded",
+#                        xlim = c(start_yr, assess_yr),
+#                        ylim = c(0, 100),
+#                        y_breaks = seq(0, 100, 10),
+#                        fill_color = "red")
+# plot_grid(plotlist = p, ncol = 1, align = "v", rel_heights = c(1, 1))
 
 ```
 
@@ -57,8 +56,7 @@ plot_data_summary(base_model,
                   label_y_placement = c(1.8, 1.8, 2.5))
 ```
 
-(ref:main-age-comp-bubbles-fig-cap) Age compositions for the aggregate fishery (top, all sectors combined) and acoustic survey (bottom) for the years `r max_fishery_age_prop[1]`--`r max_fishery_age_prop[2]`. Proportions in each year sum to 1.0 and area of the bubbles are proportional to the
-proportion and consistent in both panels (see key at top). The largest bubble in the fishery data is `r f(as.numeric(max_fishery_age_prop[3]) / 100, 2)` for age `r as.numeric(max_survey_age_prop[5])` in `r as.numeric(max_fishery_age_prop[4])` and in the survey data is `r f(as.numeric(max_survey_age_prop[3]) / 100, 2)` for age `r as.numeric(max_survey_age_prop[5])` in `r as.numeric(max_survey_age_prop[4])`. Green lines track large cohorts.
+(ref:main-age-comp-bubbles-fig-cap) Age compositions for the fishery (top) and acoustic survey (bottom) for the years `r max_fishery_age_prop[1]`--`r max_fishery_age_prop[2]`. Proportions in each year sum to 1.0 and area of the bubbles are proportional to the proportion and consistent in both panels (see key at top). The largest bubble in the fishery data is `r f(as.numeric(max_fishery_age_prop[3]) / 100, 2)` for age `r as.numeric(max_survey_age_prop[5])` in `r as.numeric(max_fishery_age_prop[4])` and in the survey data is `r f(as.numeric(max_survey_age_prop[3]) / 100, 2)` for age `r as.numeric(max_survey_age_prop[5])` in `r as.numeric(max_survey_age_prop[4])`. The red lines represent the mean age.
 
 ```{r main-age-comp-bubbles-fig, fig.cap = "(ref:main-age-comp-bubbles-fig-cap)", fig.height = 10, out.height = "90%"}
 
@@ -66,7 +64,6 @@ p_lst <- NULL
 p_lst[[1]] <-
   plot_age_comp_bubbles(base_model,
                         type = "fishery",
-                        clines = high_recruit_yrs,
                         leg_pos = "top",
                         inc_mean_age_line = TRUE,
                         point_alpha = 0.4,
@@ -77,7 +74,6 @@ p_lst[[1]] <-
 p_lst[[2]] <-
   plot_age_comp_bubbles(base_model,
                         type = "survey",
-                        clines = high_recruit_yrs,
                         inc_mean_age_line = TRUE,
                         point_alpha = 0.4,
                         xlim = c(start_yr_age_comps, last_data_yr),
@@ -88,18 +84,17 @@ p_lst[[2]] <-
 plot_grid(plotlist = p_lst, nrow = 2)
 ```
 
-(ref:main-survey-extrap-biomass-fig-cap) Acoustic survey biomass index of age-2$+$ fish (Mt, Table~\@ref(tab:main-survey-history-tab)). Approximate 95% confidence intervals are based on sampling variability (intervals without the additional squid/`r sp` apportionment uncertainty included in 2009, black line).
+(ref:main-survey-extrap-biomass-fig-cap) Acoustic survey biomass index of age-2$+$ fish (kt, Table~\@ref(tab:main-survey-history-tab)). Vertical lines represent the 95% confidence intervals.
 
 ```{r main-survey-extrap-biomass-fig,  fig.cap = "(ref:main-survey-extrap-biomass-fig-cap)"}
 
 plot_survey_biomass(base_model,
-                    index = "age2",
-                    y_lim = c(0, 0.3),
+                    y_lim = c(0, 300),
+                    y_breaks = seq(0, 300, 50),
                     x_labs_mod = 5,
                     alpha = 0.3,
                     tick_prop = 1,
-                    vjust_x_labels = -1.5,
-                    remove_yr_labels = NULL)
+                    vjust_x_labels = -1.5)
 ```
 
 
@@ -157,7 +152,7 @@ plot_age_comp_fit(base_model,
                   label_loc = c(14, 0.45))
 ```
 
-(ref:main-age-comp-pearson-fig-cap) Pearson residuals for base model fits to the age-composition data for the medians of the Markov chain Monte Carlo posteriors for the fishery (top) and acoustic survey (bottom). Closed bubbles are positive residuals (observed > expected) and open bubbles are negative residuals (observed < expected). Green lines track cohorts from years of large recruitment events.
+(ref:main-age-comp-pearson-fig-cap) Pearson residuals for base model fits to the age-composition data for the medians of the Markov chain Monte Carlo posteriors for the fishery (top) and acoustic survey (bottom). Closed bubbles are positive residuals (observed > expected) and open bubbles are negative residuals (observed < expected).
 
 ```{r main-age-comp-pearson-fig, fig.cap = "(ref:main-age-comp-pearson-fig-cap)", fig.height = 10, out.height = "90%"}
 
@@ -224,8 +219,8 @@ plot_grid(plotlist = p, ncol = 1, align = "v")
 
 plot_biomass(list(base_model),
              list(base_model_name),
-             ylim = c(0, 0.15),
-             y_breaks = seq(0, 0.15, 0.025),
+             ylim = c(0, 0.5),
+             y_breaks = seq(0, 0.5, 0.1),
              xlim = c(start_yr - 2, assess_yr + 1),
              x_breaks = seq(start_yr + 1, assess_yr +1, by = 5),
              point_shape = ts_single_model_pointshape,
@@ -238,8 +233,8 @@ plot_biomass(list(base_model),
 
 plot_param_density(base_model,
                    param_nm = paste0("SSB_", assess_yr),
-                   x_lim = c(0, 150),
-                   y_lim = c(0, 0.04),
+                   x_lim = c(0, 500),
+                   y_lim = c(0, 0.01),
                    expand_vec = c(100, 100),
                    show_y_labels = FALSE,
                    label_x_offset = 20,
@@ -266,8 +261,8 @@ plot_rel_biomass(model_lst = list(base_model),
 plot_recruitment(list(base_model),
                  list(base_model_name),
                  xlim = c(start_yr, assess_yr),
-                 ylim = c(0, 0.5),
-                 y_breaks = seq(0, 0.5, 0.05),
+                 ylim = c(0, 5),
+                 y_breaks = seq(0, 5, 0.5),
                  inc_means = TRUE,
                  leg_pos = "none") |>
   suppressWarnings()
@@ -313,7 +308,7 @@ plot_stock_recruitment(base_model,
 
 plot_fishing_intensity(base_model,
                        xlim = c(start_yr, assess_yr),
-                       ylim = c(0, 1.6),
+                       ylim = c(0, 1.2),
                        line_color="grey32")
 ```
 
@@ -323,8 +318,8 @@ plot_fishing_intensity(base_model,
 
 plot_exploitation_fraction(base_model,
                            xlim = c(start_yr, assess_yr),
-                           ylim = c(0, 0.5),
-                           y_breaks = seq(0, 0.5, by = 0.1),
+                           ylim = c(0, 0.25),
+                           y_breaks = seq(0, 0.25, by = 0.05),
                            line_color="grey32")
 ```
 
@@ -335,7 +330,7 @@ plot_exploitation_fraction(base_model,
 plot_phase(base_model,
            start_yr,
            assess_yr,
-           y_lim = c(0, 1.6),
+           y_lim = c(0, 1.2),
            init_lbl_x_off = -0.04,
            init_lbl_y_off = -0.04,
            final_lbl_x_off = 0.04,
@@ -348,8 +343,8 @@ plot_phase(base_model,
 
 plot_param_density(base_model,
                    param_nm = paste0("ForeCatch_", assess_yr + 1),
-                   y_lim = c(0, 0.15),
-                   x_lim = c(0, 100),
+                   y_lim = c(0, 0.025),
+                   x_lim = c(0, 150),
                    expand_vec = c(100, 100),
                    show_y_labels = FALSE,
                    label_x_offset = 20,
@@ -365,10 +360,10 @@ plot_biomass_fished_unfished(base_model,
                              model_nms = c("Base model - Fished",
                                            "Base model - Unfished"),
                              leg_pos = c(0.6, 0.9),
-                             ylim = c(0, 0.15),
+                             ylim = c(0, 0.5),
+                             y_breaks = seq(0, 0.5, 0.1),
                              xlim = c(start_yr - 2, assess_yr + 1),
                              x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5),
-                             y_breaks = seq(0, 0.15, by = 0.05),
                              rel = FALSE)
 ```
 
@@ -380,8 +375,9 @@ plot_biomass_fished_unfished(base_model,
                              model_nms = c("Base model - Static B0",
                                            "Base model - Dynamic B0"),
                              leg_pos = c(0.6, 0.9),
+                             ylim = c(0, 2.5),
+                             y_breaks = seq(0, 2, 0.5),
                              xlim = c(start_yr + 1, assess_yr + 1),
-                             ylim = c(0, 2),
                              rel = TRUE)
 ```
 
@@ -430,8 +426,8 @@ plot_squid(base_model,
 
 p <- list()
 p[[1]] <- plot_biomass(d_obj = base_model$retrospectives$biomass_df,
-                       ylim = c(0, 0.15),
-                       y_breaks = seq(0, 0.15, 0.025),
+                       ylim = c(0, 0.5),
+                       y_breaks = seq(0, 0.5, 0.1),
                        xlim = c(start_yr - 2, assess_yr + 1),
                        x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5),
                        leg_font_size = 12,
@@ -441,8 +437,8 @@ p[[1]] <- plot_biomass(d_obj = base_model$retrospectives$biomass_df,
                        alpha = 0.1)
 p[[2]] <- plot_recruitment(d_obj = base_model$retrospectives$recr_df,
                            xlim = c(start_yr, assess_yr),
-                           ylim = c(0, 0.5),
-                           y_breaks = seq(0, 0.5, 0.05),
+                           ylim = c(0, 10),
+                           y_breaks = seq(0, 10, 1),
                            leg_pos = "none")
 
 plot_grid(plotlist = p,

@@ -6,10 +6,14 @@
 
 ```{r main-catch-tac-tab, results = "asis", echo = FALSE}
 cap <- paste0("Annual catches of ", sp, " (t) in the Strait of Georgia, ",
-              start_yr, "--", last_data_yr, ".")
+              start_yr, "--", last_data_yr, ". The ", assess_yr, " value is ",
+              "not actual data but a projection based on the same catch as ",
+              "in ", assess_yr - 1, ".")
 if(fr())
   cap <- paste0("Captures annuelles de ", sp, " (t) dans le détroit de Georgia, ",
-                start_yr, "--", last_data_yr, ".")
+                start_yr, "--", last_data_yr, ". La valeur pour ", assess_yr,
+                " n'est pas une donnée réelle, mais une projection basée sur ",
+                "les mêmes prises qu'en ", assess_yr - 1, ".")
 
 table_catch(
   landings_tac_df,
@@ -43,9 +47,9 @@ table_age_data(
 
 ```{r main-survey-tab, results = "asis", echo = FALSE}
 
-cap <- "Acoustic survey age-2$+$ biomass estimates and uncertainty by year."
+cap <- "Acoustic survey age-2$+$ biomass estimates and Coefficients of Variation by year."
 if(fr())
-  cap <- "Estimations de la biomasse et incertitude par année selon l'étude acoustique age-2$+$."
+  cap <- "Estimations de la biomasse et du coefficients de variation par année issues de l'étude acoustique age-2$+$."
 
 table_survey(
   survey_indices_df,
@@ -75,91 +79,91 @@ table_survey(
 <!--   longtable = TRUE) -->
 <!-- ``` -->
 
-```{r main-est-numbers-at-age-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-est-numbers-at-age-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Estimated numbers-at-age at the beginning of the year from the base model (posterior medians; millions)."
-if(fr())
-  cap <- "Estimation du nombre de personnes par âge au début de l'année à partir du modèle de base (médianes postérieures ; en millions)."
+<!-- cap <- "Estimated numbers-at-age at the beginning of the year from the base model (posterior medians; millions)." -->
+<!-- if(fr()) -->
+<!--   cap <- "Estimation du nombre de personnes par âge au début de l'année à partir du modèle de base (médianes postérieures ; en millions)." -->
 
-table_at_age(
-  base_model,
-  type = "naa",
-  end_yr = end_yr,
-  caption = cap,
-  font_size = 9,
-  header_font_size = 10,
-  longtable = TRUE) |>
-  landscape()
-```
+<!-- table_at_age( -->
+<!--   base_model, -->
+<!--   type = "naa", -->
+<!--   end_yr = end_yr, -->
+<!--   caption = cap, -->
+<!--   font_size = 9, -->
+<!--   header_font_size = 10, -->
+<!--   longtable = TRUE) |> -->
+<!--   landscape() -->
+<!-- ``` -->
 
-```{r main-est-biomass-at-age-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-est-biomass-at-age-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Estimated total biomass-at-age at the beginning of the year from the base model (posterior medians; kilotonnes)."
-if(fr())
-  cap <- "Estimation de la biomasse totale par âge au début de l'année à partir du modèle de base (médianes postérieures ; kilotonnes)."
+<!-- cap <- "Estimated total biomass-at-age at the beginning of the year from the base model (posterior medians; kilotonnes)." -->
+<!-- if(fr()) -->
+<!--   cap <- "Estimation de la biomasse totale par âge au début de l'année à partir du modèle de base (médianes postérieures ; kilotonnes)." -->
 
-table_at_age(
-  base_model,
-  type = "baa",
-  end_yr = end_yr,
-  caption = cap,
-  font_size = 9,
-  header_font_size = 10,
-  longtable = TRUE) |>
-  landscape()
-```
+<!-- table_at_age( -->
+<!--   base_model, -->
+<!--   type = "baa", -->
+<!--   end_yr = end_yr, -->
+<!--   caption = cap, -->
+<!--   font_size = 9, -->
+<!--   header_font_size = 10, -->
+<!--   longtable = TRUE) |> -->
+<!--   landscape() -->
+<!-- ``` -->
 
-```{r main-est-exp-rate-at-age-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-est-exp-rate-at-age-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Estimated exploitation-fraction-at-age (catch-at-age divided by biomass-at-age at the beginning of the year) presented as a percentage for each year from the base model (posterior medians; percentage of age class removed by fishing)."
-if(fr())
-  cap <- "Fraction d'exploitation estimée par âge (captures par âge divisées par la biomasse par âge au début de l'année) présentée sous forme de pourcentage pour chaque année à partir du modèle de base (médianes postérieures ; pourcentage de la classe d'âge éliminée par la pêche)."
+<!-- cap <- "Estimated exploitation-fraction-at-age (catch-at-age divided by biomass-at-age at the beginning of the year) presented as a percentage for each year from the base model (posterior medians; percentage of age class removed by fishing)." -->
+<!-- if(fr()) -->
+<!--   cap <- "Fraction d'exploitation estimée par âge (captures par âge divisées par la biomasse par âge au début de l'année) présentée sous forme de pourcentage pour chaque année à partir du modèle de base (médianes postérieures ; pourcentage de la classe d'âge éliminée par la pêche)." -->
 
-table_at_age(
-  base_model,
-  type = "eraa",
-  end_yr = end_yr - 1,
-  digits = 2,
-  caption = cap,
-  font_size = 8,
-  header_font_size = 10,
-  longtable = TRUE) |>
-  landscape()
-```
+<!-- table_at_age( -->
+<!--   base_model, -->
+<!--   type = "eraa", -->
+<!--   end_yr = end_yr - 1, -->
+<!--   digits = 2, -->
+<!--   caption = cap, -->
+<!--   font_size = 8, -->
+<!--   header_font_size = 10, -->
+<!--   longtable = TRUE) |> -->
+<!--   landscape() -->
+<!-- ``` -->
 
-```{r main-est-catch-at-age-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-est-catch-at-age-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Estimated catch-at-age in numbers for each year from the base model (posterior medians; thousands)."
-if(fr())
-  cap <- "Estimation du nombre de prises par âge pour chaque année à partir du modèle de base (médianes postérieures ; en milliers)."
+<!-- cap <- "Estimated catch-at-age in numbers for each year from the base model (posterior medians; thousands)." -->
+<!-- if(fr()) -->
+<!--   cap <- "Estimation du nombre de prises par âge pour chaque année à partir du modèle de base (médianes postérieures ; en milliers)." -->
 
-table_at_age(
-  base_model,
-  type = "caan",
-  end_yr = end_yr - 1,
-  caption = cap,
-  font_size = 6,
-  header_font_size = 10,
-  longtable = TRUE) |>
-  landscape()
-```
+<!-- table_at_age( -->
+<!--   base_model, -->
+<!--   type = "caan", -->
+<!--   end_yr = end_yr - 1, -->
+<!--   caption = cap, -->
+<!--   font_size = 6, -->
+<!--   header_font_size = 10, -->
+<!--   longtable = TRUE) |> -->
+<!--   landscape() -->
+<!-- ``` -->
 
-```{r main-est-catch-at-age-biomass-tab, results = "asis", echo = FALSE}
+<!-- ```{r main-est-catch-at-age-biomass-tab, results = "asis", echo = FALSE} -->
 
-cap <- "Estimated catch-at-age in total biomass for each year from the base model (posterior medians; tonnes)."
-if(fr())
-  cap <- "Estimation des captures par âge en biomasse totale pour chaque année à partir du modèle de base (médianes postérieures ; tonnes)."
+<!-- cap <- "Estimated catch-at-age in total biomass for each year from the base model (posterior medians; tonnes)." -->
+<!-- if(fr()) -->
+<!--   cap <- "Estimation des captures par âge en biomasse totale pour chaque année à partir du modèle de base (médianes postérieures ; tonnes)." -->
 
-table_at_age(
-  base_model,
-  type = "caab",
-  end_yr = end_yr - 1,
-  caption = cap,
-  font_size = 6,
-  header_font_size = 10,
-  longtable = TRUE) |>
-  landscape()
-```
+<!-- table_at_age( -->
+<!--   base_model, -->
+<!--   type = "caab", -->
+<!--   end_yr = end_yr - 1, -->
+<!--   caption = cap, -->
+<!--   font_size = 6, -->
+<!--   header_font_size = 10, -->
+<!--   longtable = TRUE) |> -->
+<!--   landscape() -->
+<!-- ``` -->
 
 <!-- ```{r main-cohort-effects-tab, results = "asis", echo = FALSE} -->
 <!-- table_cohort( -->

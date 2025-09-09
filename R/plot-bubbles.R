@@ -34,7 +34,7 @@
 #' @return A [ggplot2::ggplot()] object
 #' @export
 plot_bubbles <- function(d,
-                         clines = age_bubble_cohorts,
+                         clines = NULL,
                          val_col_nm = "Proportion",
                          tick_prop = 1,
                          vjust_x_labels = -1.5,

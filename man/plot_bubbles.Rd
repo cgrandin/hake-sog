@@ -6,7 +6,7 @@
 \usage{
 plot_bubbles(
   d,
-  clines = age_bubble_cohorts,
+  clines = NULL,
   val_col_nm = "Proportion",
   tick_prop = 1,
   vjust_x_labels = -1.5,

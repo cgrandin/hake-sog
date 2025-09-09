@@ -4,7 +4,6 @@
 #' Extra SD is shown for the 2009 "squid year"
 #'
 #' @param model A model, created by [create_rds_file()]
-#' @param index The index type to plot
 #' @param y_lim A vector of two for the minimum and maximum values
 #' for the y-axis on the plot
 #' @param tick_prop A value that the length of the major tick marks are
@@ -33,9 +32,9 @@
 #' @return A [ggplot2::ggplot()] object
 #' @export
 plot_survey_biomass <- function(model,
-                                index = c("age1", "age2"),
                                 x_lim = c(survey_start_yr, survey_end_yr),
-                                y_lim = c(0, 3),
+                                y_lim = c(0, 300),
+                                y_breaks = seq(y_lim[1], y_lim[2], 50),
                                 x_labs_mod = 5,
                                 alpha = 0.3,
                                 tick_prop = 1,
@@ -50,26 +49,17 @@ plot_survey_biomass <- function(model,
                                 line_type = ts_single_model_linetype,
                                 ...){
 
-  index <- match.arg(index)
-  y_label <- ifelse(index == "age1",
-                    "Relative age-1 index (billions of fish)",
-                    "Biomass index (Mt)")
-  brk_interval <- `if`(index == "age2", 0.5, 2)
-  index <- `if`(index == "age2", 2, 3)
+  y_label <- ifelse(fr(),
+                    "Indice de biomasse (kt)",
+                    "Biomass index (kt)")
 
   ests <- model$dat$CPUE |>
-    dplyr::filter(index == !!index) |>
+    dplyr::filter(index == 2) |>
     transmute(year,
-              obs = obs / 1e6,
+              obs = obs / 1e3,
               se_log,
               lo = exp(log(obs) - 1.96 * se_log),
               hi = exp(log(obs) + 1.96 * se_log))
-
-  ests_squid <- ests |>
-    dplyr::filter(year == 2009) |>
-    mutate(se_log = 0.0682) |>
-    mutate(lo = exp(log(obs) - 1.96 * se_log),
-           hi = exp(log(obs) + 1.96 * se_log))
 
   g <- ggplot(ests,
               aes(x = year,
@@ -82,16 +72,6 @@ plot_survey_biomass <- function(model,
                  linetype = line_type,
                  lineend = "round")
 
-  if(index == 2){
-    g <- g +
-      geom_segment(data = ests_squid,
-                   alpha = 1,
-                   linewidth = line_width,
-                   color = line_color,
-                   linetype = line_type,
-                   lineend = "round")
-  }
-
   x_breaks <- x_lim[1]:x_lim[2]
   x_labels <- x_breaks
   if(is.null(x_labs_mod)){
@@ -103,8 +83,6 @@ plot_survey_biomass <- function(model,
     x_labels[x_labels %in% remove_yr_labels] <- ""
   }
 
-  y_breaks <- seq(y_lim[1], y_lim[2], brk_interval)
-
   g <- g +
     geom_point(aes(y = obs),
                shape = point_shape,
@@ -113,8 +91,9 @@ plot_survey_biomass <- function(model,
                stroke = point_stroke) +
     scale_x_continuous(breaks = x_breaks,
                        labels = x_labels) +
-    scale_y_continuous(breaks = y_breaks,
-                       expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0),
+                       breaks = y_breaks,
+                       labels = y_breaks) +
     coord_cartesian(ylim = y_lim,
                     clip = "off") +
     ylab(y_label) +

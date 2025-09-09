@@ -6,17 +6,16 @@
 \usage{
 plot_catches(
   ct,
-  type = c("Landed", "Discarded"),
   leg_font_size = 12,
   leg_key_size = 0.7,
   clip_cover = 2,
-  fill_color = "blue",
+  fill_color = "royalblue",
   xlim = c(1979, year(Sys.time()) - 1),
   x_breaks = xlim[1]:xlim[2],
   x_expansion = 1,
   x_labs_mod = 5,
-  ylim = c(0, 12),
-  y_breaks = seq(ylim[1], ylim[2], 1),
+  ylim = c(0, 12000),
+  y_breaks = seq(ylim[1], ylim[2], 1000),
   ret_df = FALSE
 )
 }

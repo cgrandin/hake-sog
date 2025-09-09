@@ -23,8 +23,7 @@ table_survey <- function(d,
                          ...){
 
     d <- d |>
-      mutate(`Index (t)` = f(as.numeric(`Index (t)`), digits)) |>
-      rename(`Standard\nDeviation` = `Standard deviation` )
+      mutate(`Index (t)` = f(as.numeric(`Index (t)`), digits))
 
   # Insert custom header fontsize before linebreaker
   if(is.null(header_font_size)){

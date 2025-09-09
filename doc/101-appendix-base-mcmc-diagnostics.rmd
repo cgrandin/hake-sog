@@ -1,5 +1,3 @@
-\newpage
-
 \rfoot{Base model MCMC diagnostics}
 
 # Base model MCMC diagnostics {#sec:app-mcmc-diagnostics}

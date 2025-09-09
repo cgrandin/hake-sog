@@ -27,51 +27,36 @@
 #' @return A [ggplot2::ggplot()] object
 #' @export
 plot_catches <- function(ct,
-                         type = c("Landed", "Discarded"),
                          leg_font_size = 12,
                          leg_key_size = 0.7,
                          clip_cover = 2,
-                         fill_color = "blue",
+                         fill_color = "royalblue",
                          xlim = c(1979, year(Sys.time()) - 1),
                          x_breaks = xlim[1]:xlim[2],
                          x_expansion = 1,
                          x_labs_mod = 5,
-                         ylim = c(0, 12),
-                         y_breaks = seq(ylim[1], ylim[2], 1),
+                         ylim = c(0, 12000),
+                         y_breaks = seq(ylim[1], ylim[2], 1000),
                          ret_df = FALSE){
 
-  type <- match.arg(type)
-
-  d <- ct |>
-    rename(Year = year)
-
   yr_col <- sym(tr("Year"))
-  type_col <- sym(type)
-  divisor <- ifelse(type == "Landed", 1e6, 1e3)
+  catch_col <- sym(paste0(tr("Catch"), " (t)"))
 
-  d <- ct |>
-    rename(!!yr_col := year) |>
-    dplyr::filter(!!yr_col %in% xlim[1]:xlim[2]) |>
-    group_by(!!yr_col) |>
-    summarize(Landed = sum(landed_kg),
-              Discarded = sum(discarded_kg)) |>
-    select(!!yr_col, !!type_col) |>
-    ungroup() |>
-    pivot_longer(-!!yr_col) |>
-    mutate(value = value / divisor)
+  ct <- ct |>
+    rename(!!yr_col := Year) |>
+    rename(!!catch_col := `Catch (t)`) |>
+    dplyr::filter(!!yr_col %in% xlim[1]:xlim[2])
 
   if(ret_df){
-    return(d |> select(-name))
+    return(ct)
   }
 
   x_labels <- make_major_tick_labels(x_breaks = x_breaks,
                                      modulo = x_labs_mod)
 
-  scale_unit <- ifelse(type == "Landed", "kt", "t")
-
-  g <- ggplot(d,
+  g <- ggplot(ct,
               aes(x = !!yr_col,
-                  y = value)) +
+                  y = !!catch_col)) +
     #fill = forcats::fct_reorder(fishery, ord))) +
     geom_hline(yintercept = y_breaks,
                linetype = "dashed",
@@ -82,7 +67,8 @@ plot_catches <- function(ct,
                        breaks = x_breaks,
                        labels = x_labels) +
     scale_y_continuous(expand = c(0, 0),
-                       breaks = y_breaks) +
+                       breaks = y_breaks,
+                       labels = scales::comma) +
     coord_cartesian(xlim = xlim,
                     ylim = ylim,
                     clip = "off") +
@@ -91,10 +77,7 @@ plot_catches <- function(ct,
           # title down so that the ticks. tick labels, and axis title don't
           # overlap each other
           axis.text.x = element_text(vjust = -2),
-          axis.title.x = element_text(vjust = -2)) +
-    ylab(ifelse(fr(),
-                paste0("Prise (", scale_unit,")"),
-                paste0("Catch (", scale_unit,")")))
+          axis.title.x = element_text(vjust = -2))
 
   # Add major tick marks
   g <- g |>
