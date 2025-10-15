@@ -183,7 +183,7 @@ plot_grid(plotlist = p, ncol = 1)
 ```{r main-prior-posterior-fig, fig.cap = "(ref:main-prior-posterior-fig-cap)", fig.height = 10, out.height = "85%"}
 
 plot_priors_vs_posts(base_model,
-                     x_range = "prior",
+                     x_range = "post",
                      facet_title_font_size = 10,
                      ncol = 3,
                      nrow = 3)
@@ -261,8 +261,8 @@ plot_rel_biomass(model_lst = list(base_model),
 plot_recruitment(list(base_model),
                  list(base_model_name),
                  xlim = c(start_yr, assess_yr),
-                 ylim = c(0, 5),
-                 y_breaks = seq(0, 5, 0.5),
+                 ylim = c(0, .1),
+                 y_breaks = seq(0, .1, 0.01),
                  inc_means = TRUE,
                  leg_pos = "none") |>
   suppressWarnings()
@@ -352,98 +352,98 @@ plot_param_density(base_model,
                                   "based on the default harvest policy"))
 ```
 
-(ref:main-fished-unfished-biomass-fig-cap) A comparison of female spawning stock biomass with fishing (black; as in Figure~\@ref(fig:main-biomass-fig)) and when the effects of fishing on the population are removed (red; unfished time series). Medians (solid lines) of the posterior distribution for beginning of the year female spawning biomass ($B_t$ in year $t$; Mt) through `r end_yr` (solid lines) with 95% posterior credibility intervals (shaded areas). The left-most circles with 95% posterior credibility intervals show the estimated unfished equilibrium biomass, $B_0$. The difference between the two lines shows the impact of removing fishing mortality from the population.
+<!-- (ref:main-fished-unfished-biomass-fig-cap) A comparison of female spawning stock biomass with fishing (black; as in Figure~\@ref(fig:main-biomass-fig)) and when the effects of fishing on the population are removed (red; unfished time series). Medians (solid lines) of the posterior distribution for beginning of the year female spawning biomass ($B_t$ in year $t$; Mt) through `r end_yr` (solid lines) with 95% posterior credibility intervals (shaded areas). The left-most circles with 95% posterior credibility intervals show the estimated unfished equilibrium biomass, $B_0$. The difference between the two lines shows the impact of removing fishing mortality from the population. -->
 
-```{r main-fished-unfished-biomass-fig, fig.cap = "(ref:main-fished-unfished-biomass-fig-cap)"}
+<!-- ```{r main-fished-unfished-biomass-fig, fig.cap = "(ref:main-fished-unfished-biomass-fig-cap)"} -->
 
-plot_biomass_fished_unfished(base_model,
-                             model_nms = c("Base model - Fished",
-                                           "Base model - Unfished"),
-                             leg_pos = c(0.6, 0.9),
-                             ylim = c(0, 0.5),
-                             y_breaks = seq(0, 0.5, 0.1),
-                             xlim = c(start_yr - 2, assess_yr + 1),
-                             x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5),
-                             rel = FALSE)
-```
+<!-- plot_biomass_fished_unfished(base_model, -->
+<!--                              model_nms = c("Base model - Fished", -->
+<!--                                            "Base model - Unfished"), -->
+<!--                              leg_pos = c(0.6, 0.9), -->
+<!--                              ylim = c(0, 0.5), -->
+<!--                              y_breaks = seq(0, 0.5, 0.1), -->
+<!--                              xlim = c(start_yr - 2, assess_yr + 1), -->
+<!--                              x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5), -->
+<!--                              rel = FALSE) -->
+<!-- ``` -->
 
-(ref:main-fished-unfished-rel-biomass-fig-cap) A comparison of relative spawning biomass when spawning biomass in year $t$ is related to unfished equilibrium biomass, $B_0$ (static $B_0$, black; as in Figure~\@ref(fig:main-relative-biomass-fig)) and when spawning biomass in year $t$ is related to the unfished biomass time series in year $t$ (dynamic $B_0$, red). Median (solid lines) of the posterior distribution for each calculation of relative spawning biomass through `r end_yr` with 95% posterior credibility intervals (shaded areas). Dashed horizontal lines show 10%, 40%, and 100% of the unfished equilibrium ($B_0$). The default `r f_40_40_10` harvest policy uses relative spawning biomass based on a static $B_0$ determination of stock status.
+<!-- (ref:main-fished-unfished-rel-biomass-fig-cap) A comparison of relative spawning biomass when spawning biomass in year $t$ is related to unfished equilibrium biomass, $B_0$ (static $B_0$, black; as in Figure~\@ref(fig:main-relative-biomass-fig)) and when spawning biomass in year $t$ is related to the unfished biomass time series in year $t$ (dynamic $B_0$, red). Median (solid lines) of the posterior distribution for each calculation of relative spawning biomass through `r end_yr` with 95% posterior credibility intervals (shaded areas). Dashed horizontal lines show 10%, 40%, and 100% of the unfished equilibrium ($B_0$). The default `r f_40_40_10` harvest policy uses relative spawning biomass based on a static $B_0$ determination of stock status. -->
 
-```{r main-fished-unfished-rel-biomass-fig, fig.cap = "(ref:main-fished-unfished-rel-biomass-fig-cap)"}
+<!-- ```{r main-fished-unfished-rel-biomass-fig, fig.cap = "(ref:main-fished-unfished-rel-biomass-fig-cap)"} -->
 
-plot_biomass_fished_unfished(base_model,
-                             model_nms = c("Base model - Static B0",
-                                           "Base model - Dynamic B0"),
-                             leg_pos = c(0.6, 0.9),
-                             ylim = c(0, 2.5),
-                             y_breaks = seq(0, 2, 0.5),
-                             xlim = c(start_yr + 1, assess_yr + 1),
-                             rel = TRUE)
-```
+<!-- plot_biomass_fished_unfished(base_model, -->
+<!--                              model_nms = c("Base model - Static B0", -->
+<!--                                            "Base model - Dynamic B0"), -->
+<!--                              leg_pos = c(0.6, 0.9), -->
+<!--                              ylim = c(0, 2.5), -->
+<!--                              y_breaks = seq(0, 2, 0.5), -->
+<!--                              xlim = c(start_yr + 1, assess_yr + 1), -->
+<!--                              rel = TRUE) -->
+<!-- ``` -->
 
-(ref:main-depletion-comparison-fig-cap) Median and 95% posterior credibility intervals of estimated relative spawning biomass to the start of `r end_yr` from the base model and projections to the start of `r forecast_yrs[length(forecast_yrs)]` (vertical shaded rectangle) for several management actions, which are defined in the decision tables. The default harvest policy catches are `r f(base_model$ct_default_policy[1])` t in `r assess_yr + 1`, `r f(base_model$ct_default_policy[2])` t in `r assess_yr + 2`, and `r f(base_model$ct_default_policy[3])` t in `r assess_yr + 3`.
+<!-- (ref:main-depletion-comparison-fig-cap) Median and 95% posterior credibility intervals of estimated relative spawning biomass to the start of `r end_yr` from the base model and projections to the start of `r forecast_yrs[length(forecast_yrs)]` (vertical shaded rectangle) for several management actions, which are defined in the decision tables. The default harvest policy catches are `r f(base_model$ct_default_policy[1])` t in `r assess_yr + 1`, `r f(base_model$ct_default_policy[2])` t in `r assess_yr + 2`, and `r f(base_model$ct_default_policy[3])` t in `r assess_yr + 3`. -->
 
-```{r main-depletion-comparison-fig, fig.cap = "(ref:main-depletion-comparison-fig-cap)", fig.height = 5}
+<!-- ```{r main-depletion-comparison-fig, fig.cap = "(ref:main-depletion-comparison-fig-cap)", fig.height = 5} -->
 
-plot_depl_fore_comparison(base_model,
-                          ylim = c(0, 1.75),
-                          xlim = c(2014, assess_yr + 4),
-                          leg_pos = c(0.2, 0.8),
-                          fore_inds = c(1, 2, 3, 4, 5, 6, 10, 11),
-                          forecast_yrs = forecast_yrs)
-```
+<!-- plot_depl_fore_comparison(base_model, -->
+<!--                           ylim = c(0, 1.75), -->
+<!--                           xlim = c(2014, assess_yr + 4), -->
+<!--                           leg_pos = c(0.2, 0.8), -->
+<!--                           fore_inds = c(1, 2, 3, 4, 5, 6, 10, 11), -->
+<!--                           forecast_yrs = forecast_yrs) -->
+<!-- ``` -->
 
-(ref:main-retrospective-recruitment-cap) Retrospective analysis of
-recruitment deviations from Markov chain Monte Carlo models over the last
-`r length(retro_cohorts)` years. Recruitment deviations are the median
-log-scale differences between recruitment estimated by the model and expected
-recruitment from the stock-recruitment relationship (shading represents
-95% posterior credibility intervals for a select low
-and high deviation). Age-0 recruitment
-deviations are non-zero because Markov chain Monte Carlo allows for
-sampling from the full lognormal distribution. Lines represent estimated
-recruitment deviations for cohorts born from `r min(retro_cohorts)` to
-`r max(retro_cohorts) + 1`, with cohort birth year marked at the right of each
-color-coded line. For example, the right-most point for the `r assess_yr - 8`
-cohort shows the cohort at age-8 (i.e., at the start of `r assess_yr`,
-which represents the base model and includes data through `r assess_yr - 1`).
-The next point to the left is the `r assess_yr - 8` cohort at age-7,
-calculated by removing one year of data (so includes data up to
-`r assess_yr - 2`). Thus, models are fit to data available only up to the
-start of the year in which each cohort became a given age, such that the
-last year of data for a given point equals
-$cohort\ birth\ year + cohort\ age - 1$.
+<!-- (ref:main-retrospective-recruitment-cap) Retrospective analysis of -->
+<!-- recruitment deviations from Markov chain Monte Carlo models over the last -->
+<!-- `r length(retro_cohorts)` years. Recruitment deviations are the median -->
+<!-- log-scale differences between recruitment estimated by the model and expected -->
+<!-- recruitment from the stock-recruitment relationship (shading represents -->
+<!-- 95% posterior credibility intervals for a select low -->
+<!-- and high deviation). Age-0 recruitment -->
+<!-- deviations are non-zero because Markov chain Monte Carlo allows for -->
+<!-- sampling from the full lognormal distribution. Lines represent estimated -->
+<!-- recruitment deviations for cohorts born from `r min(retro_cohorts)` to -->
+<!-- `r max(retro_cohorts) + 1`, with cohort birth year marked at the right of each -->
+<!-- color-coded line. For example, the right-most point for the `r assess_yr - 8` -->
+<!-- cohort shows the cohort at age-8 (i.e., at the start of `r assess_yr`, -->
+<!-- which represents the base model and includes data through `r assess_yr - 1`). -->
+<!-- The next point to the left is the `r assess_yr - 8` cohort at age-7, -->
+<!-- calculated by removing one year of data (so includes data up to -->
+<!-- `r assess_yr - 2`). Thus, models are fit to data available only up to the -->
+<!-- start of the year in which each cohort became a given age, such that the -->
+<!-- last year of data for a given point equals -->
+<!-- $cohort\ birth\ year + cohort\ age - 1$. -->
 
-```{r main-retrospective-recruitment-fig, fig.cap = "(ref:main-retrospective-recruitment-cap)", fig.height = 6}
+<!-- ```{r main-retrospective-recruitment-fig, fig.cap = "(ref:main-retrospective-recruitment-cap)", fig.height = 6} -->
 
-plot_squid(base_model,
-           show_ci = TRUE)
-```
+<!-- plot_squid(base_model, -->
+<!--            show_ci = TRUE) -->
+<!-- ``` -->
 
-(ref:main-biomass-recruitment-retrospective-cap) Markov chain Monte Carlo estimates of spawning biomass at the start of each year (top) and recruitment (bottom) for the base model and 5-year retrospective runs.
+<!-- (ref:main-biomass-recruitment-retrospective-cap) Markov chain Monte Carlo estimates of spawning biomass at the start of each year (top) and recruitment (bottom) for the base model and 5-year retrospective runs. -->
 
-```{r main-biomass-recruitment-retrospective-fig, fig.cap = "(ref:main-biomass-recruitment-retrospective-cap)", fig.height = 8}
+<!-- ```{r main-biomass-recruitment-retrospective-fig, fig.cap = "(ref:main-biomass-recruitment-retrospective-cap)", fig.height = 8} -->
 
-p <- list()
-p[[1]] <- plot_biomass(d_obj = base_model$retrospectives$biomass_df,
-                       ylim = c(0, 0.5),
-                       y_breaks = seq(0, 0.5, 0.1),
-                       xlim = c(start_yr - 2, assess_yr + 1),
-                       x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5),
-                       leg_font_size = 12,
-                       x_expansion = 3.5,
-                       leg_pos = c(0.6, 0.89),
-                       leg_ncol = 2,
-                       alpha = 0.1)
-p[[2]] <- plot_recruitment(d_obj = base_model$retrospectives$recr_df,
-                           xlim = c(start_yr, assess_yr),
-                           ylim = c(0, 10),
-                           y_breaks = seq(0, 10, 1),
-                           leg_pos = "none")
+<!-- p <- list() -->
+<!-- p[[1]] <- plot_biomass(d_obj = base_model$retrospectives$biomass_df, -->
+<!--                        ylim = c(0, 0.5), -->
+<!--                        y_breaks = seq(0, 0.5, 0.1), -->
+<!--                        xlim = c(start_yr - 2, assess_yr + 1), -->
+<!--                        x_breaks = seq(start_yr + 1, assess_yr + 1, by = 5), -->
+<!--                        leg_font_size = 12, -->
+<!--                        x_expansion = 3.5, -->
+<!--                        leg_pos = c(0.6, 0.89), -->
+<!--                        leg_ncol = 2, -->
+<!--                        alpha = 0.1) -->
+<!-- p[[2]] <- plot_recruitment(d_obj = base_model$retrospectives$recr_df, -->
+<!--                            xlim = c(start_yr, assess_yr), -->
+<!--                            ylim = c(0, 10), -->
+<!--                            y_breaks = seq(0, 10, 1), -->
+<!--                            leg_pos = "none") -->
 
-plot_grid(plotlist = p,
-          nrow = 2,
-          ncol = 1,
-          align = "v",
-          rel_heights = c(1, 1))
-```
+<!-- plot_grid(plotlist = p, -->
+<!--           nrow = 2, -->
+<!--           ncol = 1, -->
+<!--           align = "v", -->
+<!--           rel_heights = c(1, 1)) -->
+<!-- ``` -->

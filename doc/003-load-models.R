@@ -69,8 +69,21 @@ request_models_desc <-
 request_models_dirs <- NA
 request_models_desc <- NA
 
-test_models_dirs <- NA
-test_models_desc <- NA
+test_models_dirs <-
+  list(c("03-catchability-prior-offshore",
+         "04-float-q-est-m",
+         "05-float-q-fix-m-35",
+         "06-float-q-fix-m-50",
+         "07-float-q-fix-m-20"))
+test_models_desc <-
+  list(c("Catchability prior from offshore",
+         "Q set to no float and M estimated in phase 2",
+         "Q set to no float and M fixed at 0.35",
+         "Q set to no float and M fixed at 0.5",
+         "Q set to no float and M fixed at 0.2"))
+
+#test_models_dirs <- NA
+#test_models_desc <- NA
 
 drs <- set_dirs(models_dir = models_dir,
                 base_models_dirs = base_models_dirs,
@@ -86,7 +99,10 @@ if(!exists("models")){
                         test_models_desc = test_models_desc)
 }
 
-base_model <- models$base_models_dirs[[1]][[1]]
+# 3 6 4 5
+base_model <- models$test_models_dirs[[1]][[5]]
+#base_model <- models$base_models_dirs[[1]][[1]]
+base_model$ct_default_policy <-NA
 base_model_name <- attr(base_model, "desc")
 
 sens_models <- models$sens_models_dirs

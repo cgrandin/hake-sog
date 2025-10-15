@@ -7,9 +7,9 @@
 set_dirs(
   models_dir = NA,
   base_models_dir = "01-base-models",
-  sens_models_dir = "03-sensitivity-models",
-  request_models_dir = "04-request-models",
-  test_models_dir = "05-test-models",
+  sens_models_dir = "02-sensitivity-models",
+  request_models_dir = "03-request-models",
+  test_models_dir = "03-test-models",
   base_models_dirs = NA,
   sens_models_dirs = NA,
   request_models_dirs = NA,

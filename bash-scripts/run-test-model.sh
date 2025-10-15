@@ -35,13 +35,13 @@ models_path="/srv/hake-sog/models"
 year_path=$assess_year
 version_path="01-version"
 type_path="03-test-models"
-model_name="03-catchability-prior-offshore"
+model_name="06-float-q-fix-m-50"
 
 ss_exe="ss3"
 num_chains=8
-num_samples=8000
+num_samples=2000
 num_warmup_samples=250
-adapt_delta=0.9
+adapt_delta=0.6
 run_extra_mcmc=TRUE
 
 model_path=$models_path/$year_path/$version_path/$type_path/$model_name

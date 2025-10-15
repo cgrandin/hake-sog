@@ -33,14 +33,58 @@ plot_priors_vs_posts <- function(model,
                                  ...){
   x_range <- match.arg(x_range)
 
+  # Check the names of the posteriors and match with the priors
+  posts <- model$parameter_posts
+  j <- names(posts)
+  has_m <- any(grepl("NatM", j))
+  has_steep <- any(grepl("teep", j))
+  has_ro <- any(grepl("R.*0", j))
+  has_extrasd <- any(grepl("extra", j))
+  has_dm_fish <- any(grepl("DM.*P1", j))
+  has_dm_survey <- any(grepl("DM.*P2", j))
+
   priors <- model$parameter_priors
   priors <- priors[names(priors) != "Fishery recruitment deviations"]
   priors <- priors[names(priors) != "Age 1 extra SD"]
+  wch_m <- which(grepl("Natural", names(priors)))
+  wch_ro <- which(grepl("R*.0", names(priors)))
+  wch_steep <- which(grepl("teep", names(priors)))
+  wch_extrasd <- which(grepl("extra", names(priors)))
+  wch_dm_fish <- which(grepl("Diri.*fish", names(priors)))
+  wch_dm_survey <- which(grepl("Diri.*survey", names(priors)))
+
   titles <- names(priors)
 
-  posts <- model$parameter_posts
-  names(posts) <- titles
+  nms <- NULL
+  if(has_m){
+    nms <- titles[wch_m]
+  }
+  if(has_ro){
+    nms <- c(nms, titles[wch_ro])
+  }
+  if(has_steep){
+    nms <- c(nms, titles[wch_steep])
+  }
+  if(has_extrasd){
+    nms <- c(nms, titles[wch_extrasd])
+  }
+  if(has_dm_fish){
+    nms <- c(nms, titles[wch_dm_fish])
+  }
+  if(has_dm_survey){
+    nms <- c(nms, titles[wch_dm_survey])
+  }
+  names(posts) <- nms
 
+  has_vec <- c(has_m, has_ro, has_steep, has_extrasd, has_dm_fish, has_dm_survey)
+  if(length(priors) == length(has_vec)){
+    priors <- priors[has_vec]
+  }else{
+   # Assume priors match posteriors
+   if(length(priors) != length(posts)){
+     stop("The priors and posterior output do not match! See plot_priors_vs_posts()")
+   }
+  }
   posts_long <- posts |>
     pivot_longer(everything(), names_to = "param") |>
     mutate(param = factor(param, levels = titles)) |>

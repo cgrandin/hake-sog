@@ -41,10 +41,10 @@ model_name="01-base"
 
 ss_exe="ss3"
 num_chains=8
-num_samples=8000
+num_samples=2000
 num_warmup_samples=250
-adapt_delta=0.9
-run_extra_mcmc=TRUE
+adapt_delta=0.
+# run_extra_mcmc=TRUE
 
 model_path=$models_path/$year_path/$version_path/$type_path/$model_name
 

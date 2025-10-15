@@ -1,0 +1,461 @@
+\rfoot{Acoustic Survey}
+
+```{r introduction-en, eval = !fr(), results = 'asis'}
+cat("# Acoustic-trawl survey of `r sp` (*`r science_name`*) in the Strait of Georgia
+
+## Introduction {#sec:intro}
+
+The Strait of Georgia (SOG) is an important spawning, nursery and rearing ground for many fish taxa, among which `r sp` (*`r science_name`*) and Walleye Pollock (*Theragra chalcogramma*) are the two most abundant demersal species. Usually, hake adults migrate into the central-southern SOG in preparation for spawning in early winter, and then aggregate in the deep basins (> 200m) to spawn around late February to May [@mcfarlane1985]. Acoustic-trawl surveys have been conducted sporadically since the 1970s (see @kieser1999 for a review) and annual surveys began again in February-March of 2023. Over the past forty years, the operating acoustic system has transitioned from BioSonics to dual-frequency EK500 in 1995, and then to multi-frequency EK60 in 2009 and EK80 since 2020. This transition to new scientific echosounders, and improvement in acoustic methodologies have been providing better measurements through increased dynamic range, as well as improved fish detection and separation between marine nekton and zooplankton. Recent acoustic-trawl surveys covered the core area of the SOG as well as 6 other strata; Saanich inlet to the south, the Desolation Sound area to the north (covering waters in between Quadra, East and West Redonda, and Cortes Islands), as well as Bute, Toba, and Jervis inlets and Howe Sound.
+
+Methodologies and protocols for the acoustic-trawl survey in the SOG are the same as the ones employed for the coastal stock as part of the joint U.S. – Canada surveys [@clemons2024], with a few exceptions. One key difference is about spatial scale and survey coverage – the SOG is a much smaller area and has twice the survey coverage resolution, with transect spacing of approximately 9.2 km (5 nmi). The survey is not stratified based on the size distribution of fish, but rather based on geographic strata. Geostatistical inter- and extrapolation are also not applied to the data. Transect-based estimates of backscatter averaged over the survey domain are used to compute biomass, for direct comparisons with historical survey estimates.
+
+The objectives of this document are to present an updated estimate of `r sp` biomass in the Strait of Georgia for 2024 and provide detailed information on the methodologies and protocols used to assess this population. Only results from the core survey area (Strait of Georgia including Malaspina Strait) will be presented, for comparisons with historical acoustic surveys.
+
+")
+
+```
+
+```{r introduction-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("#Étude acoustique au chalut du merlu du Pacifique (*`r science_name`*) dans le détroit de Georgia
+
+## Introduction {#sec:intro}
+
+Le détroit de Georgia (SOG) est une importante zone de frai, de nurserie et d'élevage pour de nombreux taxons de poissons, parmi lesquels le merlu du Pacifique (*`r science_name`*) et le colin de l'Alaska (*Theragra chalcogramma*) sont les deux espèces démersales les plus abondantes. En général, les merlus adultes migrent vers le centre-sud du SOG en prévision du frai au début de l'hiver, puis se regroupent dans les bassins profonds (> 200 m) pour frayer entre fin février et mai [@mcfarlane1985]. Des études acoustiques au chalut ont été menées de manière sporadique depuis les années 1970 (voir @kieser1999 pour une revue) et des études annuelles ont repris en février-mars 2023. Au cours des quarante dernières années, le système acoustique utilisé est passé de BioSonics à EK500 à double fréquence en 1995, puis à EK60 multifréquence en 2009 et EK80 depuis 2020. Cette transition vers de nouveaux échosondeurs scientifiques et l'amélioration des méthodologies acoustiques ont permis d'obtenir de meilleures mesures grâce à une gamme dynamique accrue, ainsi qu'à une meilleure détection des poissons et une meilleure séparation entre le necton marin et le zooplancton. Les récentes études acoustiques au chalut ont couvert la zone centrale du SOG ainsi que six autres strates : l'entrée de Saanich au sud, la zone de Desolation Sound au nord (couvrant les eaux entre Quadra, East et West Redonda et les îles Cortes), ainsi que les entrées de Bute, Toba et Jervis et Howe Sound.
+
+Les méthodologies et protocoles utilisés pour le relevé acoustique au chalut dans la SOG sont les mêmes que ceux utilisés pour le stock côtier dans le cadre des relevés conjoints États-Unis-Canada [@clemons2024], à quelques exceptions près. Une différence majeure concerne l'échelle spatiale et la couverture de l'étude : la zone SOG est beaucoup plus petite et la résolution de la couverture de l'étude est deux fois plus élevée, avec un espacement des transects d'environ 9,2 km (5 milles marins). L'étude n'est pas stratifiée en fonction de la distribution de la taille des poissons, mais plutôt en fonction de strates géographiques. L'interpolation et l'extrapolation géostatistiques ne sont pas non plus appliquées aux données. Les estimations de la rétrodiffusion basées sur les transects et moyennées sur le domaine d'étude sont utilisées pour calculer la biomasse, afin de permettre des comparaisons directes avec les estimations des études historiques.
+
+Le présent document a pour objectif de présenter une estimation actualisée de la biomasse du merlu du Pacifique dans le détroit de Georgia pour 2024 et de fournir des informations détaillées sur les méthodologies et les protocoles utilisés pour évaluer cette population. Seuls les résultats provenant de la zone d'étude principale (détroit de Georgia, y compris le détroit de Malaspina) seront présentés, à des fins de comparaison avec les études acoustiques historiques.
+
+")
+
+```
+
+```{r materials-and-methods-en, eval = !fr(), results = 'asis'}
+cat("## Materials and Methods
+
+### Survey Design
+
+General survey design within the core stratum is a systematic parallel transect design with random position start [@simmonds2007]. The transects are separated by 9.2 km (5 nmi) on average (inter-distance can vary between 4-6 nmi), depending on logistical constraints and presence of physical barriers. The transects follow a south-west to north-east orientation, perpendicular to the main axis of the strait (175\textdegree) and end at the 50 m isobath (when safe navigation permits). In narrow sections, such as inside Malaspina Strait and within Fjords and Sounds (not discussed here), transects follow a random zig-zag pattern ensuring the bathymetric gradients are consistently crossed. Bathymetry within these channels are highly variable and often have steep gradients, ensuring no bias are introduced due to anisotropy; in the instance where distribution of fish might be correlated to seafloor depth.
+
+")
+```
+
+```{r materials-and-methods-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("## Matériaux et méthodes
+
+### Conception de l'enquête
+
+La conception générale de l'étude au sein de la strate centrale est une conception systématique de transects parallèles avec un point de départ aléatoire [@simmonds2007]. Les transects sont séparés en moyenne de 9,2 km (5 milles marins) (la distance entre eux peut varier entre 4 et 6 milles marins), en fonction des contraintes logistiques et de la présence d'obstacles physiques. Les transects suivent une orientation sud-ouest/nord-est, perpendiculaire à l'axe principal du détroit (175°) et se terminent à l'isobathe de 50 m (lorsque la sécurité de la navigation le permet). Dans les sections étroites, telles que l'intérieur du détroit de Malaspina et les fjords et bras de mer (non abordés ici), les transects suivent un tracé aléatoire en zigzag afin de garantir que les gradients bathymétriques sont traversés de manière cohérente. La bathymétrie dans ces chenaux est très variable et présente souvent des gradients abrupts, ce qui garantit l'absence de biais dû à l'anisotropie, dans le cas où la distribution des poissons pourrait être corrélée à la profondeur du fond marin.
+
+")
+```
+
+(ref:fig-map-cap-en) Map of Vancouver Island with the survey area and strata.
+
+(ref:fig-map-cap-fr) Carte de l'île de Vancouver avec la zone d'étude et les strates.
+
+```{r fig-map, fig.cap = ifelse(fr(), "(ref:fig-map-cap-fr)", "(ref:fig-map-cap-en)"), out.width = "4in", results = "asis"}
+
+fn <- ifelse(fr(), "french-survey-map.png", "english-survey-map.png")
+include_graphics(here("doc", figures_dir, fn), rel_path = FALSE)
+```
+
+(ref:fig-survey-transects-cap-en) Map of the survey vessel track and transects within the Strait of Georgia.
+
+(ref:fig-survey-transects-cap-fr) Carte de la trajectoire du navire d'étude et des transects dans le détroit de Georgia.
+
+```{r fig-survey-transects, fig.cap = ifelse(fr(), "(ref:fig-survey-transects-cap-fr)", "(ref:fig-survey-transects-cap-en)"), out.width = "3in", results = "asis"}
+
+include_graphics(here("doc", figures_dir, "transects-survey.png"), rel_path = FALSE)
+```
+
+\clearpage
+
+```{r scientific-echosounder-en, eval = !fr(), results = 'asis'}
+cat("### Scientific echosounder
+
+The CCGS Sir John Franklin was used to carry out the survey in the SOG, using the 38 kHz frequency for echo-integration of signal attributed to Pacific hake. The Ek80 systems were calibrated at the beginning (or end) of each acoustic surveys following the suspended calibration sphere method [@demer2015], using a 38.1 mm diameter tungsten-carbide sphere with 3% cobalt binding. CTD profiles conducted during the survey were used to estimate the sound speed in water and the absorption coefficients at each acoustic frequency. Details are listed in Table \@ref(tab:calibration-table).
+
+")
+```
+
+```{r scientific-echosounder-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("### Sondeur scientifique
+
+Le NGCC Sir John Franklin a été utilisé pour effectuer le levé dans la SOG, en utilisant la fréquence de 38 kHz pour l'intégration par écho du signal attribué au merlu du Pacifique. Les systèmes Ek80 ont été étalonnés au début (ou à la fin) de chaque levé acoustique selon la méthode de la sphère d'étalonnage en suspension [@demer2015], à l'aide d'une sphère en carbure de tungstène de 38,1 mm de diamètre avec 3 % de cobalt. Les profils CTD réalisés pendant l'étude ont été utilisés pour estimer la vitesse du son dans l'eau et les coefficients d'absorption à chaque fréquence acoustique. Les détails sont indiqués dans le tableau \@ref(tab:calibration-table).
+
+")
+```
+
+```{r calibration-table, results = "asis"}
+cap <- paste0("Simrad EK80 system transducers parameters for the CCGS Sir John Franklin.")
+if(fr()){
+  cap <- paste0("Paramètres des transducteurs du système Simrad EK80 pour le NGCC Sir John Franklin.")
+}
+
+fn <- ifelse(fr(),
+             here("data-tables/calibration-french.csv"),
+             here("data-tables/calibration.csv"))
+
+surv_cal_df <- read_csv(fn,
+                        col_types = cols(),
+                        show_col_types = FALSE)
+
+table_calibration(surv_cal_df,
+                  font_size = 9,
+                  bold_header = TRUE,
+                  caption = cap)
+```
+
+```{r operating-parameters-table, results = "asis"}
+cap <- paste0("Simrad EK80 operating parameters for the CCGS Sir John Franklin.")
+if(fr()){
+  cap <- paste0("Paramètres de fonctionnement du Simrad EK80 pour le NGCC Sir John Franklin.")
+}
+
+fn <- ifelse(fr(),
+             here("data-tables/survey-operating-parameters-french.csv"),
+             here("data-tables/survey-operating-parameters.csv"))
+
+surv_op_params_df <- read_csv(fn,
+                              col_types = cols(),
+                              show_col_types = FALSE)
+
+table_calibration(surv_op_params_df,
+                  font_size = 9,
+                  bold_header = TRUE,
+                  caption = cap)
+```
+
+\clearpage
+
+```{r trawl-sampling-en, eval = !fr(), results = 'asis'}
+
+cat("### Midwater trawl and biological sampling
+
+Acoustic signs were targeted with a midwater trawl for species identification and specimen collection. A 24/20 model Aleutian Wing Trawl was used in combination with USA Jet model P trawl doors. The codend liner had 8 mm mesh to retain smaller fish. Trawl performance was assessed via Scanmar SS4 trawldoors sensors and a Simrad FS70 trawl sonar mounted on a kite above the headrope. Trawl set time at target depth varied between 5 and 20 minutes depending on the amount of fish observed entering the trawl mouth via the FS70 sonar.
+
+All catches were sorted to the lowest identifiable taxon and weighted. For `r sp`, a random sample of up to 50 specimens were collected for length, weight, sex, age (otolith), and maturity (US 5-stage maturity convention). Gut content was also examined for the first 25 specimen. If there was more than 50 `r sp`, additional length, sex, and weight samples were collected from up to 175 more fish. If there were more than 225 fish, a third random sample of length was collected from up to an additional 175 fish. For Walleye pollock, a random sample of up to 50 specimen was collected for length, weight, sex, and maturity (7-stage maturity convention). Gut content was also examined for the first 25 specimen. If more than 50 Walleye pollock were caught, an additional random sample of up to 100 specimen was collected for length, sex, and weight. For all other species where catch was greater than 1 kg, length, weight, and sex (when feasible) were collected on a random subsample of up to 100 specimens.
+
+")
+```
+
+```{r trawl-sampling-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+
+cat("### Chalutage pélagique et échantillonnage biologique
+
+Les signaux acoustiques ont été ciblés à l'aide d'un chalut pélagique afin d'identifier les espèces et de collecter des spécimens. Un chalut à ailes Aleutian modèle 24/20 a été utilisé en combinaison avec des portes de chalut USA Jet modèle P. Le sac du chalut était muni d'un filet à mailles de 8 mm afin de retenir les poissons plus petits. Les performances du chalut ont été évaluées à l'aide de capteurs Scanmar SS4 installés sur les portes du chalut et d'un sonar Simrad FS70 monté sur un cerf-volant au-dessus de la ralingue. La durée d'immersion du chalut à la profondeur cible variait entre 5 et 20 minutes, en fonction de la quantité de poissons observés entrant dans la bouche du chalut grâce au sonar FS70.
+
+Toutes les prises ont été triées selon le taxon identifiable le plus bas et pesées. Pour « r sp », un échantillon aléatoire de 50 spécimens maximum a été prélevé afin de déterminer la longueur, le poids, le sexe, l'âge (otolithe) et la maturité (convention américaine des 5 stades de maturité). Le contenu intestinal des 25 premiers spécimens a également été examiné. S'il y avait plus de 50 spécimens r sp, des échantillons supplémentaires de longueur, de sexe et de poids ont été prélevés sur 175 poissons supplémentaires au maximum. S'il y avait plus de 225 poissons, un troisième échantillon aléatoire de longueur a été prélevé sur 175 poissons supplémentaires au maximum. Pour le colin d'Alaska, un échantillon aléatoire de 50 spécimens au maximum a été prélevé pour mesurer la longueur, le poids, le sexe et la maturité (convention de maturité en 7 étapes). Le contenu intestinal des 25 premiers spécimens a également été examiné. Si plus de 50 colins de l'Alaska étaient capturés, un échantillon aléatoire supplémentaire de 100 spécimens au maximum était prélevé pour mesurer la longueur, le sexe et le poids. Pour toutes les autres espèces dont la capture était supérieure à 1 kg, la longueur, le poids et le sexe (lorsque cela était possible) ont été mesurés sur un sous-échantillon aléatoire de 100 spécimens au maximum.
+
+")
+```
+
+```{r trawl-video-en, eval = !fr(), results = 'asis'}
+
+cat("### In-trawl video system
+
+Use of a video camera system in the trawl net has been an integral part of DFO Pacific region acoustic-trawl surveys since 2011. Advantages of collecting video data from trawl surveys include; the verification of acoustic signatures (improved ability to identify layers seen on echogram); the identification of organisms present in the water column but not caught due to catchability limits of the net (euphausiids, myctophids, jellyfish, salps); temporal details of catch and composition (order and depth at which animals were caught); and provision of semi-quantitative insights in densities of organisms observed during the trawl set.
+
+The in-trawl camera system was comprised of three main components:
+
+- a self-powered video camera (GOPRO HERO4) in a pressure case inside a protective cage,
+- a powerful underwater light inside a protective cage, and
+- a power source (battery-pack) in a pressure case for the underwater light.
+
+The light and camera cages were placed on the top-side of the inside of the trawl net. The light was angled directly downwards in its cage. The camera was positioned 1.5 m ahead of the light (closer to the bow) and was angled towards the cod end (approximately -30° from vertical) to record images within the light beam. The battery was set in a mesh bag which was secured to the upper starboard ribline of the net. The cable connection to the light was secured at the beginning of the survey and remained so for the entire survey. The cable connection to the battery was plugged in before deployment and unplugged after deployment. The battery was generally charged in the evenings, and put in the net during the day’s fishing operations. An RBR sensor (measuring temperature and pressure) was also secured to the camera cage during deployments.
+
+Video files were synchronized with the pressure sensor to obtain the trawl path within the acoustic echogram and to generate depth outputs (as a subtitle file) overlayed on the camera footage. Video files were reviewed to assess the time and depth each identifiable taxon were observed within the trawl, and to provide a qualitative assessment of their size as they passed by features of known dimensions (e.g. light frame, net mesh, ribline markings). 
+
+The in-trawl video data from the 2024 survey revealed that juvenile `r sp` (age-1) were found in separate layers than adults (age-2+). Juvenile hake were in thin layers at an average depth of 120 m, often mixed with the upper part of the mesopelagic layer, composed of a mixture of small organisms including smooth tongues, myctophids, squids, and various nekton and zooplankton (e.g. larval fish, euphausiids, salps). Adult hake were in contrast mostly found below 200 m depth in relatively monospecific aggregations. All age-1 `r sp` caught in the upper layers had fork length of less than 18 cm, while adults caught in deeper water were all above 18 cm.
+
+")
+```
+
+```{r trawl-video-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+
+cat("### Système vidéo embarqué dans le chalut
+
+L'utilisation d'un système de caméra vidéo dans le chalut fait partie intégrante des relevés acoustiques au chalut menés par le MPO dans la région du Pacifique depuis 2011. La collecte de données vidéo lors des relevés au chalut présente plusieurs avantages, notamment la vérification des signatures acoustiques (meilleure capacité à identifier les couches visibles sur l'échogramme) l'identification des organismes présents dans la colonne d'eau mais non capturés en raison des limites de capturabilité du filet (euphausiacés, myctophidés, méduses, salpes) ; les détails temporels de la capture et de la composition (ordre et profondeur auxquels les animaux ont été capturés) ; et la fourniture d'informations semi-quantitatives sur les densités des organismes observés pendant le chalutage.
+
+Le système de caméra embarquée dans le chalut comprenait trois éléments principaux :
+
+  1. une caméra vidéo autonome (GOPRO HERO4) dans un boîtier étanche à l'intérieur d'une cage de protection,
+  2. un puissant éclairage sous-marin à l'intérieur d'une cage de protection, et
+  3. une source d'alimentation (batterie) dans un boîtier étanche pour l'éclairage sous-marin.
+
+Les cages contenant l'éclairage et la caméra étaient placées sur la partie supérieure de l'intérieur du chalut. La lampe était orientée directement vers le bas dans sa cage. La caméra était positionnée 1,5 m devant la lampe (plus près de la proue) et orientée vers le cul du chalut (à environ -30° par rapport à la verticale) afin d'enregistrer les images dans le faisceau lumineux. La batterie était placée dans un sac en filet fixé à la ligne de bordure supérieure tribord du filet. Le câble de connexion à la lampe a été fixé au début de l'étude et est resté en place pendant toute la durée de celle-ci. Le câble de connexion à la batterie a été branché avant le déploiement et débranché après celui-ci. La batterie était généralement chargée le soir et placée dans le filet pendant les opérations de pêche de la journée. Un capteur RBR (mesurant la température et la pression) a également été fixé à la cage de la caméra pendant les déploiements.
+
+Les fichiers vidéo ont été synchronisés avec le capteur de pression afin d'obtenir la trajectoire du chalut dans l'échogramme acoustique et de générer des données de profondeur (sous forme de fichier de sous-titres) superposées aux images de la caméra. Les fichiers vidéo ont été examinés afin d'évaluer le moment et la profondeur auxquels chaque taxon identifiable a été observé dans le chalut, et de fournir une évaluation qualitative de leur taille lorsqu'ils passaient devant des éléments de dimensions connues (par exemple, cadre léger, mailles du filet, marquages de la ligne de flottaison). 
+
+Les données vidéo du chalut provenant de l'étude de 2024 ont révélé que les juvéniles « r sp » (âge 1) se trouvaient dans des couches distinctes de celles des adultes (âge 2+). Les merlus juvéniles se trouvaient en couches minces à une profondeur moyenne de 120 m, souvent mélangés à la partie supérieure de la couche mésopélagique, composée d'un mélange de petits organismes comprenant des langues lisses, des myctophidés, des calmars et divers nectons et zooplanctons (par exemple, des larves de poissons, des euphausiacés, des salpes). En revanche, les merlus adultes se trouvaient principalement à plus de 200 m de profondeur, dans des agrégats relativement monospécifiques. Tous les sp` r de 1 an capturés dans les couches supérieures avaient une longueur à la fourche inférieure à 18 cm, tandis que les adultes capturés en eaux plus profondes mesuraient tous plus de 18 cm.
+
+")
+```
+
+```{r acoustic-classification-en, eval = !fr(), results = 'asis'}
+
+cat("### Acoustic classification and acoustic backscatter partitioning
+
+Acoustic backscatter along transects were assigned to species or group of species based on their characteristics and available information for a given site. In addition to trawl and in-trawl video information (as defined previously), signs were categorized based on:
+Backscatter characteristics, including:
+
+- Acoustic density and density gradients
+- Acoustic morphometry: shape, size, and patchiness of aggregation
+- Depth distribution
+- Relationship with seafloor and bathymetry
+- Relationships with other scattering types
+- Frequency dependent backscattering
+
+In addition, ancillary information were used to assist and refine acoustic classification, including:
+
+- Historical information, such as access to libraries of trawl echograms relevant for the area
+- Distribution of backscatter on adjacent transects
+- Regional information from past surveys
+
+")
+```
+
+```{r acoustic-classification-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+
+cat("### Classification acoustique et partitionnement de la rétrodiffusion acoustique
+
+La rétrodiffusion acoustique le long des transects a été attribuée à des espèces ou à des groupes d'espèces en fonction de leurs caractéristiques et des informations disponibles pour un site donné. Outre les informations provenant des chaluts et des caméras embarquées (telles que définies précédemment), les signes ont été classés en fonction des critères suivants :
+Caractéristiques de la rétrodiffusion, notamment :
+
+- La densité acoustique et les gradients de densité
+- La morphométrie acoustique : forme, taille et caractère fragmenté de l'agrégation
+- La distribution en profondeur
+- La relation avec le fond marin et la bathymétrie
+- Les relations avec d'autres types de diffusion
+- La rétrodiffusion dépendante de la fréquence
+
+En outre, des informations complémentaires ont été utilisées pour faciliter et affiner la classification acoustique, notamment :
+
+- Les informations historiques, telles que l'accès à des bibliothèques d'échogrammes de chalutage pertinents pour la zone
+- La distribution de la rétrodiffusion sur les transects adjacents
+- Les informations régionales issues d'études antérieures
+
+")
+```
+
+(ref:fig-echogram-cap-en) Example of an echogram with an aggregation of `r sp`. Color scale on the right represent the volume backscattering strength on a logarithmic scale (Sv in dB re 1 m^-1^).
+
+(ref:fig-echogram-cap-fr) Exemple d'échogramme avec agrégation de `r sp`. L'échelle de couleurs à droite représente la force de rétrodiffusion volumique sur une échelle logarithmique (Sv en dB re 1 m^-1^).
+
+```{r fig-echogram, fig.cap = ifelse(fr(), "(ref:fig-echogram-cap-fr)", "(ref:fig-echogram-cap-en)"), out.width = "6in", results = "asis"}
+
+include_graphics(here("doc", figures_dir, "hake-school-echogram.png"), rel_path = FALSE)
+```
+
+\clearpage
+
+```{r echo-integration-en, eval = !fr(), results = 'asis'}
+
+cat("### Echo-integration
+
+All acoustic data analyses were performed with the Echoview \textcopyright\ processing software. Backscatter that was attributed to a species or scattering group (Pacific hake age-2+ in this case) were delimited by user-defined polygons or boxes (often referred to as acoustic regions) all along survey transects. Volume backscattering coefficients (s~v~ in m^-1^) were summed (integrated) over the depth range of the aggregation to obtain area backscattering coefficients (s~a~ in m^-2^). This quantity is often represented as Nautical Area Backscattering Coefficient (NASC), which is s~a~ multiplied by 4\pi 1852^2^ (units m^2^ nmi^-2^). See @maclennan2002 for a comprehensive look at definitions and symbols in fisheries acoustics.
+
+The area backscattering coefficients $s_{at}$ for a transect $t$ with a number $n$ of acoustic regions can be expressed as:
+
+\begin{equation} 
+  s_{at}=\frac{\sum\limits_{i=1}^{n}{s_{ai}\times P_i}}{P_t}
+(\#eq:area-bs-coefs)
+\end{equation} 
+
+Where $s_{ai}$ is the area backscattering coefficients for region $i$, $P_i$ is the number of pings in region $i$, and $P_t$ is the total number of pings in the transect.
+
+Transect-based estimates of area backscattering coefficients ($s_{as}$) were then weighted by their transect length ($L_t$) to obtain the survey stratum area backscattering coefficients over $n$ number of transects.
+
+\begin{equation} 
+  s_{as}=\frac{\sum\limits_{t=1}^{n}{(s_{at}\times L_t)}}{\sum\limits_{t=1}^{n}L_t}
+(\#eq:transect-bs-coefs)
+\end{equation} 
+
+")
+```
+
+```{r echo-integration-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("### Intégration des échos
+
+Toutes les analyses des données acoustiques ont été réalisées à l'aide du logiciel de traitement Echoview\textcopyright\. La rétrodiffusion attribuée à une espèce ou à un groupe de diffusion (dans ce cas, le merlu du Pacifique âgé de 2 ans et plus) a été délimitée par des polygones ou des boîtes définis par l'utilisateur (souvent appelés régions acoustiques) tout au long des transects d'étude. Les coefficients de rétrodiffusion volumique (s~v~ en m^-1^) ont été additionnés (intégrés) sur la plage de profondeur de l'agrégat afin d'obtenir les coefficients de rétrodiffusion de surface (s~a~ en m^-2^). Cette quantité est souvent représentée par le coefficient de rétrodiffusion de la zone nautique (NASC), qui est égal à s~a~ multiplié par 4\pi 1852^2^ (unités m^2^ nmi^-2^). Voir @maclennan2002 pour un aperçu complet des définitions et des symboles utilisés en acoustique halieutique.
+
+Les coefficients de rétrodiffusion de surface $s_{at}$ pour un transect $t$ avec un nombre $n$ de régions acoustiques peuvent être exprimés comme suit :
+
+\begin{equation} 
+  s_{at}=\frac{\sum\limits_{i=1}^{n}{s_{ai}\times P_i}}{P_t}
+(\#eq:area-bs-coefs)
+\end{equation} 
+
+Où $s_{ai}$ est le coefficient de rétrodiffusion de surface pour la région $i$, $P_i$ est le nombre de signaux dans la région $i$, et $P_t$ est le nombre total de signaux dans le transect.
+
+Les estimations des coefficients de rétrodiffusion de surface ($s_{as}$) basées sur les transects ont ensuite été pondérées en fonction de la longueur des transects ($L_t$) afin d'obtenir les coefficients de rétrodiffusion de surface de la strate d'étude sur un nombre $n$ de transects.
+
+\begin{equation} 
+  s_{as}=\frac{\sum\limits_{t=1}^{n}{(s_{at}\times L_t)}}{\sum\limits_{t=1}^{n}L_t}
+(\#eq:transect-bs-coefs)
+\end{equation} 
+
+")
+```
+
+(ref:fig-dist-nasc-cap-en) Distribution of Nautical Area Scattering Coefficients (m^2^nmi^-2^) of Pacific Hake in the Strait of Georgia in the 2024 acoustic-trawl survey.
+
+(ref:fig-dist-nasc-cap-fr) Répartition des coefficients de diffusion dans la zone nautique (m^2^nmi^-2^) du merlu du Pacifique dans le détroit de Georgia lors du relevé acoustique au chalut de 2024.
+
+```{r fig-dist-nasc, fig.cap = ifelse(fr(), "(ref:fig-dist-nasc-cap-fr)", "(ref:fig-dist-nasc-cap-en)"), out.width = "6in", results = "asis"}
+
+fn <- ifelse(fr(), "french-target-strengths.png", "english-target-strengths.png")
+include_graphics(here("doc", figures_dir, fn), rel_path = FALSE)
+```
+
+\clearpage
+
+```{r conv-bs-to-biomass-en, eval = !fr(), results = 'asis'}
+
+cat("### Conversion of acoustic backscatter to biomass
+
+To convert acoustic survey backscatter into biomass required several key conversions, including length to weight and acoustic target strength (TS) to length relationships. These relationships can be combined by calculating target strength (and equivalent backscattering cross-section $\sigma_{bs}$) per kg for each species. Since target strength models are based on length, weights can be derived based on either empirical relationship between length and weight in the collected samples or from the literature. For the 2024 SOG survey, the relationship was derived from all survey catches using the equation \@ref(eq:weight-length).
+
+\begin{equation} 
+  W = aL^b
+(\#eq:weight-length)
+\end{equation} 
+
+Where $W$ is weight in grams and $L$ is length in mm, with intercept $a$ and slope $b$. Table \@ref(tab:weight-length-table) lists the coefficients obtained for the two species.
+
+")
+```
+
+```{r conv-bs-to-biomass-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("### Conversion de la rétrodiffusion acoustique en biomasse
+
+Pour convertir la rétrodiffusion acoustique en biomasse, plusieurs conversions clés ont été nécessaires, notamment entre la longueur et le poids, et entre la force acoustique de la cible (TS) et la longueur. Ces relations peuvent être combinées en calculant la force de la cible (et la section efficace de rétrodiffusion équivalente $\sigma_{bs}$) par kg pour chaque espèce. Comme les modèles de force cible sont basés sur la longueur, les poids peuvent être dérivés soit à partir de la relation empirique entre la longueur et le poids dans les échantillons collectés, soit à partir de la littérature. Pour l'étude SOG 2024, la relation a été dérivée de toutes les captures de l'étude à l'aide de l'équation \@ref(eq:weight-length).
+
+\begin{equation} 
+  W = aL^b
+(\#eq:weight-length)
+\end{equation} 
+
+Où $W$ est le poids en grammes et $L$ la longueur en mm, avec une ordonnée à l'origine $a$ et une pente $b$. Le tableau \@ref(tab:weight-length-table) répertorie les coefficients obtenus pour les deux espèces.
+
+")
+```
+
+```{r weight-length-table, results = "asis"}
+cap <- paste0("Coefficients values for the length-weight relationships obtained from survey data.")
+if(fr()){
+  cap <- paste0("Valeurs des coefficients pour les relations longueur-poids obtenues à partir des données d'enquête.")
+}
+
+fn <- ifelse(fr(),
+             here("data-tables/weight-length-survey-french.csv"),
+             here("data-tables/weight-length-survey.csv"))
+
+surv_lw_df <- read_csv(fn,
+                       col_types = cols(),
+                       show_col_types = FALSE)
+
+table_calibration(surv_lw_df,
+                  font_size = 9,
+                  bold_header = TRUE,
+                  caption = cap)
+```
+
+```{r target-strength-models-en, eval = !fr(), results = 'asis'}
+cat("Target strength (TS) models for individual fish are expressed in equation \@ref(eq:ts):
+    
+\begin{equation} 
+  TS(db) = 20log(L_{cm}) + b_{20}
+(\#eq:ts)
+\end{equation} 
+
+Where length ($L_{cm}$) is expressed in cm and $b_{20}$ is the intercept. The linear domain expression of $TS$ is the backscattering cross section ($\sigma_{bs}$ in m^2^) as shown in equation \@ref(eq:ts-length):
+
+\begin{equation} 
+  \sigma_{bs} = 10^{\frac{TS}{10}}
+(\#eq:ts-length)
+\end{equation}
+
+Table \@ref(tab:ts-models) lists the TS models used for some of the more common species encountered in the Pacific and Strait of Georgia surveys.
+")
+```
+
+```{r target-strength-models-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("Les modèles de force cible (TS) pour chaque poisson sont exprimés dans l'équation \@ref(eq:ts) :
+
+\begin{equation} 
+  TS(db) = 20log(L_{cm}) + b_{20}
+(\#eq:ts)
+\end{equation} 
+
+Où la longueur ($L_{cm}$) est exprimée en cm et $b_{20}$ est l'ordonnée à l'origine. L'expression linéaire de $TS$ est la section efficace de rétrodiffusion ($\sigma_{bs}$ en m^2^) comme indiqué dans l'équation \@ref(eq:ts-length) :
+
+\begin{equation} 
+  \sigma_{bs} = 10^{\frac{TS}{10}}
+(\#eq:ts-length)
+\end{equation}
+
+Le tableau \@ref(tab:ts-models) répertorie les modèles TS utilisés pour certaines des espèces les plus courantes rencontrées lors des études menées dans le Pacifique et le détroit de Georgia.
+
+")
+```
+
+```{r ts-models, results = "asis"}
+cap <- paste0("Target strength to length coefficients for some common species.")
+if(fr()){
+  cap <- paste0("Coefficients de résistance à la traction par rapport à la longueur pour certaines espèces courantes.")
+}
+
+fn <- ifelse(fr(),
+             here("data-tables/ts-models-french.csv"),
+             here("data-tables/ts-models.csv"))
+
+surv_ts_models_df <- read_csv(fn,
+                              col_types = cols(),
+                              show_col_types = FALSE)
+
+table_calibration(surv_ts_models_df,
+                  font_size = 9,
+                  bold_header = TRUE,
+                  caption = cap)
+```
+
+```{r target-strength-models-2-en, eval = !fr(), results = 'asis'}
+cat("The total catch of a species was partitioned in 1 cm length class, with associated weight ($w$) and target strength (with reciprocal $\sigma_{bs}$) from the relationships described above were calculated for each interval.
+
+The $\sigma_{bs}$ per kg (m^2^ kg^-1^ ) can then be calculated using equation \@ref(eq:sigma-bs-per-kg):
+
+\begin{equation} 
+  \sigma_{bs} per kg = \frac{\sum\limits_{i=1}^{n}{P_i\times \sigma_{bsi}}}{\sum\limits_{i=1}^{n}{P_i\times w_i}}
+(\#eq:sigma-bs-per-kg)
+\end{equation}
+
+Where $P_i$ is the proportion of fish in size class $i$ and $n$ is the total number of size classes. For age-2+ `r sp`, $TS$ per kg was -30.986 dB ($\sigma_{bs}$ per kg of 0.000797) for the 2024 survey.
+
+This gave a biomass of 34,215 metric tons of adult (age-2+) `r sp` for the 2024 survey. Although systematic surveys (e.g. with equidistant transect spacing) are more precise than a random design, it makes it more difficult to assess true variance, which cannot be calculated with regular statistics [@matheron1971]. We used bootstraps on the acoustic estimates to resample transects with replacements 1,000 times, to give a non-parametric estimate of the uncertainty.
+
+The Bias-Corrected and Accelerated 95% confidence interval obtained from bootstraps was [20,387, 67,555] for the 2024 survey.
+")
+```
+
+```{r target-strength-models-2-fr, eval = fr(), results = 'asis', needs_trans = FALSE}
+cat("Le total des prises d'une espèce a été divisé en classes de longueur de 1 cm, et le poids associé ($w$) et la force cible (avec réciproque $\sigma_{bs}$) à partir des relations décrites ci-dessus ont été calculés pour chaque intervalle.
+
+Le $\sigma_{bs}$ par kg (m^2^ kg^-1^) peut alors être calculé à l'aide de l'équation \@ref(eq:sigma-bs-per-kg) :
+
+\begin{equation} 
+  \sigma_{bs} per kg = \frac{\sum\limits_{i=1}^{n}{P_i\times \sigma_{bsi}}}{\sum\limits_{i=1}^{n}{P_i\times w_i}}
+(\#eq:sigma-bs-per-kg)
+\end{equation}
+
+Où $P_i$ est la proportion de poissons dans la classe de taille $i$ et $n$ est le nombre total de classes de taille. Pour les poissons âgés de 2 ans et plus `r sp`, la valeur $TS$ par kg était de -30 986 dB ($\sigma_{bs}$ par kg de 0,000797) pour l'enquête de 2024.
+
+Cela a donné une biomasse de 34 215 tonnes métriques d'adultes (âgés de plus de 2 ans) `r sp` pour l'enquête de 2024. Bien que les enquêtes systématiques (par exemple avec un espacement équidistant des transects) soient plus précises qu'une conception aléatoire, elles rendent plus difficile l'évaluation de la variance réelle, qui ne peut être calculée à l'aide de statistiques régulières [@matheron1971]. Nous avons utilisé des bootstraps sur les estimations acoustiques pour rééchantillonner les transects avec 1 000 remplacements, afin d'obtenir une estimation non paramétrique de l'incertitude.
+
+L'intervalle de confiance à 95 % corrigé du biais et accéléré obtenu à partir des bootstraps était de [20 387, 67 555] pour l'enquête de 2024.
+
+")
+```
+
+\clearpage

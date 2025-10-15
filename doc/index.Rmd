@@ -96,9 +96,9 @@ output:
    # every time you compile the document. If false, any changes you have made
    # to the style file in your project will remain between compilations.
    # If true, your changes will be lost when you compile
-   copy_sty: true
+   copy_sty: false
    # line_nums is a toggle to show line numbers on the left side of the page.
-   line_nums: true
+   line_nums: false
    # line_nums_mod represents showing every Nth line if line_nums is true
    line_nums_mod: 1
    # lot_lof is a toggle to show/not show the lists of tables and figures at
@@ -137,6 +137,8 @@ bibliography: bib/refs.bib
 # Any extra LaTeX code for the header:
 # header-includes:
 # - \usepackage{tikz}
+header-includes:
+  - \usepackage{amssymb}
 ---
 
 ```{r setup, echo = FALSE, cache = FALSE, message = FALSE, results = "hide", warning = FALSE}

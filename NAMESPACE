@@ -316,7 +316,6 @@ import(knitr)
 import(magick)
 import(purrr)
 import(r4ss, except = c(profile))
-
 import(rnaturalearth)
 import(rnaturalearthhires)
 import(stats)

@@ -157,9 +157,13 @@ plot_survey_fit_mcmc <- function(model,
     summarize(across(matches(pat),
                      ~median(.x))) |>
     unlist()
-  names(extra_sd) <- tolower(gsub(pat, "\\1", names(extra_sd)))
-  # `added_se` is a single numeric value
-  extra_sd <- extra_sd[names(extra_sd) == type]
+  if(is.null(extra_sd)){
+    extra_sd <- 0
+  }else{
+    names(extra_sd) <- tolower(gsub(pat, "\\1", names(extra_sd)))
+    # `added_se` is a single numeric value
+    extra_sd <- extra_sd[names(extra_sd) == type]
+  }
 
   # Extract observed index values (thin errorbars) ----
   # These have the extra SD added on

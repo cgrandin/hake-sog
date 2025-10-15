@@ -1,0 +1,7 @@
+"Fréquence\n(kHz)","Longueur\nd'onde\n(mm)","Largeur du\nfaisceau\n(degrés)","Niveau source\nmax/min\n(dB re $$\mu$$Pa @ 1m)","Surface effective\ndu transducteur\n(cm2)","Champ proche\n(cm)"
+18,83,11,"225 / 215",1479,178
+38,39,7,"229 / 219",820,208
+70,21,7,"227 / 217",242,113
+120,13,7,"222 / 212",82,66
+200,8,7,"220 / 212",30,39
+333,5,7,"212 / 209",11,24

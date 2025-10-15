@@ -6,9 +6,9 @@
 \usage{
 plot_survey_biomass(
   model,
-  index = c("age1", "age2"),
   x_lim = c(survey_start_yr, survey_end_yr),
-  y_lim = c(0, 3),
+  y_lim = c(0, 300),
+  y_breaks = seq(y_lim[1], y_lim[2], 50),
   x_labs_mod = 5,
   alpha = 0.3,
   tick_prop = 1,
@@ -26,8 +26,6 @@ plot_survey_biomass(
 }
 \arguments{
 \item{model}{A model, created by \code{\link[=create_rds_file]{create_rds_file()}}}
-
-\item{index}{The index type to plot}
 
 \item{y_lim}{A vector of two for the minimum and maximum values
 for the y-axis on the plot}
