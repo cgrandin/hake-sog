@@ -7,7 +7,6 @@
 _book
 #_bookdown_*
 _main*
-all.bib
 csas-style
 #knitr-cache
 knitr-cache-docx
@@ -41,10 +40,6 @@ tmp_*
 *.stan
 *.pdf
 
-!docs/pre-review-responses/Arrowtooth-TWG-response-doc.pdf
-!docs/working-paper/Revised_Arrowtooth-2022-Working-paper.pdf
-!docs/sar/SAR-arrowtooth-2022.pdf
-
 *.sso
 *.ss_new
 *.cov
@@ -56,8 +51,4 @@ tmp_*
 *.ss-backup
 *.dep
 *.hes
-ss3/arf/plots*
-ss3/arf/ss.*
-ss3/arf-*
-ss3/arf/run*
 
