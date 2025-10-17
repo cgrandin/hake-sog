@@ -17,6 +17,9 @@ if(!length(yaml_proj_vars)){
 # of the YAML part of `000-launcher.rmd`.
 list2env(yaml_proj_vars, envir = globalenv())
 
+# Convert species name to French if compiling in French
+sp <- ifelse(fr(), "merlu du Pacifique", sp)
+
 # System info variables -------------------------------------------------------
 sys_info <- Sys.info()
 computer_name <- sys_info[["nodename"]]
